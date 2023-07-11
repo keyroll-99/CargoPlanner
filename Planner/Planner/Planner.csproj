@@ -15,7 +15,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Planner.Abstraction\Planner.Abstraction.csproj" />
+      <ProjectReference Include="..\Planner.Service\Planner.Service.csproj" />
     </ItemGroup>
 
 </Project>
