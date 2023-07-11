@@ -1,0 +1,11 @@
+version: "3.11"
+
+services:
+    osrm:
+        container_name: osrm
+        build: ./Osrm
+        ports:
+            - "8000:5000"
+    # planner:
+    #     build: ./Planner/Planner
+    

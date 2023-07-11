@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Planner", "Planner\Planner.csproj", "{CCD4CDE1-A8A3-4A87-9D4E-BDDB49D9A95B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Planner.Abstraction", "Planner.Abstraction\Planner.Abstraction.csproj", "{8200AF6C-7D92-4A8B-A893-3EEA57BE9E0D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Planner.Core", "Planner.Core\Planner.Core.csproj", "{62F05F2A-792E-46EB-B7AF-4F63B4309035}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CCD4CDE1-A8A3-4A87-9D4E-BDDB49D9A95B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CCD4CDE1-A8A3-4A87-9D4E-BDDB49D9A95B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CCD4CDE1-A8A3-4A87-9D4E-BDDB49D9A95B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CCD4CDE1-A8A3-4A87-9D4E-BDDB49D9A95B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8200AF6C-7D92-4A8B-A893-3EEA57BE9E0D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8200AF6C-7D92-4A8B-A893-3EEA57BE9E0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8200AF6C-7D92-4A8B-A893-3EEA57BE9E0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8200AF6C-7D92-4A8B-A893-3EEA57BE9E0D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{62F05F2A-792E-46EB-B7AF-4F63B4309035}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{62F05F2A-792E-46EB-B7AF-4F63B4309035}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{62F05F2A-792E-46EB-B7AF-4F63B4309035}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{62F05F2A-792E-46EB-B7AF-4F63B4309035}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
