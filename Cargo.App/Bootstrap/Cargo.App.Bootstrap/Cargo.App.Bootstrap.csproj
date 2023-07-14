@@ -13,4 +13,9 @@
       </Content>
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\..\Modules\User\Cargo.App.Modules.Users.Api\Cargo.App.Modules.Users.Api.csproj" />
+      <ProjectReference Include="..\..\User\Cargo.App.User.Api\Cargo.App.User.Api.csproj" />
+    </ItemGroup>
+
 </Project>
