@@ -8,14 +8,18 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.4" />
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+    </ItemGroup>
+
+    <ItemGroup>
       <Content Include="..\..\.dockerignore">
         <Link>.dockerignore</Link>
       </Content>
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\Modules\User\Cargo.App.Modules.Users.Api\Cargo.App.Modules.Users.Api.csproj" />
-      <ProjectReference Include="..\..\User\Cargo.App.User.Api\Cargo.App.User.Api.csproj" />
+      <ProjectReference Include="..\..\Modules\Users\CargoApp.Modules.Users.Api\CargoApp.Modules.Users.Api.csproj" />
     </ItemGroup>
 
 </Project>
