@@ -11,9 +11,4 @@
       <ProjectReference Include="..\CargoApp.Modules.Users.Core\CargoApp.Modules.Users.Core.csproj" />
     </ItemGroup>
 
-
-    <ItemGroup>
-        <InternalsVisibleTo Include="CargoApp.Bootstrap" />
-    </ItemGroup>
-
 </Project>

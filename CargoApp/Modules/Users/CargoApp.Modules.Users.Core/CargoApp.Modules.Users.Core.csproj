@@ -14,5 +14,9 @@
     <ItemGroup>
         <InternalsVisibleTo Include="CargoApp.Modules.Users.Api" />
     </ItemGroup>
+    
+    <ItemGroup>
+      <Folder Include="DTO\" />
+    </ItemGroup>
 
 </Project>
