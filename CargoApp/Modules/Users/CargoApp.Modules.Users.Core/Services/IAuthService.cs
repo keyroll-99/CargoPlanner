@@ -5,5 +5,5 @@ namespace CargoApp.Modules.Users.Core.Services;
 
 public interface IAuthService
 {
-    public Task<UserDto> CreateUser(CreateUserCommand createUserCommand);
+    public Task<UserDto> CreateUserAsync(CreateUserCommand createUserCommand);
 }

@@ -1,20 +1,25 @@
 ﻿using CargoApp.Core.Abstraction.Policies;
 using CargoApp.Modules.Users.Core.Commands;
-using CargoApp.Modules.Users.Core.Entities;
-using Microsoft.EntityFrameworkCore;
+using CargoApp.Modules.Users.Core.Repositories;
 
 namespace CargoApp.Modules.Users.Core.Policies;
 
 public class UniqueEmailPolicy : IPolicy<CreateUserCommand>
 {
+    private readonly IUserRepository _userRepository;
 
-    private DbSet<User> Users;
+    public UniqueEmailPolicy(IUserRepository userRepository)
+    {
+        _userRepository = userRepository;
+    }
+
+    public string ErrorMessage => "User with this email exists";
 
     public bool CanBeApplied(CreateUserCommand model)
         => true;
 
-    public bool IsValid(CreateUserCommand model)
+    public async ValueTask<bool> IsValid(CreateUserCommand model)
     {
-        throw new NotImplementedException();
+        return await _userRepository.ExistsByEmail(model.Email);
     }
 }

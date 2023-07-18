@@ -5,5 +5,5 @@ namespace CargoApp.Modules.Users.Core.Repositories;
 
 public interface IUserRepository : IRepository<User, Guid>
 {
-    
+    public Task<bool> ExistsByEmail(string email);
 }

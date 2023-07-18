@@ -4,8 +4,8 @@ namespace CargoApp.Modules.Users.Core.Entities;
 
 public class User : BaseEntity
 {
-    public string Email { get; set; }
-    public string Password { get; set; }
+    public required string Email { get; set; }
+    public required string Password { get; set; }
     public bool IsActive { get; set; }
 
     public User(
@@ -20,5 +20,9 @@ public class User : BaseEntity
         Password = password;
         IsActive = isActive;
         CreateAt = createAt;
+    }
+
+    public User()
+    {
     }
 }
