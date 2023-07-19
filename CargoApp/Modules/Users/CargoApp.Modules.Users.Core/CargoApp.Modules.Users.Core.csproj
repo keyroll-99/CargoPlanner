@@ -13,6 +13,7 @@
 
     <ItemGroup>
       <Folder Include="Exceptions\" />
+        <InternalsVisibleTo Include="CargoApp.Modules.Users.Api" />
     </ItemGroup>
 
 </Project>

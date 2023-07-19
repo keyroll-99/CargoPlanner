@@ -20,6 +20,6 @@ public class UniqueEmailPolicy : IPolicy<CreateUserCommand>
 
     public async ValueTask<bool> IsValid(CreateUserCommand model)
     {
-        return await _userRepository.ExistsByEmail(model.Email);
+        return !(await _userRepository.ExistsByEmail(model.Email));
     }
 }

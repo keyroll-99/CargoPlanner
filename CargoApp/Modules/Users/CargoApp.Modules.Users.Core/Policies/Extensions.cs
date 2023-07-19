@@ -14,13 +14,13 @@ internal static class Extensions
             services.Add(new ServiceDescriptor(
                 typeof(IPolicy<CreateUserCommand>),
                 policies,
-                ServiceLifetime.Singleton));
+                ServiceLifetime.Scoped));
         }
 
         return services;
     }
 
     private static IEnumerable<Type> GetAllPolicy<T>()
-        => Assembly.GetExecutingAssembly().GetTypes()
-            .Where(x => x is { IsAbstract: false, IsClass: true } && typeof(IPolicy<T>).IsAssignableTo(x));
+        => Assembly.GetExecutingAssembly().GetTypes().Where(x =>
+            x is { IsAbstract: false, IsClass: true } && typeof(IPolicy<T>).IsAssignableFrom(x));
 }

@@ -1,4 +1,5 @@
-﻿using CargoApp.Core.Abstraction.Repositories;
+﻿using CargoApp.Core.Abstraction.Clock;
+using CargoApp.Core.Abstraction.Repositories;
 using CargoApp.Core.Infrastructure.Entites;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,10 +11,12 @@ public class Repository<TModel, TAppContext> : IRepository<TModel, Guid>
 {
     protected readonly DbSet<TModel> Entities;
     protected readonly TAppContext AppContext;
+    protected readonly IClock _clock;
 
-    public Repository(TAppContext appContext)
+    public Repository(TAppContext appContext, IClock clock)
     {
         AppContext = appContext;
+        _clock = clock;
         Entities = appContext.Set<TModel>();
     }
 
@@ -29,7 +32,7 @@ public class Repository<TModel, TAppContext> : IRepository<TModel, Guid>
 
     public async Task<TModel> CreateAsync(TModel model)
     {
-        model.CreateAt = DateTime.Now;
+        model.CreateAt = _clock.Now();
         await Entities.AddAsync(model);
         await AppContext.SaveChangesAsync();
         return model;

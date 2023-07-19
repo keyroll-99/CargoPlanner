@@ -6,5 +6,5 @@ internal static class Extensions
 {
     public static IServiceCollection AddServices(this IServiceCollection services)
         => services
-            .AddSingleton<IAuthService, AuthService>();
+            .AddScoped<IAuthService, AuthService>();
 }
