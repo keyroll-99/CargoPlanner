@@ -1,4 +1,5 @@
 ﻿using CargoApp.Core.Abstraction.Policies;
+using CargoApp.Core.Infrastructure.Response;
 using CargoApp.Modules.Users.Core.Commands;
 using CargoApp.Modules.Users.Core.DTO;
 using CargoApp.Modules.Users.Core.Entities;
@@ -25,14 +26,13 @@ public class AuthService : IAuthService
         _passwordManager = passwordManager;
     }
 
-    public async Task<UserDto> CreateUserAsync(CreateUserCommand createUserCommand)
+    public async Task<Match<UserDto, string>> CreateUserAsync(CreateUserCommand createUserCommand)
     {
         foreach (var policy in _createUserPolicy.Where(x => x.CanBeApplied(createUserCommand)))
         {
             if (!await policy.IsValid(createUserCommand))
             {
-                // todo change this for custom exteption or match
-                throw new SystemException(policy.ErrorMessage, StatusCodes.Status400BadRequest);
+                return policy.ErrorMessage;
             }
         }
 

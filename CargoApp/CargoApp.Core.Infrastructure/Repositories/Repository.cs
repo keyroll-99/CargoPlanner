@@ -13,7 +13,7 @@ public class Repository<TModel, TAppContext> : IRepository<TModel, Guid>
     protected readonly TAppContext AppContext;
     protected readonly IClock _clock;
 
-    public Repository(TAppContext appContext, IClock clock)
+    protected Repository(TAppContext appContext, IClock clock)
     {
         AppContext = appContext;
         _clock = clock;

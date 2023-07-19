@@ -11,6 +11,7 @@ internal static class Extensions
     {
         foreach (var policies in GetAllPolicy<CreateUserCommand>())
         {
+            // todo assembly scan for each policy? 
             services.Add(new ServiceDescriptor(
                 typeof(IPolicy<CreateUserCommand>),
                 policies,

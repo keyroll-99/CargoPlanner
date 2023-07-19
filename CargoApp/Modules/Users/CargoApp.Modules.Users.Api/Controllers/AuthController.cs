@@ -1,6 +1,7 @@
 ﻿using CargoApp.Modules.Users.Core.Commands;
 using CargoApp.Modules.Users.Core.DTO;
 using CargoApp.Modules.Users.Core.Services;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CargoApp.Modules.Users.Controllers;
@@ -21,10 +22,13 @@ public class AuthController : ControllerBase
     {
         return Task.FromResult(new UserDto(Guid.NewGuid(), "test@test.com", true));
     }
-
-    [HttpPost("Create")]
-    public async Task<UserDto> CreateUser(CreateUserCommand createUserCommand)
+    
+    [HttpPost("[action]")]
+    [ProducesResponseType(typeof(UserDto),StatusCodes.Status200OK)]    
+    [ProducesResponseType(typeof(string),StatusCodes.Status400BadRequest)]    
+    public async Task<IActionResult> SignIn(CreateUserCommand createUserCommand)
     {
-        return await _authService.CreateUserAsync(createUserCommand);
+        var result = await _authService.CreateUserAsync(createUserCommand);
+        return result.GetObjectResult();
     }
 }
