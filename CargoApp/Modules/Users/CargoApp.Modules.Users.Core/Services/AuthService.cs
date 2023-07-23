@@ -5,19 +5,17 @@ using CargoApp.Modules.Users.Core.DTO;
 using CargoApp.Modules.Users.Core.Entities;
 using CargoApp.Modules.Users.Core.Repositories;
 using CargoApp.Modules.Users.Core.Security;
-using Microsoft.AspNetCore.Http;
-using SystemException = CargoApp.Core.Infrastructure.Exception.SystemException;
 
 namespace CargoApp.Modules.Users.Core.Services;
 
-public class AuthService : IAuthService
+internal class AuthService : IAuthService
 {
-    private readonly IUserRepository _userRepository;
     private readonly IEnumerable<IPolicy<CreateUserCommand>> _createUserPolicy;
     private readonly PasswordManager _passwordManager;
+    private readonly IUserRepository _userRepository;
 
     public AuthService(
-        IUserRepository userRepository, 
+        IUserRepository userRepository,
         IEnumerable<IPolicy<CreateUserCommand>> createUserPolicy,
         PasswordManager passwordManager)
     {
@@ -29,12 +27,8 @@ public class AuthService : IAuthService
     public async Task<Match<UserDto, string>> CreateUserAsync(CreateUserCommand createUserCommand)
     {
         foreach (var policy in _createUserPolicy.Where(x => x.CanBeApplied(createUserCommand)))
-        {
             if (!await policy.IsValid(createUserCommand))
-            {
                 return policy.ErrorMessage;
-            }
-        }
 
         var model = new User
         {

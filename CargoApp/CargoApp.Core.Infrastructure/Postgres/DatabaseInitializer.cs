@@ -17,9 +17,11 @@ public class DatabaseInitializer<T> : IHostedService where T : DbContext
     {
         await using var scope = _serviceProvider.CreateAsyncScope();
         var dbContext = (DbContext)scope.ServiceProvider.GetRequiredService<T>();
-        await dbContext.Database.MigrateAsync(cancellationToken: cancellationToken);
+        await dbContext.Database.MigrateAsync(cancellationToken);
     }
 
     public Task StopAsync(CancellationToken cancellationToken)
-        => Task.CompletedTask;
+    {
+        return Task.CompletedTask;
+    }
 }

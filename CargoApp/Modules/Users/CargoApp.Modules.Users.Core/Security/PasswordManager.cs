@@ -12,9 +12,14 @@ public sealed class PasswordManager
         _passwordHasher = passwordHasher;
     }
 
-    public string Hash(string password) => _passwordHasher.HashPassword(default, password);
+    public string Hash(string password)
+    {
+        return _passwordHasher.HashPassword(default, password);
+    }
 
     public bool Validate(string password, string securedPassword)
-        => _passwordHasher.VerifyHashedPassword(default, securedPassword, password) ==
-           PasswordVerificationResult.Success;
+    {
+        return _passwordHasher.VerifyHashedPassword(default, securedPassword, password) ==
+               PasswordVerificationResult.Success;
+    }
 }

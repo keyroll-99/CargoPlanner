@@ -12,12 +12,12 @@ public static class Extensions
         var options = services.GetOptions<PostgresOptions>(SectionName);
         services.AddSingleton(options);
         return services;
-    }     
-    
+    }
+
     public static IServiceCollection AddPostgres<T>(this IServiceCollection services) where T : DbContext
     {
         var options = services.GetOptions<PostgresOptions>(SectionName);
         services.AddDbContext<T>(x => x.UseNpgsql(options.ConnectionString));
         return services;
-    } 
+    }
 }

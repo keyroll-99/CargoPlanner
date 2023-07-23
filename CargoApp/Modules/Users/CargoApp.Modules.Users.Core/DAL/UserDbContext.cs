@@ -5,6 +5,11 @@ namespace CargoApp.Modules.Users.Core.DAL;
 
 public class UserDbContext : DbContext
 {
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.HasDefaultSchema("users");
+        modelBuilder.ApplyConfigurationsFromAssembly(GetType().Assembly);
+    }
 #pragma warning disable CS8618
     public DbSet<User> Users { get; set; }
 
@@ -12,11 +17,4 @@ public class UserDbContext : DbContext
     {
     }
 #pragma warning restore CS8618
-    
-
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        modelBuilder.HasDefaultSchema("users");
-        modelBuilder.ApplyConfigurationsFromAssembly(GetType().Assembly);
-    }
 }

@@ -5,5 +5,7 @@ namespace CargoApp.Core.Infrastructure.Clock;
 public class Clock : IClock
 {
     public DateTime Now()
-     => DateTime.UtcNow;
+    {
+        return DateTime.UtcNow;
+    }
 }

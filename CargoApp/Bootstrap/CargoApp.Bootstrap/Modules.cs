@@ -8,5 +8,5 @@ internal static class Modules
     {
         services.AddUsers();
         return services;
-    } 
+    }
 }

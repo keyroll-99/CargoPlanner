@@ -5,10 +5,9 @@ using Microsoft.AspNetCore.Http;
 
 namespace CargoApp.Modules.Users.Core.Policies;
 
-public class UniqueEmailPolicy : IPolicy<CreateUserCommand>
+internal class UniqueEmailPolicy : IPolicy<CreateUserCommand>
 {
     private readonly IUserRepository _userRepository;
-    public int StatusCode => StatusCodes.Status400BadRequest;
 
 
     public UniqueEmailPolicy(IUserRepository userRepository)
@@ -16,13 +15,17 @@ public class UniqueEmailPolicy : IPolicy<CreateUserCommand>
         _userRepository = userRepository;
     }
 
+    public int StatusCode => StatusCodes.Status400BadRequest;
+
     public string ErrorMessage => "User with this email exists";
 
     public bool CanBeApplied(CreateUserCommand model)
-        => true;
+    {
+        return true;
+    }
 
     public async ValueTask<bool> IsValid(CreateUserCommand model)
     {
-        return !(await _userRepository.ExistsByEmail(model.Email));
+        return !await _userRepository.ExistsByEmail(model.Email);
     }
 }

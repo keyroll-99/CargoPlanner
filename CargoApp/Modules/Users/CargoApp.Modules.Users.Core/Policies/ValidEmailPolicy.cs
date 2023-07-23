@@ -5,18 +5,23 @@ using Microsoft.AspNetCore.Http;
 
 namespace CargoApp.Modules.Users.Core.Policies;
 
-public partial class ValidEmailPolicy : IPolicy<CreateUserCommand>
+internal partial class ValidEmailPolicy : IPolicy<CreateUserCommand>
 {
     public string ErrorMessage => "Invalid Email.";
     public int StatusCode => StatusCodes.Status400BadRequest;
 
 
     public bool CanBeApplied(CreateUserCommand model)
-        => true;
+    {
+        return true;
+    }
 
     public ValueTask<bool> IsValid(CreateUserCommand model)
-        => ValueTask.FromResult(MyRegex().IsMatch(model.Email));
-    
-    [GeneratedRegex("^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$")]
+    {
+        return ValueTask.FromResult(MyRegex().IsMatch(model.Email));
+    }
+
+    [GeneratedRegex(
+        "^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$")]
     private static partial Regex MyRegex();
 }

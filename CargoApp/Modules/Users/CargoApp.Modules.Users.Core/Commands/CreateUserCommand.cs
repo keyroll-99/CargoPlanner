@@ -2,5 +2,4 @@
 
 public record CreateUserCommand(string Email, string Password)
 {
-    
 }

@@ -7,7 +7,9 @@ namespace CargoApp.Modules.Users.Core.Security;
 internal static class Extensions
 {
     public static IServiceCollection AddSecurity(this IServiceCollection services)
-        => services
+    {
+        return services
             .AddSingleton<IPasswordHasher<User>, PasswordHasher<User>>()
             .AddSingleton<PasswordManager>();
+    }
 }

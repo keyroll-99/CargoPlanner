@@ -8,6 +8,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 
 [assembly: InternalsVisibleTo("CargoApp.Bootstrap")]
+
 namespace CargoApp.Core.Infrastructure;
 
 public static class Extensions
@@ -22,7 +23,7 @@ public static class Extensions
         services.AddControllers();
         services.AddEndpointsApiExplorer();
         services.AddPostgres();
-        
+
         return services;
     }
 
@@ -36,22 +37,23 @@ public static class Extensions
             {
                 c.DocumentTitle = "REDOC API Documentation";
                 c.SpecUrl = "/swagger/v1/swagger.json";
-            }); 
+            });
         }
+
         app.UseHttpsRedirection();
 
         app.UseAuthorization();
 
         app.MapControllers();
-        
+
         return app;
     }
 
-    public static T GetOptions<T>(this IServiceCollection services, string sectionName) where T: new()
+    public static T GetOptions<T>(this IServiceCollection services, string sectionName) where T : new()
     {
         using var serviceProvider = services.BuildServiceProvider();
         var configuration = serviceProvider.GetRequiredService<IConfiguration>();
-        return configuration.GetOptions<T>(sectionName); 
+        return configuration.GetOptions<T>(sectionName);
     }
 
     public static T GetOptions<T>(this IConfiguration configuration, string sectionName) where T : new()
@@ -60,5 +62,4 @@ public static class Extensions
         configuration.GetSection(sectionName).Bind(option);
         return option;
     }
-
 }

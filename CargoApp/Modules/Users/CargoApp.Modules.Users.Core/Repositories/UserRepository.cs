@@ -6,9 +6,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CargoApp.Modules.Users.Core.Repositories;
 
-public class UserRepository : Repository<User, UserDbContext>,  IUserRepository
+internal class UserRepository : Repository<User, UserDbContext>, IUserRepository
 {
-
     public UserRepository(UserDbContext appContext, IClock clock) : base(appContext, clock)
     {
     }
@@ -18,5 +17,4 @@ public class UserRepository : Repository<User, UserDbContext>,  IUserRepository
         var y = await Entities.AnyAsync(x => x.Email == email);
         return y;
     }
-
 }

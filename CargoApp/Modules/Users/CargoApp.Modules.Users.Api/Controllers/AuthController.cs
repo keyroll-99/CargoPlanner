@@ -22,10 +22,10 @@ public class AuthController : ControllerBase
     {
         return Task.FromResult(new UserDto(Guid.NewGuid(), "test@test.com", true));
     }
-    
+
     [HttpPost("[action]")]
-    [ProducesResponseType(typeof(UserDto),StatusCodes.Status200OK)]    
-    [ProducesResponseType(typeof(string),StatusCodes.Status400BadRequest)]    
+    [ProducesResponseType(typeof(UserDto), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> SignIn(CreateUserCommand createUserCommand)
     {
         var result = await _authService.CreateUserAsync(createUserCommand);

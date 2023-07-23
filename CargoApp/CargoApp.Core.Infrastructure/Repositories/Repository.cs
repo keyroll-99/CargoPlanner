@@ -9,9 +9,9 @@ public class Repository<TModel, TAppContext> : IRepository<TModel, Guid>
     where TModel : BaseEntity
     where TAppContext : DbContext
 {
-    protected readonly DbSet<TModel> Entities;
-    protected readonly TAppContext AppContext;
     protected readonly IClock _clock;
+    protected readonly TAppContext AppContext;
+    protected readonly DbSet<TModel> Entities;
 
     protected Repository(TAppContext appContext, IClock clock)
     {
@@ -48,6 +48,6 @@ public class Repository<TModel, TAppContext> : IRepository<TModel, Guid>
     public async Task<bool> DeleteAsync(TModel model)
     {
         Entities.Remove(model);
-        return (await AppContext.SaveChangesAsync()) > 0;
+        return await AppContext.SaveChangesAsync() > 0;
     }
 }

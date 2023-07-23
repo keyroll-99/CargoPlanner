@@ -4,10 +4,6 @@ namespace CargoApp.Modules.Users.Core.Entities;
 
 public class User : BaseEntity
 {
-    public required string Email { get; set; }
-    public required string Password { get; set; }
-    public bool IsActive { get; set; }
-
     public User(
         Guid id,
         string email,
@@ -25,4 +21,8 @@ public class User : BaseEntity
     public User()
     {
     }
+
+    public required string Email { get; set; }
+    public required string Password { get; set; }
+    public bool IsActive { get; set; }
 }
