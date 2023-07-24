@@ -24,8 +24,8 @@ internal class UniqueEmailPolicy : IPolicy<CreateUserCommand>
         return true;
     }
 
-    public async ValueTask<bool> IsValid(CreateUserCommand model)
+    public async ValueTask<bool> IsValidAsync(CreateUserCommand model)
     {
-        return !await _userRepository.ExistsByEmail(model.Email);
+        return !await _userRepository.ExistsByEmailAsync(model.Email);
     }
 }

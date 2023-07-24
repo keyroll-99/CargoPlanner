@@ -14,7 +14,7 @@ internal class PasswordStrengthPolicy : IPolicy<CreateUserCommand>
         return true;
     }
 
-    public ValueTask<bool> IsValid(CreateUserCommand model)
+    public ValueTask<bool> IsValidAsync(CreateUserCommand model)
     {
         return ValueTask.FromResult(model.Password.Length >= 6);
     }

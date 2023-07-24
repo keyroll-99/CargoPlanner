@@ -7,13 +7,13 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\..\CargoApp.Core.Infrastructure\CargoApp.Core.Infrastructure.csproj"/>
-        <ProjectReference Include="..\..\..\CargoApp.Core.Abstraction\CargoApp.Core.Abstraction.csproj"/>
+        <ProjectReference Include="..\..\..\CargoApp.Core.Infrastructure\CargoApp.Core.Infrastructure.csproj" />
+        <ProjectReference Include="..\..\..\CargoApp.Core.Abstraction\CargoApp.Core.Abstraction.csproj" />
     </ItemGroup>
 
     <ItemGroup>
-        <Folder Include="Exceptions\"/>
-        <InternalsVisibleTo Include="CargoApp.Modules.Users.Api"/>
+        <Folder Include="Exceptions\" />
+        <InternalsVisibleTo Include="CargoApp.Modules.Users.Api" />
     </ItemGroup>
 
 </Project>

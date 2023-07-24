@@ -5,5 +5,6 @@ namespace CargoApp.Modules.Users.Core.Repositories;
 
 internal interface IUserRepository : IRepository<User, Guid>
 {
-    public Task<bool> ExistsByEmail(string email);
+    public Task<bool> ExistsByEmailAsync(string email);
+    public Task<User?> GetByEmailAsync(string email);
 }

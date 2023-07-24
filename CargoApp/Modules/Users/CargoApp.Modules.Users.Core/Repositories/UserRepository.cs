@@ -12,9 +12,13 @@ internal class UserRepository : Repository<User, UserDbContext>, IUserRepository
     {
     }
 
-    public async Task<bool> ExistsByEmail(string email)
+    public async Task<bool> ExistsByEmailAsync(string email)
     {
-        var y = await Entities.AnyAsync(x => x.Email == email);
-        return y;
+        return await Entities.AnyAsync(x => x.Email == email);
+    }
+
+    public Task<User?> GetByEmailAsync(string email)
+    {
+        return Entities.SingleOrDefaultAsync(x => x.Email == email);
     }
 }
