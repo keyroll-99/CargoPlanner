@@ -1,7 +1,9 @@
 ﻿using CargoApp.Core.Abstraction.Auth;
+using CargoApp.Core.Abstraction.Context;
 using CargoApp.Modules.Users.Core.Commands;
 using CargoApp.Modules.Users.Core.DTO;
 using CargoApp.Modules.Users.Core.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,16 +14,20 @@ namespace CargoApp.Modules.Users.Controllers;
 public class AuthController : ControllerBase
 {
     private readonly IAuthService _authService;
+    private readonly IContext _context;
 
-    public AuthController(IAuthService authService)
+    public AuthController(IAuthService authService, IContext context)
     {
         _authService = authService;
+        _context = context;
     }
 
     [HttpGet("Me")]
-    public Task<UserDto> GetLoggedUser()
+    [Authorize]
+    public Task<OkObjectResult> GetLoggedUser()
     {
-        return Task.FromResult(new UserDto(Guid.NewGuid(), "test@test.com", true));
+        
+        return Task.FromResult(new OkObjectResult(_context.IdentityContext));
     }
 
     [HttpPost("[action]")]

@@ -7,26 +7,27 @@ using CargoApp.Modules.Users.Core.Entities;
 using CargoApp.Modules.Users.Core.Repositories;
 using CargoApp.Modules.Users.Core.Security;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 
 namespace CargoApp.Modules.Users.Core.Services;
 
 internal class AuthService : IAuthService
 {
     private readonly IEnumerable<IPolicy<CreateUserCommand>> _createUserPolicy;
-    private readonly PasswordManager _passwordManager;
     private readonly IUserRepository _userRepository;
     private readonly IAuthManager _authManager;
+    private readonly IPasswordHasher<User> _passwordHasher;
 
     public AuthService(
         IUserRepository userRepository,
         IEnumerable<IPolicy<CreateUserCommand>> createUserPolicy,
-        PasswordManager passwordManager, 
-        IAuthManager authManager)
+        IAuthManager authManager,
+        IPasswordHasher<User> passwordHasher)
     {
         _userRepository = userRepository;
         _createUserPolicy = createUserPolicy;
-        _passwordManager = passwordManager;
         _authManager = authManager;
+        _passwordHasher = passwordHasher;
     }
 
     public async Task<Result<UserDto, string>> CreateUserAsync(CreateUserCommand createUserCommand)
@@ -39,7 +40,7 @@ internal class AuthService : IAuthService
         {
             Email = createUserCommand.Email,
             Id = Guid.NewGuid(),
-            Password = _passwordManager.Hash(createUserCommand.Password),
+            Password = _passwordHasher.HashPassword(default, createUserCommand.Password),
             IsActive = true
         };
         await _userRepository.CreateAsync(model);
@@ -50,7 +51,8 @@ internal class AuthService : IAuthService
     public async Task<Result<JsonWebToken, string>> SignInAsync(SingInCommand singInCommand)
     {
         var user = await _userRepository.GetByEmailAsync(singInCommand.Email);
-        if (user is null || _passwordManager.Validate(singInCommand.Password, user.Password))
+        if (user is null || _passwordHasher.VerifyHashedPassword(default, user.Password, singInCommand.Password) ==
+            PasswordVerificationResult.Failed)
         {
             return Result<JsonWebToken, string>.Fail("Invalid Email or Password", StatusCodes.Status401Unauthorized);
         }

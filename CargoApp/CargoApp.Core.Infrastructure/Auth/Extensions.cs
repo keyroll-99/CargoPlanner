@@ -11,7 +11,6 @@ public static class Extensions
     public static IServiceCollection AddAuth(this IServiceCollection services)
     {
         var options = services.GetOptions<AuthOptions>("Jwt");
-        services.AddSingleton<IAuthManager, AuthManager>();
 
         var tokenValidationParameters = new TokenValidationParameters
         {

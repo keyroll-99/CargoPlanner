@@ -1,4 +1,5 @@
-﻿using CargoApp.Modules.Users.Core.Entities;
+﻿using CargoApp.Core.Abstraction.Auth;
+using CargoApp.Modules.Users.Core.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -9,7 +10,7 @@ internal static class Extensions
     public static IServiceCollection AddSecurity(this IServiceCollection services)
     {
         return services
-            .AddSingleton<IPasswordHasher<User>, PasswordHasher<User>>()
-            .AddSingleton<PasswordManager>();
+            .AddSingleton<IAuthManager, AuthManager>()
+            .AddSingleton<IPasswordHasher<User>, PasswordHasher<User>>();
     }
 }

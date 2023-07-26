@@ -3,11 +3,12 @@ using System.Security.Claims;
 using System.Text;
 using CargoApp.Core.Abstraction.Auth;
 using CargoApp.Core.Abstraction.Clock;
+using CargoApp.Core.Infrastructure.Auth;
 using Microsoft.IdentityModel.Tokens;
 using JsonWebToken = CargoApp.Core.Abstraction.Auth.JsonWebToken;
 using JwtRegisteredClaimNames = Microsoft.IdentityModel.JsonWebTokens.JwtRegisteredClaimNames;
 
-namespace CargoApp.Core.Infrastructure.Auth;
+namespace CargoApp.Modules.Users.Core.Security;
 
 public class AuthManager : IAuthManager
 {
@@ -36,7 +37,6 @@ public class AuthManager : IAuthManager
             new(JwtRegisteredClaimNames.Sub, userId.ToString()),
             new(JwtRegisteredClaimNames.UniqueName, userId.ToString()),
             new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-            new(JwtRegisteredClaimNames.Iat, new DateTimeOffset(now).ToUnixTimeMilliseconds().ToString())
         };
 
         var expires = now.Add(_authOptions.Expiry);

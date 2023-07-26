@@ -1,6 +1,7 @@
 ﻿using System.Runtime.CompilerServices;
 using CargoApp.Core.Abstraction.Clock;
 using CargoApp.Core.Infrastructure.Auth;
+using CargoApp.Core.Infrastructure.Context;
 using CargoApp.Core.Infrastructure.Postgres;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
@@ -25,6 +26,7 @@ public static class Extensions
         services.AddEndpointsApiExplorer();
         services.AddPostgres();
         services.AddAuth();
+        services.AddContext();
 
         return services;
     }
@@ -43,9 +45,8 @@ public static class Extensions
         }
 
         app.UseHttpsRedirection();
-
+        app.UseAuthentication();
         app.UseAuthorization();
-
         app.MapControllers();
 
         return app;
