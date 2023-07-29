@@ -1,5 +1,6 @@
 ﻿using CargoApp.Core.Abstraction.Auth;
 using CargoApp.Core.Abstraction.Context;
+using CargoApp.Modules.Contracts.User;
 using CargoApp.Modules.Users.Core.Commands;
 using CargoApp.Modules.Users.Core.DTO;
 using CargoApp.Modules.Users.Core.Services;
@@ -14,20 +15,23 @@ namespace CargoApp.Modules.Users.Controllers;
 public class AuthController : ControllerBase
 {
     private readonly IAuthService _authService;
+    private readonly IUser _userService;
     private readonly IContext _context;
 
-    public AuthController(IAuthService authService, IContext context)
+    public AuthController(IAuthService authService, IContext context, IUser userService)
     {
         _authService = authService;
         _context = context;
+        _userService = userService;
     }
 
     [HttpGet("Me")]
     [Authorize]
-    public Task<OkObjectResult> GetLoggedUser()
+    [ProducesResponseType(typeof(UserDto), StatusCodes.Status200OK)]
+    public async Task<IActionResult> GetLoggedUser()
     {
-        
-        return Task.FromResult(new OkObjectResult(_context.IdentityContext));
+        var result = await _userService.GetUserByIdAsync(_context.IdentityContext.Id);
+        return result.GetObjectResult();
     }
 
     [HttpPost("[action]")]

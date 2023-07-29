@@ -28,6 +28,16 @@ public static class Extensions
         services.AddAuth();
         services.AddContext();
 
+        services.AddCors((setupAction) =>
+        {
+            setupAction.AddPolicy("local", builder =>
+            {
+                builder.AllowAnyHeader();
+                builder.AllowAnyMethod();
+                builder.AllowAnyOrigin();
+            });
+        });
+        
         return services;
     }
 
@@ -42,8 +52,9 @@ public static class Extensions
                 c.DocumentTitle = "REDOC API Documentation";
                 c.SpecUrl = "/swagger/v1/swagger.json";
             });
-        }
 
+            app.UseCors("local");
+        }
         app.UseHttpsRedirection();
         app.UseAuthentication();
         app.UseAuthorization();
