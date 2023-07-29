@@ -6,6 +6,8 @@ internal static class Extensions
 {
     public static IServiceCollection AddRepositories(this IServiceCollection services)
     {
-        return services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
+        return services;
     }
 }

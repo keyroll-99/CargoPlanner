@@ -1,4 +1,5 @@
 ﻿using CargoApp.Core.Abstraction.Auth;
+using CargoApp.Core.Abstraction.Clock;
 using CargoApp.Core.Abstraction.Policies;
 using CargoApp.Modules.Users.Core.Commands;
 using CargoApp.Modules.Users.Core.Entities;
@@ -18,6 +19,8 @@ public class AuthServiceTests
     private readonly Mock<IUserRepository> _userRepository = new();
     private readonly Mock<IAuthManager> _authManager = new();
     private readonly Mock<IPasswordHasher<User>> _passwordHasher = new();
+    private readonly Mock<IRefreshTokenRepository> _refreshTokenRepository = new();
+    private readonly Mock<IClock> _clock = new();
     private readonly IAuthService _service;
 
     public AuthServiceTests()
@@ -27,7 +30,7 @@ public class AuthServiceTests
             _samplePolicy
         };
         _service = new AuthService(_userRepository.Object, createUserPolicies, _authManager.Object,
-            _passwordHasher.Object);
+            _passwordHasher.Object, _refreshTokenRepository.Object, _clock.Object);
     }
 
     [Fact]

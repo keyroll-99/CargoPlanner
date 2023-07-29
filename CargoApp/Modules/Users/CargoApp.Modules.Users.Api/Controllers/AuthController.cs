@@ -15,23 +15,10 @@ namespace CargoApp.Modules.Users.Controllers;
 public class AuthController : ControllerBase
 {
     private readonly IAuthService _authService;
-    private readonly IUser _userService;
-    private readonly IContext _context;
 
-    public AuthController(IAuthService authService, IContext context, IUser userService)
+    public AuthController(IAuthService authService)
     {
         _authService = authService;
-        _context = context;
-        _userService = userService;
-    }
-
-    [HttpGet("Me")]
-    [Authorize]
-    [ProducesResponseType(typeof(UserDto), StatusCodes.Status200OK)]
-    public async Task<IActionResult> GetLoggedUser()
-    {
-        var result = await _userService.GetUserByIdAsync(_context.IdentityContext.Id);
-        return result.GetObjectResult();
     }
 
     [HttpPost("[action]")]

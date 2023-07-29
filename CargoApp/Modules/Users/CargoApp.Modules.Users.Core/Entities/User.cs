@@ -4,25 +4,9 @@ namespace CargoApp.Modules.Users.Core.Entities;
 
 public class User : BaseEntity
 {
-    public User(
-        Guid id,
-        string email,
-        string password,
-        bool isActive,
-        DateTime createAt)
-    {
-        Id = id;
-        Email = email;
-        Password = password;
-        IsActive = isActive;
-        CreateAt = createAt;
-    }
-
-    public User()
-    {
-    }
-
     public required string Email { get; set; }
     public required string Password { get; set; }
     public bool IsActive { get; set; }
+    
+    public ICollection<RefreshToken> RefreshTokens { get; init; } = new List<RefreshToken>();
 }
