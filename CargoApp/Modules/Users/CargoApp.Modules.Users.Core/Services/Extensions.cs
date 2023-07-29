@@ -1,4 +1,5 @@
 ﻿using CargoApp.Modules.Contracts.User;
+using CargoApp.Modules.Users.Core.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace CargoApp.Modules.Users.Core.Services;

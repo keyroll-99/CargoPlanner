@@ -19,21 +19,18 @@ internal class AuthService : IAuthService
     private readonly IClock _clock;
     private readonly IAuthManager _authManager;
     private readonly IPasswordHasher<User> _passwordHasher;
-    private readonly IRefreshTokenRepository _refreshTokenRepository;
 
     public AuthService(
         IUserRepository userRepository,
         IEnumerable<IPolicy<CreateUserCommand>> createUserPolicy,
         IAuthManager authManager,
         IPasswordHasher<User> passwordHasher, 
-        IRefreshTokenRepository refreshTokenRepository,
         IClock clock)
     {
         _userRepository = userRepository;
         _createUserPolicy = createUserPolicy;
         _authManager = authManager;
         _passwordHasher = passwordHasher;
-        _refreshTokenRepository = refreshTokenRepository;
         _clock = clock;
     }
 
@@ -65,25 +62,6 @@ internal class AuthService : IAuthService
         }
 
         var token = _authManager.CreateToken(user.Id, user.Email);
-        token.RefreshToken = await GenerateRefreshToken(user);
         return token;
-    }
-
-    
-    // todo move it to other service
-    private async Task<string> GenerateRefreshToken(User user)
-    {
-        while (true)
-        {
-            var token = Convert.ToBase64String(RandomNumberGenerator.GetBytes(64));
-            var existToken = await _refreshTokenRepository.TokenExistsAsync(token);
-
-            if (existToken)
-            {
-                continue;
-            }
-
-            return token;
-        }
     }
 }

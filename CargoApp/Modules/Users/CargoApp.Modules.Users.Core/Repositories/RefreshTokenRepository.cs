@@ -8,7 +8,7 @@ namespace CargoApp.Modules.Users.Core.Repositories;
 
 public class RefreshTokenRepository : Repository<RefreshToken, UserDbContext>, IRefreshTokenRepository
 {
-    protected RefreshTokenRepository(UserDbContext appContext, IClock clock) : base(appContext, clock)
+    public RefreshTokenRepository(UserDbContext appContext, IClock clock) : base(appContext, clock)
     {
     }
 

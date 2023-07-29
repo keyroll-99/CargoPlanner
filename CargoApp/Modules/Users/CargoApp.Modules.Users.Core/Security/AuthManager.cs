@@ -4,21 +4,23 @@ using System.Text;
 using CargoApp.Core.Abstraction.Auth;
 using CargoApp.Core.Abstraction.Clock;
 using CargoApp.Core.Infrastructure.Auth;
+using CargoApp.Modules.Users.Core.Utils;
 using Microsoft.IdentityModel.Tokens;
 using JsonWebToken = CargoApp.Core.Abstraction.Auth.JsonWebToken;
 using JwtRegisteredClaimNames = Microsoft.IdentityModel.JsonWebTokens.JwtRegisteredClaimNames;
 
 namespace CargoApp.Modules.Users.Core.Security;
 
-public class AuthManager : IAuthManager
+internal class AuthManager : IAuthManager
 {
     private readonly IClock _clock;
     private readonly AuthOptions _authOptions;
     private readonly SigningCredentials _signingCredentials;
+    private readonly IRefreshTokenUtils _refreshTokenUtils;
     private readonly string _issuer;
 
 
-    public AuthManager(IClock clock, AuthOptions authOptions)
+    public AuthManager(IClock clock, AuthOptions authOptions, IRefreshTokenUtilsFactory refreshTokenUtilsFactory)
     {
         _clock = clock;
         _authOptions = authOptions;
@@ -26,6 +28,7 @@ public class AuthManager : IAuthManager
             new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(authOptions.IssuerSigningKey)),
                 SecurityAlgorithms.HmacSha256);
         _issuer = authOptions.Issuer;
+        _refreshTokenUtils = refreshTokenUtilsFactory.Create();
     }
 
     public JsonWebToken CreateToken(Guid userId, string email)
@@ -56,7 +59,7 @@ public class AuthManager : IAuthManager
             Email = email,
             Expires = expires,
             AccessToken = token,
-            RefreshToken = string.Empty
+            RefreshToken = _refreshTokenUtils.GenerateRefreshToken(userId)
         };
     }
 }
