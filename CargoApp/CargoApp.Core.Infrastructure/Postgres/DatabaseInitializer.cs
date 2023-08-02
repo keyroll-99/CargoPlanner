@@ -4,7 +4,7 @@ using Microsoft.Extensions.Hosting;
 
 namespace CargoApp.Core.Infrastructure.Postgres;
 
-public class DatabaseInitializer<T> : IHostedService where T : DbContext
+internal class DatabaseInitializer<T> : IHostedService where T : DbContext
 {
     private readonly IServiceProvider _serviceProvider;
 

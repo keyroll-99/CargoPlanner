@@ -1,6 +1,6 @@
 ﻿using CargoApp.Core.Abstraction.Context;
-using CargoApp.Modules.Contracts.User;
-using CargoApp.Modules.Users.Core.DTO;
+using CargoApp.Modules.Contracts.Users;
+using CargoApp.Modules.Contracts.Users.DTO;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

@@ -1,7 +1,7 @@
 ﻿using CargoApp.Core.Infrastructure.Response;
-using CargoApp.Modules.Users.Core.DTO;
+using CargoApp.Modules.Contracts.Users.DTO;
 
-namespace CargoApp.Modules.Contracts.User;
+namespace CargoApp.Modules.Contracts.Users;
 
 public interface IUser
 {

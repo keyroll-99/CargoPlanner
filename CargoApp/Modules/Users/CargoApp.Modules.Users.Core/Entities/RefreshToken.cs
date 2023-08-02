@@ -1,4 +1,5 @@
-﻿using CargoApp.Core.Infrastructure.Entites;
+﻿using CargoApp.Core.Abstraction.Clock;
+using CargoApp.Core.Infrastructure.Entites;
 
 namespace CargoApp.Modules.Users.Core.Entities;
 
@@ -10,7 +11,8 @@ public class RefreshToken : BaseEntity
     public Guid UserId { get; private set; }
     public User User { get; private set; }
 
-    public RefreshToken(Guid id, DateTime createAt, string token, DateTime expiredAt, bool isUsed, Guid userId, User user) : base(id, createAt)
+    public RefreshToken(Guid id, DateTime createAt, string token, DateTime expiredAt, bool isUsed, Guid userId,
+        User user) : base(id, createAt)
     {
         Token = token;
         ExpiredAt = expiredAt;
@@ -19,11 +21,25 @@ public class RefreshToken : BaseEntity
         User = user;
     }
 
-    public RefreshToken(Guid id, DateTime createAt, string token, DateTime expiredAt, bool isUsed, Guid userId) : base(id, createAt)
+    public RefreshToken(Guid id, DateTime createAt, string token, DateTime expiredAt, bool isUsed, Guid userId) :
+        base(id, createAt)
     {
         Token = token;
         ExpiredAt = expiredAt;
         IsUsed = isUsed;
         UserId = userId;
+    }
+
+    
+    // maybe whole logic should be here?
+    public static RefreshToken Create(Guid userId, string token, IClock clock)
+    {
+        return new RefreshToken(
+            Guid.NewGuid(),
+            clock.Now(),
+            token,
+            clock.Now().AddDays(7),
+            false,
+            userId);
     }
 }

@@ -1,16 +1,16 @@
-﻿using System.Security.Cryptography;
-using CargoApp.Core.Abstraction.Auth;
+﻿using CargoApp.Core.Abstraction.Auth;
 using CargoApp.Core.Abstraction.Clock;
 using CargoApp.Core.Abstraction.Policies;
 using CargoApp.Core.Infrastructure.Response;
+using CargoApp.Modules.Contracts.Users.DTO;
 using CargoApp.Modules.Users.Core.Commands;
-using CargoApp.Modules.Users.Core.DTO;
 using CargoApp.Modules.Users.Core.Entities;
 using CargoApp.Modules.Users.Core.Repositories;
+using CargoApp.Modules.Users.Core.Services.Abstract;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 
-namespace CargoApp.Modules.Users.Core.Services;
+namespace CargoApp.Modules.Users.Core.Services.Impl;
 
 internal class AuthService : IAuthService
 {

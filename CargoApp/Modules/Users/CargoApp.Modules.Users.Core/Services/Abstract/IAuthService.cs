@@ -1,10 +1,9 @@
-﻿using System.Text.RegularExpressions;
-using CargoApp.Core.Abstraction.Auth;
+﻿using CargoApp.Core.Abstraction.Auth;
 using CargoApp.Core.Infrastructure.Response;
+using CargoApp.Modules.Contracts.Users.DTO;
 using CargoApp.Modules.Users.Core.Commands;
-using CargoApp.Modules.Users.Core.DTO;
 
-namespace CargoApp.Modules.Users.Core.Services;
+namespace CargoApp.Modules.Users.Core.Services.Abstract;
 
 public interface IAuthService
 {

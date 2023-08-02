@@ -1,4 +1,4 @@
-﻿using CargoApp.Modules.Users.Core.DTO;
+﻿using CargoApp.Modules.Contracts.Users.DTO;
 using CargoApp.Modules.Users.Core.Entities;
 
 namespace CargoApp.Modules.Users.Core.Mappers;

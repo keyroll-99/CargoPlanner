@@ -6,6 +6,8 @@ using CargoApp.Modules.Users.Core.Entities;
 using CargoApp.Modules.Users.Core.Policies;
 using CargoApp.Modules.Users.Core.Repositories;
 using CargoApp.Modules.Users.Core.Services;
+using CargoApp.Modules.Users.Core.Services.Abstract;
+using CargoApp.Modules.Users.Core.Services.Impl;
 using FluentAssertions;
 using Microsoft.AspNetCore.Identity;
 using Moq;

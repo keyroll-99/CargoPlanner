@@ -5,7 +5,6 @@ using CargoApp.Modules.Users.Core.Policies;
 using CargoApp.Modules.Users.Core.Repositories;
 using CargoApp.Modules.Users.Core.Security;
 using CargoApp.Modules.Users.Core.Services;
-using CargoApp.Modules.Users.Core.Utils;
 using Microsoft.Extensions.DependencyInjection;
 
 [assembly: InternalsVisibleTo("CargoApp.Modules.Users.Api")]
@@ -17,10 +16,8 @@ internal static class Extensions
     public static IServiceCollection AddCore(this IServiceCollection services)
     {
         services.AddPostgres<UserDbContext>();
-        services.AddHostedService<DatabaseInitializer<UserDbContext>>();
         services.AddRepositories();
         services.AddPolicies();
-        services.AddUtils();
         services.AddSecurity();
         services.AddServices();
 

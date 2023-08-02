@@ -18,6 +18,7 @@ public static class Extensions
     {
         var options = services.GetOptions<PostgresOptions>(SectionName);
         services.AddDbContext<T>(x => x.UseNpgsql(options.ConnectionString));
+        services.AddHostedService<DatabaseInitializer<T>>();
         return services;
     }
 }

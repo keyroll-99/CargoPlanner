@@ -1,5 +1,7 @@
-﻿using CargoApp.Modules.Contracts.User;
+﻿using CargoApp.Modules.Contracts.Users;
 using CargoApp.Modules.Users.Core.Repositories;
+using CargoApp.Modules.Users.Core.Services.Abstract;
+using CargoApp.Modules.Users.Core.Services.Impl;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace CargoApp.Modules.Users.Core.Services;
@@ -10,6 +12,7 @@ internal static class Extensions
     {
         return services
             .AddScoped<IAuthService, AuthService>()
-            .AddScoped<IUser, UserService>();
+            .AddScoped<IUser, UserService>()
+            .AddScoped<IRefreshTokenService, RefreshTokenService>();
     }
 }
