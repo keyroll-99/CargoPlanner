@@ -1,4 +1,5 @@
-﻿using CargoApp.Core.Abstraction.Clock;
+﻿using System.Linq.Expressions;
+using CargoApp.Core.Abstraction.Clock;
 using CargoApp.Core.Infrastructure.Repositories;
 using CargoApp.Modules.Users.Core.DAL;
 using CargoApp.Modules.Users.Core.Entities;
@@ -15,5 +16,21 @@ public class RefreshTokenRepository : Repository<RefreshToken, UserDbContext>, I
     public Task<bool> TokenExistsAsync(string token)
     {
         return Entities.AnyAsync(x => x.Token == token);
+    }
+
+    public Task<RefreshToken?> GetByTokenAsync(string token)
+    {
+        return Entities.FirstOrDefaultAsync(x => x.Token == token);
+    }
+
+    public Task<List<RefreshToken>> GetAllTokenByUserIdAsync(Guid userId, Expression<Func<RefreshToken, bool>>? additionalFilter = null)
+    {
+        var result = Entities.Where(x => x.UserId == userId);
+        if (additionalFilter is not null)
+        {
+            result.Where(additionalFilter);
+        }
+
+        return result.ToListAsync();
     }
 }

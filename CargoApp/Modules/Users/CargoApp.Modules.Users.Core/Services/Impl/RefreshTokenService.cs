@@ -1,5 +1,6 @@
 ﻿using System.Security.Cryptography;
 using CargoApp.Core.Abstraction.Clock;
+using CargoApp.Core.Infrastructure.Response;
 using CargoApp.Modules.Users.Core.Entities;
 using CargoApp.Modules.Users.Core.Repositories;
 using CargoApp.Modules.Users.Core.Services.Abstract;
@@ -11,8 +12,6 @@ internal class RefreshTokenService : IRefreshTokenService
     private readonly IRefreshTokenRepository _refreshTokenRepository;
     private readonly IUserRepository _userRepository;
     private readonly IClock _clock;
-
-    private const int HowManyDaysRefreshTokenValid = 7;
 
     public RefreshTokenService(IRefreshTokenRepository refreshTokenRepository, IUserRepository userRepository, IClock clock)
     {
@@ -28,14 +27,41 @@ internal class RefreshTokenService : IRefreshTokenService
         return token;
     }
 
-    public Task<string> RefreshTokenAsync(string token)
+    public async Task<Result<string, string>> RefreshTokenAsync(string token)
     {
-        throw new NotImplementedException();
+        var dbModel = await _refreshTokenRepository.GetByTokenAsync(token);
+        if (dbModel is null)
+        {
+            return Result<string, string>.Fail("Refresh token doesn't exists");
+        }
+
+        if (dbModel.ExpiredAt < _clock.Now())
+        {
+            return Result<string, string>.Fail("Refresh token has expired");
+        }
+
+        if (dbModel.IsUsed)
+        {
+            await InvokeAllRefreshTokenAsync(dbModel.UserId);
+            return Result<string, string>.Fail("Refresh token has been used");
+        }
+        
+        var newTokenTask = GenerateTokenAsync(dbModel.UserId);
+        dbModel.IsUsed = true;
+        await _refreshTokenRepository.UpdateAsync(dbModel);
+
+        return Result<string, string>.Success(await newTokenTask);
     }
 
-    public Task InvokeAllRefreshTokenAsync(Guid userId)
+    private async Task InvokeAllRefreshTokenAsync(Guid userId)
     {
-        throw new NotImplementedException();
+        var allNotUsedTokens = await _refreshTokenRepository.GetAllTokenByUserIdAsync(userId, x => !x.IsUsed);
+        foreach (var token in allNotUsedTokens)
+        {
+            token.IsUsed = true;
+        }
+
+        await _refreshTokenRepository.UpdateRangeAsync(allNotUsedTokens);
     }
 
     private async Task<string> GetUniqueRefreshToken()

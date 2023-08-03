@@ -42,17 +42,42 @@ public class AuthController : ControllerBase
         var result = await _authService.SignInAsync(command);
         if (result.IsSuccess)
         {
-            var cookieOptions = new CookieOptions
-            {
-                HttpOnly = true,
-                Expires = DateTimeOffset.Now.AddDays(7),
-                Secure = true,
-                SameSite = SameSiteMode.None
-            };
             var userToken = await _refreshTokenService.GenerateTokenAsync(result.SuccessModel!.UserId);
-            Response.Cookies.Append(RefreshTokenCookieName, userToken, cookieOptions);
+            SetCookie(RefreshTokenCookieName, userToken);
         }
 
         return result.GetObjectResult();
+    }
+
+    [HttpPost]
+    [Authorize]
+    public async Task<IActionResult> Refresh()
+    {
+        var cookie = Request.Cookies.TryGetValue(RefreshTokenCookieName, out var refreshToken);
+        if (!cookie)
+        {
+            return BadRequest("Refresh token in cookie not found");
+        }
+
+        var result = await _refreshTokenService.RefreshTokenAsync(refreshToken!);
+        if (result.IsSuccess)
+        {
+            SetCookie(RefreshTokenCookieName, result.SuccessModel!);
+        }
+
+        return result.GetObjectResult();
+    }
+
+    // Todo: maybe I should create utils for it
+    private void SetCookie(string key, string value)
+    {
+        var cookieOptions = new CookieOptions
+        {
+            HttpOnly = true,
+            Expires = DateTimeOffset.Now.AddDays(7),
+            Secure = true,
+            SameSite = SameSiteMode.None
+        };
+        Response.Cookies.Append(key, value, cookieOptions);
     }
 }

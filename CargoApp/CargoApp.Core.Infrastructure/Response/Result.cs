@@ -20,12 +20,12 @@ public class Result<TSuccess, TError>
     public TSuccess? SuccessModel { get; }
     public TError? ErrorModel { get; }
 
-    public static Result<TSuccess, TError> Fail(TError error, int statusCode)
+    public static Result<TSuccess, TError> Fail(TError error, int statusCode = StatusCodes.Status400BadRequest)
     {
         return new Result<TSuccess, TError>(false, statusCode, default, error);
     }
 
-    public static Result<TSuccess, TError> Success(TSuccess success, int statusCode)
+    public static Result<TSuccess, TError> Success(TSuccess success, int statusCode = StatusCodes.Status200OK)
     {
         return new Result<TSuccess, TError>(true, statusCode, success, default);
     }

@@ -45,6 +45,13 @@ public class Repository<TModel, TAppContext> : IRepository<TModel, Guid>
         return model;
     }
 
+    public async Task<IList<TModel>> UpdateRangeAsync(IList<TModel> models)
+    {
+        Entities.UpdateRange(models);
+        await AppContext.SaveChangesAsync();
+        return models;
+    }
+
     public async Task<bool> DeleteAsync(TModel model)
     {
         Entities.Remove(model);
