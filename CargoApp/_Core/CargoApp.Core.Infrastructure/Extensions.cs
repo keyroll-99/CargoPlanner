@@ -1,8 +1,8 @@
 ﻿using System.Runtime.CompilerServices;
-using CargoApp.Core.Abstraction.Clock;
 using CargoApp.Core.Infrastructure.Auth;
 using CargoApp.Core.Infrastructure.Context;
 using CargoApp.Core.Infrastructure.Postgres;
+using CargoApp.Core.ShareCore.Clock;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

@@ -19,7 +19,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\CargoApp.Core.Abstraction\CargoApp.Core.Abstraction.csproj" />
+      <ProjectReference Include="..\CargoApp.Core.Abstraction\CargoApp.Core.Abstraction.csproj" />
     </ItemGroup>
 
 </Project>

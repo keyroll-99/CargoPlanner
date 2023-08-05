@@ -4,11 +4,16 @@
         <TargetFramework>net7.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
-        <RootNamespace>CargoApp.Modules.Contracts.Users</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\..\..\_Core\CargoApp.Core.Infrastructure\CargoApp.Core.Infrastructure.csproj" />
+      <ProjectReference Include="..\CargoApp.Modules.Cargoes.Application\CargoApp.Modules.Cargoes.Application.csproj" />
     </ItemGroup>
-
+    <ItemGroup>
+        <InternalsVisibleTo Include="CargoApp.Modules.Cargoes.Api" />
+    </ItemGroup>
+    <ItemGroup>
+      <Folder Include="DAL\Migrations\" />
+    </ItemGroup>
 </Project>

@@ -1,4 +1,4 @@
-﻿using CargoApp.Core.Abstraction.Clock;
+﻿using CargoApp.Core.ShareCore.Clock;
 
 namespace CargoApp.Core.Infrastructure.Clock;
 

@@ -1,4 +1,4 @@
-﻿namespace CargoApp.Core.Abstraction.Clock;
+﻿namespace CargoApp.Core.ShareCore.Clock;
 
 public interface IClock
 {

@@ -1,6 +1,6 @@
 ﻿using System.Linq.Expressions;
-using CargoApp.Core.Abstraction.Clock;
 using CargoApp.Core.Infrastructure.Repositories;
+using CargoApp.Core.ShareCore.Clock;
 using CargoApp.Modules.Users.Core.DAL;
 using CargoApp.Modules.Users.Core.Entities;
 using Microsoft.EntityFrameworkCore;

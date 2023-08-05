@@ -1,6 +1,6 @@
-﻿using CargoApp.Core.Abstraction.Clock;
-using CargoApp.Core.Abstraction.Repositories;
-using CargoApp.Core.Infrastructure.Entites;
+﻿using CargoApp.Core.Abstraction.Repositories;
+using CargoApp.Core.ShareCore.Clock;
+using CargoApp.Core.ShareCore.Entites;
 using Microsoft.EntityFrameworkCore;
 
 namespace CargoApp.Core.Infrastructure.Repositories;

@@ -22,6 +22,7 @@
     </ItemGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\..\Modules\Cargoes\CargoApp.Modules.Cargoes.Api\CargoApp.Modules.Cargoes.Api.csproj" />
         <ProjectReference Include="..\..\Modules\Users\CargoApp.Modules.Users.Api\CargoApp.Modules.Users.Api.csproj"/>
     </ItemGroup>
 

@@ -7,8 +7,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\..\CargoApp.Core.Infrastructure\CargoApp.Core.Infrastructure.csproj" />
-        <ProjectReference Include="..\..\..\CargoApp.Core.Abstraction\CargoApp.Core.Abstraction.csproj" />
+        <ProjectReference Include="..\..\..\_Core\CargoApp.Core.Abstraction\CargoApp.Core.Abstraction.csproj" />
+        <ProjectReference Include="..\..\..\_Core\CargoApp.Core.Infrastructure\CargoApp.Core.Infrastructure.csproj" />
         <ProjectReference Include="..\..\_Contracts\CargoApp.Modules.Contracts.Users\CargoApp.Modules.Contracts.Users.csproj" />
     </ItemGroup>
 

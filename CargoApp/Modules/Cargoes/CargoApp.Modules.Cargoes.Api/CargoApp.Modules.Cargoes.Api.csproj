@@ -6,8 +6,9 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+
     <ItemGroup>
-      <Folder Include="Controller\" />
+      <ProjectReference Include="..\CargoApp.Modules.Cargoes.Infrastructure\CargoApp.Modules.Cargoes.Infrastructure.csproj" />
     </ItemGroup>
 
 </Project>

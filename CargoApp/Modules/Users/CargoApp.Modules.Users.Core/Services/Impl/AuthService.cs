@@ -1,7 +1,7 @@
 ﻿using CargoApp.Core.Abstraction.Auth;
-using CargoApp.Core.Abstraction.Clock;
-using CargoApp.Core.Abstraction.Policies;
 using CargoApp.Core.Infrastructure.Response;
+using CargoApp.Core.ShareCore.Clock;
+using CargoApp.Core.ShareCore.Policies;
 using CargoApp.Modules.Contracts.Users.DTO;
 using CargoApp.Modules.Users.Core.Commands;
 using CargoApp.Modules.Users.Core.Entities;

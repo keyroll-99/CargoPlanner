@@ -1,5 +1,5 @@
 ﻿using System.Reflection;
-using CargoApp.Core.Abstraction.Policies;
+using CargoApp.Core.ShareCore.Policies;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace CargoApp.Modules.Users.Core.Policies;

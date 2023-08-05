@@ -1,5 +1,5 @@
-﻿using CargoApp.Core.Abstraction.Clock;
-using CargoApp.Core.Infrastructure.Entites;
+﻿using CargoApp.Core.ShareCore.Clock;
+using CargoApp.Core.ShareCore.Entites;
 
 namespace CargoApp.Modules.Users.Core.Entities;
 

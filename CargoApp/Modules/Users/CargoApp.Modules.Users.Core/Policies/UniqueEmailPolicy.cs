@@ -1,4 +1,4 @@
-﻿using CargoApp.Core.Abstraction.Policies;
+﻿using CargoApp.Core.ShareCore.Policies;
 using CargoApp.Modules.Users.Core.Commands;
 using CargoApp.Modules.Users.Core.Repositories;
 using Microsoft.AspNetCore.Http;

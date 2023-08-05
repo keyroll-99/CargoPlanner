@@ -1,6 +1,6 @@
-﻿namespace CargoApp.Core.Abstraction.Policies;
+﻿namespace CargoApp.Core.ShareCore.Policies;
 
-public interface IPolicy<T> : IPolicyMarker
+public interface IPolicy<in T> : IPolicyMarker
 {
     public string ErrorMessage { get; }
     public int StatusCode { get; }

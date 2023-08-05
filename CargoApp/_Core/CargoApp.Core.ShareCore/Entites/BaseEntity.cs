@@ -1,4 +1,4 @@
-﻿namespace CargoApp.Core.Infrastructure.Entites;
+﻿namespace CargoApp.Core.ShareCore.Entites;
 
 public class BaseEntity
 {
