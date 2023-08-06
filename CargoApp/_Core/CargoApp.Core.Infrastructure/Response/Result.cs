@@ -134,4 +134,24 @@ public class Result<TSuccess> : Result<TSuccess, string>
     public Result(bool isSuccess, int statusCode, TSuccess? successModel, string? errorModel) : base(isSuccess, statusCode, successModel, errorModel)
     {
     }
+    
+    public new static Result<TSuccess> Fail(string error, int statusCode = StatusCodes.Status400BadRequest)
+    {
+        return new Result<TSuccess>(false, statusCode, default, error);
+    }
+
+    public new static Result<TSuccess> Success(TSuccess success, int statusCode = StatusCodes.Status200OK)
+    {
+        return new Result<TSuccess>(true, statusCode, success, default);
+    }
+
+    public static implicit operator Result<TSuccess>(string error)
+    {
+        return new Result<TSuccess>(false, StatusCodes.Status400BadRequest, default, error);
+    }
+
+    public static implicit operator Result<TSuccess>(TSuccess success)
+    {
+        return new Result<TSuccess>(true, StatusCodes.Status200OK, success, default);
+    }
 }

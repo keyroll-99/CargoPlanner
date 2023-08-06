@@ -1,12 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace CargoApp.Modules.Cargoes.Api.Controller;
+namespace CargoApp.Modules.Locations.Api.Controllers;
 
 [Route(ModuleInstaller.BasePath)]
 public class HomeController : ControllerBase
 {
     [HttpGet]
-    public ObjectResult Ping()
+    public static ObjectResult Ping()
     {
         return new OkObjectResult($"Ok from {ModuleInstaller.BasePath}");
     }

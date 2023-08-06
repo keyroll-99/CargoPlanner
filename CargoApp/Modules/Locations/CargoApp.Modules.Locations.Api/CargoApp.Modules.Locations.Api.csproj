@@ -10,4 +10,5 @@
       <ProjectReference Include="..\CargoApp.Modules.Locations.Infrastructure\CargoApp.Modules.Locations.Infrastructure.csproj" />
     </ItemGroup>
 
+
 </Project>

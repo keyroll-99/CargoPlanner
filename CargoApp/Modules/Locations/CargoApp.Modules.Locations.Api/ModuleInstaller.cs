@@ -7,7 +7,7 @@ namespace CargoApp.Modules.Locations.Api;
 
 internal static class ModuleInstaller
 {
-    public static string ModuleName => "Location";
+    public const string BasePath = "Location";
 
     public static IServiceCollection AddLocations(this IServiceCollection services)
     {
