@@ -32,6 +32,10 @@ public class Repository<TModel, TAppContext> : IRepository<TModel, Guid>
 
     public async Task<TModel> CreateAsync(TModel model)
     {
+        if (model.Id == Guid.Empty)
+        {
+            model.Id = Guid.NewGuid();
+        }
         model.CreateAt = _clock.Now();
         await Entities.AddAsync(model);
         await AppContext.SaveChangesAsync();

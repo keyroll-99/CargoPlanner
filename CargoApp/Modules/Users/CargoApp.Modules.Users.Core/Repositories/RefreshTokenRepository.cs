@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CargoApp.Modules.Users.Core.Repositories;
 
-public class RefreshTokenRepository : Repository<RefreshToken, UserDbContext>, IRefreshTokenRepository
+internal class RefreshTokenRepository : Repository<RefreshToken, UserDbContext>, IRefreshTokenRepository
 {
     public RefreshTokenRepository(UserDbContext appContext, IClock clock) : base(appContext, clock)
     {

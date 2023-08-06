@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using CargoApp.Core.Infrastructure.Exception;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CargoApp.Core.Infrastructure.Response;
@@ -7,7 +8,7 @@ public class Result<TSuccess, TError>
     where TSuccess : class
     where TError : class
 {
-    private Result(bool isSuccess, int statusCode, TSuccess? successModel, TError? errorModel)
+    protected Result(bool isSuccess, int statusCode, TSuccess? successModel, TError? errorModel)
     {
         IsSuccess = isSuccess;
         StatusCode = statusCode;
@@ -40,6 +41,83 @@ public class Result<TSuccess, TError>
         return new Result<TSuccess, TError>(true, StatusCodes.Status200OK, success, default);
     }
 
+    public static implicit operator TSuccess(Result<TSuccess, TError> result)
+    {
+        InvalidResultCastException.ThrowIfCantCast(result, true);
+        return result.SuccessModel!;
+    }
+
+    public static implicit operator TError(Result<TSuccess, TError> result)
+    {
+        InvalidResultCastException.ThrowIfCantCast(result, false);
+        return result.ErrorModel!;
+    }
+
+    public (TSuccess?, TError?) Match(Func<TSuccess, TSuccess> onSuccess, Func<TError, TError> onError)
+    {
+        if (IsSuccess)
+        {
+            return (onSuccess(SuccessModel!), null);
+        }
+
+        return (null, onError(ErrorModel!));
+    }
+    
+    public (TSuccessResult?, TErrorResult?) Match<TSuccessResult, TErrorResult>(Func<TSuccess, TSuccessResult> onSuccess, Func<TError, TErrorResult> onError)
+        where TSuccessResult : class
+        where TErrorResult : class
+    {
+        if (IsSuccess)
+        {
+            return (onSuccess(SuccessModel!), null);
+        }
+
+        return (null, onError(ErrorModel!));
+    }
+    
+    public (TSuccessResult?, TError?) MatchOnlySuccess<TSuccessResult>(Func<TSuccess, TSuccessResult> onSuccess)
+        where TSuccessResult : class
+    {
+        if (IsSuccess)
+        {
+            return (onSuccess(SuccessModel!), null);
+        }
+
+        return (null, ErrorModel);
+    }
+    
+    public (TSuccess?, TError?) MatchOnlySuccess(Func<TSuccess, TSuccess> onSuccess)
+    {
+        if (IsSuccess)
+        {
+            return (onSuccess(SuccessModel!), null);
+        }
+
+        return (null, ErrorModel);
+    }
+    
+    public (TSuccess?, TErrorResult?) MatchOnlyError<TErrorResult>(Func<TError, TErrorResult> onError)
+        where TErrorResult : class
+    {
+        if (IsSuccess)
+        {
+            return (SuccessModel, null);
+        }
+
+        return (null, onError(ErrorModel!));
+    }
+    
+    public (TSuccess?, TError?) MatchOnlyError(Func<TError, TError> onError)
+    {
+        if (IsSuccess)
+        {
+            return (SuccessModel, null);
+        }
+
+        return (null, onError(ErrorModel!));
+    }
+
+    
     public ObjectResult GetObjectResult()
     {
         var objectResult = new ObjectResult(IsSuccess ? SuccessModel : ErrorModel)
@@ -47,5 +125,13 @@ public class Result<TSuccess, TError>
             StatusCode = StatusCode
         };
         return objectResult;
+    }
+}
+
+public class Result<TSuccess> : Result<TSuccess, string>
+    where TSuccess : class
+{
+    public Result(bool isSuccess, int statusCode, TSuccess? successModel, string? errorModel) : base(isSuccess, statusCode, successModel, errorModel)
+    {
     }
 }

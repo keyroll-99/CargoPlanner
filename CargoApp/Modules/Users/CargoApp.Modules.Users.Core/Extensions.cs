@@ -8,7 +8,6 @@ using CargoApp.Modules.Users.Core.Services;
 using Microsoft.Extensions.DependencyInjection;
 
 [assembly: InternalsVisibleTo("CargoApp.Modules.Users.Api")]
-
 namespace CargoApp.Modules.Users.Core;
 
 internal static class Extensions

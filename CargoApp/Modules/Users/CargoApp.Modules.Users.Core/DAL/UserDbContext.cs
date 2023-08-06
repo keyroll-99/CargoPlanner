@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CargoApp.Modules.Users.Core.DAL;
 
-public class UserDbContext : DbContext
+internal class UserDbContext : DbContext
 {
     public UserDbContext(DbContextOptions<UserDbContext> options) : base(options)
     {
