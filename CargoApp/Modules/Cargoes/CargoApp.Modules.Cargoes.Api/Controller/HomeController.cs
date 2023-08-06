@@ -5,7 +5,8 @@ namespace CargoApp.Modules.Cargoes.Api.Controller;
 [Route(ModuleInstaller.BasePath)]
 public class HomeController : ControllerBase
 {
-    public ActionResult<string> Ping()
+    [HttpGet]
+    public ObjectResult Ping()
     {
         return new OkObjectResult($"Ok from {ModuleInstaller.BasePath}");
     }

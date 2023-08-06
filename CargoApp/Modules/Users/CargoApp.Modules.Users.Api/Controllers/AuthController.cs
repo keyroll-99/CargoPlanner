@@ -40,17 +40,21 @@ public class AuthController : ControllerBase
     public async Task<IActionResult> SignIn(SingInCommand command)
     {
         var result = await _authService.SignInAsync(command);
-        if (result.IsSuccess)
+        if (!result.IsSuccess)
         {
-            var userToken = await _refreshTokenService.GenerateTokenAsync(result.SuccessModel!.UserId);
-            SetCookie(RefreshTokenCookieName, userToken);
+            return result.GetObjectResult();
         }
+        
+        var userToken = await _refreshTokenService.GenerateTokenAsync(result.SuccessModel!.UserId);
+        SetCookie(RefreshTokenCookieName, userToken);
 
         return result.GetObjectResult();
     }
 
     [HttpPost]
     [Authorize]
+    [ProducesResponseType(typeof(JsonWebToken), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Refresh()
     {
         var cookie = Request.Cookies.TryGetValue(RefreshTokenCookieName, out var refreshToken);
@@ -60,12 +64,19 @@ public class AuthController : ControllerBase
         }
 
         var result = await _refreshTokenService.RefreshTokenAsync(refreshToken!);
-        if (result.IsSuccess)
+        if (!result.IsSuccess)
+        {
+            return result.GetObjectResult();
+        }
+        
+        var tokenResult = await _refreshTokenService.GenerateJsonWebTokenAsync(refreshToken!);
+        if (tokenResult.IsSuccess)
         {
             SetCookie(RefreshTokenCookieName, result.SuccessModel!);
         }
 
-        return result.GetObjectResult();
+        return tokenResult.GetObjectResult();
+
     }
 
     // Todo: maybe I should create utils for it

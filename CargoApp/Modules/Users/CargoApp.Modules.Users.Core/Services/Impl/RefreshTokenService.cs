@@ -1,4 +1,5 @@
 ﻿using System.Security.Cryptography;
+using CargoApp.Core.Abstraction.Auth;
 using CargoApp.Core.Infrastructure.Response;
 using CargoApp.Core.ShareCore.Clock;
 using CargoApp.Modules.Users.Core.Entities;
@@ -11,13 +12,15 @@ internal class RefreshTokenService : IRefreshTokenService
 {
     private readonly IRefreshTokenRepository _refreshTokenRepository;
     private readonly IUserRepository _userRepository;
+    private readonly IAuthManager _authManager;
     private readonly IClock _clock;
 
-    public RefreshTokenService(IRefreshTokenRepository refreshTokenRepository, IUserRepository userRepository, IClock clock)
+    public RefreshTokenService(IRefreshTokenRepository refreshTokenRepository, IUserRepository userRepository, IClock clock, IAuthManager authManager)
     {
         _refreshTokenRepository = refreshTokenRepository;
         _userRepository = userRepository;
         _clock = clock;
+        _authManager = authManager;
     }
 
     public async Task<string> GenerateTokenAsync(Guid userId)
@@ -46,11 +49,22 @@ internal class RefreshTokenService : IRefreshTokenService
             return Result<string, string>.Fail("Refresh token has been used");
         }
         
-        var newTokenTask = GenerateTokenAsync(dbModel.UserId);
+        var newTokenTask = await GenerateTokenAsync(dbModel.UserId);
         dbModel.IsUsed = true;
         await _refreshTokenRepository.UpdateAsync(dbModel);
 
-        return Result<string, string>.Success(await newTokenTask);
+        return Result<string, string>.Success(newTokenTask);
+    }
+
+    public async Task<Result<JsonWebToken, string>> GenerateJsonWebTokenAsync(string token)
+    {
+        var user = (await _refreshTokenRepository.GetByTokenAsync(token))?.User;
+        if (user is null)
+        {
+            return "Token doesn't exists";
+        }
+
+        return _authManager.CreateToken(user.Id, user.Email);
     }
 
     private async Task InvokeAllRefreshTokenAsync(Guid userId)

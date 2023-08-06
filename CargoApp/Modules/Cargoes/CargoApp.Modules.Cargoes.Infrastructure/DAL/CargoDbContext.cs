@@ -5,7 +5,7 @@ namespace CargoApp.Modules.Cargoes.Infrastructure.DAL;
 
 public class CargoDbContext : DbContext
 {
-    public CargoDbContext(DbContextOptions options) : base(options)
+    public CargoDbContext(DbContextOptions<CargoDbContext> options) : base(options)
     {
     }
     

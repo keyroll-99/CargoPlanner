@@ -8,7 +8,7 @@ internal static class Modules
     public static IServiceCollection LoadModules(this IServiceCollection services)
     {
         services.AddUsers();
-        services.AddCargoes();
+        // services.AddCargoes();
         return services;
     }
 }

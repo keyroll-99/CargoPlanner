@@ -20,7 +20,7 @@ public class RefreshTokenRepository : Repository<RefreshToken, UserDbContext>, I
 
     public Task<RefreshToken?> GetByTokenAsync(string token)
     {
-        return Entities.FirstOrDefaultAsync(x => x.Token == token);
+        return Entities.Include(x => x.User).FirstOrDefaultAsync(x => x.Token == token);
     }
 
     public Task<List<RefreshToken>> GetAllTokenByUserIdAsync(Guid userId, Expression<Func<RefreshToken, bool>>? additionalFilter = null)
