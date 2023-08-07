@@ -10,7 +10,7 @@ internal static class NominatimLocationMapper
         return new Location(
             lat: Convert.ToDouble(location.Lat),
             lon: Convert.ToDouble(location.Lon),
-            name: location.Name,
+            name: location.DisplayName.Split(",").FirstOrDefault() ?? "",
             displayName: location.DisplayName,
             osmId: location.OsmId,
             address: location.Address.AsAddress()

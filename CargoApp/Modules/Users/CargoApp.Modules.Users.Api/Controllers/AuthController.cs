@@ -52,7 +52,6 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost]
-    [Authorize]
     [ProducesResponseType(typeof(JsonWebToken), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Refresh()

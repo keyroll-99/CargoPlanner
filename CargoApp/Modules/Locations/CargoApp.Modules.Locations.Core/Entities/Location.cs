@@ -10,7 +10,7 @@ public class Location : BaseEntity
     public string DisplayName { get; private set; }
     public long OsmId { get; private set;}
     public Guid AddressId { get; private set; }
-    public Address Address { get; private set; }
+    public Address? Address { get; private set; }
     
 
     public Location(Guid id, DateTime createAt, double lat, double lon, string name, string displayName, long osmId, Address address) : base(id, createAt)
@@ -29,6 +29,27 @@ public class Location : BaseEntity
         Name = name;
         DisplayName = displayName;
         OsmId = osmId;
+        Address = address;
+    }
+
+    public Location(Guid id, DateTime createAt, double lat, double lon, string name, string displayName, long osmId, Guid addressId) : base(id, createAt)
+    {
+        Lat = lat;
+        Lon = lon;
+        Name = name;
+        DisplayName = displayName;
+        OsmId = osmId;
+        AddressId = addressId;
+    }
+
+    public Location(double lat, double lon, string name, string displayName, long osmId, Guid addressId, Address? address)
+    {
+        Lat = lat;
+        Lon = lon;
+        Name = name;
+        DisplayName = displayName;
+        OsmId = osmId;
+        AddressId = addressId;
         Address = address;
     }
 }

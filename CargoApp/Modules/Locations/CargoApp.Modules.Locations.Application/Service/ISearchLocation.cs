@@ -1,6 +1,8 @@
-﻿namespace CargoApp.Modules.Locations.Application.Service;
+﻿using CargoApp.Modules.Locations.Core.Entities;
+
+namespace CargoApp.Modules.Locations.Application.Service;
 
 public interface ISearchLocation
 {
-    public string Search(string query);
+    public Task<IEnumerable<Location>> Search(string query);
 }
