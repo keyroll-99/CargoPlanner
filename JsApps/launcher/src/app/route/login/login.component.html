@@ -1,0 +1,17 @@
+<form [formGroup]="singInForm" >
+  <mat-form-field>
+    <mat-label>Email</mat-label>
+    <input type="email" matInput
+           placeholder="Ex. pat@example.com">
+    <mat-hint>Errors appear instantly!</mat-hint>
+    <mat-error *ngIf="singInForm.controls['email'].hasError('email') &&!singInForm.controls['email'].hasError('required')">
+      Please enter a valid email address
+    </mat-error>
+    <mat-error *ngIf="singInForm.controls['email'].hasError('required')">
+      Email is <strong>required</strong>
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field>
+
+  </mat-form-field>
+</form>
