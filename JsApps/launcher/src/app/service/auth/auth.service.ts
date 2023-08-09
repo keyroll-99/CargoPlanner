@@ -1,17 +1,14 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import SingInForm from "./contracts/SingInForm";
-import {Router} from "@angular/router";
-import {Environment} from "@angular/cli/lib/config/workspace-schema";
 import {environment} from "../../../environments/environment";
-import {catchError} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  constructor(private httpClient: HttpClient, private router: Router) { }
+  constructor(private httpClient: HttpClient) { }
 
   public isAuthenticated(): boolean {
     const token = localStorage.getItem("jwt");
@@ -21,7 +18,10 @@ export class AuthService {
 
   public singIn(form: SingInForm){
     const baseUrl = environment.apiUrl
-    return  this.httpClient.post<{accessToken: string}>(`${baseUrl}/Users/Auth/SignIn`, form);
+    return  this.httpClient.post<{accessToken: string}>(`${baseUrl}Users/Auth/SignIn`, form);
   }
 
+  public setJwt(jwt: string){
+    localStorage.setItem("jwt", jwt);
+  }
 }
