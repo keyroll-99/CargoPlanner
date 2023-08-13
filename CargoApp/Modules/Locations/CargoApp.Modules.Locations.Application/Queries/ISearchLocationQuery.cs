@@ -1,8 +1,8 @@
 ﻿using CargoApp.Modules.Locations.Core.Entities;
 
-namespace CargoApp.Modules.Locations.Application.Service;
+namespace CargoApp.Modules.Locations.Application.Queries;
 
-public interface ISearchLocation
+public interface ISearchLocationQuery
 {
     public Task<IEnumerable<Location>> Search(string query);
 }

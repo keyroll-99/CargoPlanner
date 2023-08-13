@@ -1,4 +1,4 @@
-﻿using CargoApp.Modules.Locations.Application.Service;
+﻿using CargoApp.Modules.Locations.Application.Queries;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,17 +7,17 @@ namespace CargoApp.Modules.Locations.Api.Controllers;
 [Route($"{ModuleInstaller.BasePath}/[action]")]
 public class LocationController : ControllerBase
 {
-    private readonly ISearchLocation _searchLocation;
+    private readonly ISearchLocationQuery _searchLocationQuery;
 
-    public LocationController(ISearchLocation searchLocation)
+    public LocationController(ISearchLocationQuery searchLocationQuery)
     {
-        _searchLocation = searchLocation;
+        _searchLocationQuery = searchLocationQuery;
     }
 
     [HttpGet]
     [Authorize]
     public async Task<IActionResult> Search([FromQuery] string query)
     {
-        return Ok(await _searchLocation.Search(query));
+        return Ok(await _searchLocationQuery.Search(query));
     }
 }

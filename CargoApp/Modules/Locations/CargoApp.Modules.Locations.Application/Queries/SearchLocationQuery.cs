@@ -1,13 +1,13 @@
 ﻿using CargoApp.Modules.Locations.Application.ExternalServices.Locations;
 using CargoApp.Modules.Locations.Core.Entities;
 
-namespace CargoApp.Modules.Locations.Application.Service;
+namespace CargoApp.Modules.Locations.Application.Queries;
 
-internal class SearchLocation : ISearchLocation
+internal class SearchLocationQuery : ISearchLocationQuery
 {
-    private ILocationClientFactory _locationClientFactory;
+    private readonly ILocationClientFactory _locationClientFactory;
 
-    public SearchLocation(ILocationClientFactory locationClientFactory)
+    public SearchLocationQuery(ILocationClientFactory locationClientFactory)
     {
         _locationClientFactory = locationClientFactory;
     }
