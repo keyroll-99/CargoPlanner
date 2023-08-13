@@ -1,25 +1,26 @@
-﻿using CargoApp.Modules.Locations.Core.Entities;
+﻿using CargoApp.Modules.Locations.Application.DTO;
+using CargoApp.Modules.Locations.Core.Entities;
 using CargoApp.Modules.Locations.Infrastructure.ExternalServices.Nominatim.DTO;
 
 namespace CargoApp.Modules.Locations.Infrastructure.ExternalServices.Nominatim.Mappers;
 
 internal static class NominatimLocationMapper
 {
-    public static Location AsLocation(this NominatimLocation location)
+    public static LocationDto AsLocationDto(this NominatimLocation location)
     {
-        return new Location(
+        return new LocationDto(
             lat: Convert.ToDouble(location.Lat),
             lon: Convert.ToDouble(location.Lon),
             name: location.DisplayName.Split(",").FirstOrDefault() ?? "",
             displayName: location.DisplayName,
             osmId: location.OsmId,
-            address: location.Address.AsAddress()
+            address: location.Address.AsAddressDto()
         );
     }
 
-    private static Address AsAddress(this NominatimAddress address)
+    private static AddressDto AsAddressDto(this NominatimAddress address)
     {
-        return new Address(
+        return new AddressDto(
             city: address.City,
             cityDistrict: address.CityDistrict,
             continent: address.Continent,

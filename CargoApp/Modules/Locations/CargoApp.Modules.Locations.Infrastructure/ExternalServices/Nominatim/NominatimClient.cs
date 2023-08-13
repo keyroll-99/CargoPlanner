@@ -1,6 +1,7 @@
 ﻿using System.Text.Json;
 using System.Web;
 using CargoApp.Core.Infrastructure.Response;
+using CargoApp.Modules.Locations.Application.DTO;
 using CargoApp.Modules.Locations.Application.ExternalServices;
 using CargoApp.Modules.Locations.Application.ExternalServices.Locations;
 using CargoApp.Modules.Locations.Core.Entities;
@@ -20,7 +21,7 @@ internal class NominatimClient : ILocationClient
     }
 
 
-    public async Task<Result<IEnumerable<Location>>> Search(string query, CancellationToken cancellationToken)
+    public async Task<Result<IEnumerable<LocationDto>>> Search(string query, CancellationToken cancellationToken)
     {
         var request = GetHttpSearchRequest(query);
         using var result = await _httpClient
@@ -38,7 +39,7 @@ internal class NominatimClient : ILocationClient
             return "Something went wrong";
         }
 
-        return Result<IEnumerable<Location>>.Success(deserializedResult.Select(x => x.AsLocation()));
+        return Result<IEnumerable<LocationDto>>.Success(deserializedResult.Select(x => x.AsLocationDto()));
     }
 
     private static HttpRequestMessage GetHttpSearchRequest(string query)
