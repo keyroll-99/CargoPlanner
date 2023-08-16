@@ -2,6 +2,7 @@
 using CargoApp.Core.Infrastructure.Auth;
 using CargoApp.Core.Infrastructure.Context;
 using CargoApp.Core.Infrastructure.Postgres;
+using CargoApp.Core.Infrastructure.Repositories;
 using CargoApp.Core.ShareCore.Clock;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
@@ -21,6 +22,7 @@ public static class Extensions
         {
             c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebApiDevoTo", Version = "v1" });
         });
+        services.AddRepositoryFactory();
         services.AddSingleton<IClock, Clock.Clock>();
         services.AddControllers();
         services.AddEndpointsApiExplorer();

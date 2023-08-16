@@ -1,10 +1,8 @@
-﻿using CargoApp.Core.Infrastructure.Response;
-using CargoApp.Modules.Locations.Application.DTO;
-using MediatR;
+﻿using CargoApp.Core.Infrastructure.CQRS.Query;
 
 namespace CargoApp.Modules.Locations.Application.Queries.SearchLocation;
 
-public class SearchLocationQuery : IRequest<Result<IEnumerable<LocationDto>>>
+public class SearchLocationQuery : IQuery
 {
     public required string Query { get; init; }
 }

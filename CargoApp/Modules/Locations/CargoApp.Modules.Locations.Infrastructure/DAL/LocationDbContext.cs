@@ -9,11 +9,8 @@ public class LocationDbContext : DbContext
     {
     }
 
-    protected LocationDbContext()
-    {
-    }
-
     public DbSet<Location> Locations { get; set; }
+    public DbSet<Address> Addresses { get; set; }
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
