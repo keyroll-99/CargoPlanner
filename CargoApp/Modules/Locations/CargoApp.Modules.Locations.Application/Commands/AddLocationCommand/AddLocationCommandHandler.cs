@@ -1,49 +1,43 @@
 ﻿using CargoApp.Core.Abstraction.Repositories;
 using CargoApp.Core.Infrastructure.Response;
+using CargoApp.Core.ShareCore.Policies;
+using CargoApp.Modules.Locations.Application.Mappers.Location;
 using CargoApp.Modules.Locations.Application.Repositories;
 using CargoApp.Modules.Locations.Core.Entities;
+using Microsoft.AspNetCore.Http;
 
 namespace CargoApp.Modules.Locations.Application.Commands.AddLocationCommand;
 
 public class AddLocationCommandHandler : IAddLocationCommandHandler
 {
-    private IRepositoryFactory _repositoryFactory;
-    private ILocationRepository _locationRepository;
+    private readonly ILocationRepository _locationRepository;
+    private readonly IEnumerable<IPolicy<AddLocationCommand>> _policies;
     
-    public AddLocationCommandHandler(IRepositoryFactory repositoryFactory)
+    public AddLocationCommandHandler(ILocationRepository locationRepository, IEnumerable<IPolicy<AddLocationCommand>> policies)
     {
-        _repositoryFactory = repositoryFactory;
-        _locationRepository = repositoryFactory.GetRepository<ILocationRepository>();
+        _locationRepository = locationRepository;
+        _policies = policies;
     }
 
     public async Task<Result<string, string>> Handle(AddLocationCommand command)
     {
-        // _locationRepository = _repositoryFactory.GetRepository<ILocationRepository>();
         var commandLocation = command.Location;
         var existsLocation = await _locationRepository.GetByOsmIdAsync(commandLocation.OsmId);
         if (existsLocation is not null)
         {
             return Result<string, string>.Success(existsLocation.Id.ToString());
         }
-        
-        var location = new Location(
-            lat: commandLocation.Lat,
-            lon: commandLocation.Lon,
-            name: commandLocation.Name,
-            displayName: commandLocation.DisplayName,
-            osmId: commandLocation.OsmId,
-            address: new Address(
-                city: commandLocation.Address.City,
-                cityDistrict: commandLocation.Address.CityDistrict,
-                continent: commandLocation.Address.Continent,
-                country: commandLocation.Address.Country,
-                countryCode: commandLocation.Address.CountryCode,
-                houseNumber: commandLocation.Address.HouseNumber,
-                postCode: commandLocation.Address.CountryCode
-            )
-        );
 
+        foreach (var policy in _policies.Where(x => x.CanBeApplied(command)))
+        {
+            if (!await policy.IsValidAsync(command))
+            {
+                return Result<string, string>.Fail(policy.ErrorMessage, policy.StatusCode);
+            }
+        }
+
+        var location = command.Location.AsEntity();
         var result = await _locationRepository.CreateAsync(location);
-        return Result<string, string>.Success(result.Id.ToString());
+        return Result<string, string>.Success(result.Id.ToString(), StatusCodes.Status201Created);
     }
 }

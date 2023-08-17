@@ -9,14 +9,14 @@ public class Repository<TModel, TAppContext> : IRepository<TModel, Guid>
     where TModel : BaseEntity
     where TAppContext : DbContext
 {
-    protected readonly IClock _clock;
+    protected readonly IClock Clock;
     protected readonly TAppContext AppContext;
     protected readonly DbSet<TModel> Entities;
 
     protected Repository(TAppContext appContext, IClock clock)
     {
         AppContext = appContext;
-        _clock = clock;
+        Clock = clock;
         Entities = appContext.Set<TModel>();
     }
 
@@ -36,7 +36,7 @@ public class Repository<TModel, TAppContext> : IRepository<TModel, Guid>
         {
             model.Id = Guid.NewGuid();
         }
-        model.CreateAt = _clock.Now();
+        model.CreateAt = Clock.Now();
         await Entities.AddAsync(model);
         await AppContext.SaveChangesAsync();
         return model;

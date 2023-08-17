@@ -20,6 +20,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\CargoApp.Core.Abstraction\CargoApp.Core.Abstraction.csproj" />
+
     </ItemGroup>
 
 

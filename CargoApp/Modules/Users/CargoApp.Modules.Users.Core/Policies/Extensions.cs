@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using CargoApp.Core.Infrastructure.Policies;
 using CargoApp.Core.ShareCore.Policies;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -8,18 +9,20 @@ internal static class Extensions
 {
     public static IServiceCollection AddPolicies(this IServiceCollection services)
     {
-        var policyTypes = GetAllPolicesTypes();
-        foreach (var policyType in policyTypes)
-        {
-            var concretePolicies = GetAllPolicy(policyType);
-            foreach (var concretePolicy in concretePolicies)
-                services.Add(new ServiceDescriptor(
-                    policyType,
-                    concretePolicy,
-                    ServiceLifetime.Scoped));
-        }
-
+        services.AddPolicies(Assembly.GetExecutingAssembly());
         return services;
+        // var policyTypes = GetAllPolicesTypes();
+        // foreach (var policyType in policyTypes)
+        // {
+        //     var concretePolicies = GetAllPolicy(policyType);
+        //     foreach (var concretePolicy in concretePolicies)
+        //         services.Add(new ServiceDescriptor(
+        //             policyType,
+        //             concretePolicy,
+        //             ServiceLifetime.Scoped));
+        // }
+        //
+        // return services;
     }
 
     private static IEnumerable<Type> GetAllPolicesTypes()

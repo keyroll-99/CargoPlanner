@@ -1,4 +1,5 @@
 ﻿using System.Runtime.CompilerServices;
+using System.Text.Json;
 using CargoApp.Core.Infrastructure.Auth;
 using CargoApp.Core.Infrastructure.Context;
 using CargoApp.Core.Infrastructure.Postgres;
@@ -22,9 +23,9 @@ public static class Extensions
         {
             c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebApiDevoTo", Version = "v1" });
         });
-        services.AddRepositoryFactory();
         services.AddSingleton<IClock, Clock.Clock>();
-        services.AddControllers();
+        services.AddControllers()
+            .AddJsonOptions(o => o.JsonSerializerOptions.PropertyNamingPolicy = null);
         services.AddEndpointsApiExplorer();
         services.AddPostgres();
         services.AddAuth();

@@ -2,12 +2,12 @@
 
 public class LocationDto
 {
-    public double Lat { get; init; }
-    public double Lon { get; init; }
-    public string DisplayName { get; init; }
-    public long OsmId { get; init;}
-    public string Name { get; init; }
-    public AddressDto Address { get; init; }
+    public double Lat { get;  private set; }
+    public double Lon { get;  private set; }
+    public string DisplayName { get;  private set; }
+    public long OsmId { get;  private set;}
+    public string Name { get;  private set; }
+    public AddressDto Address { get;  private set; }
 
     public LocationDto(double lat, double lon, string displayName, long osmId, string name, AddressDto address)
     {
