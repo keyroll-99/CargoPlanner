@@ -1,16 +1,15 @@
 import {Component} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import SingInForm from "../../service/auth/contracts/SingInForm";
-import {AuthService} from "../../service/auth/auth.service";
 import {Router} from "@angular/router";
-
+import SingInForm from "../../models/SingInForm";
+import {AuthService} from "../../../../core/services/auth.service";
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss'],
+  selector: 'app-sign-in',
+  templateUrl: './sign-in.component.html',
+  styleUrls: ['./sign-in.component.scss']
 })
-export class LoginComponent {
+export class SignInComponent {
   singInForm = new FormGroup({
       email: new FormControl("", [Validators.required]),
       password: new FormControl("", [Validators.required])
@@ -29,7 +28,7 @@ export class LoginComponent {
             this.authService.setJwt(x.accessToken);
             this.router.navigate(['/']);
           },
-          error: error => console.log(error)
+          error: (error: string) => console.log(error)
         });
     }
   }

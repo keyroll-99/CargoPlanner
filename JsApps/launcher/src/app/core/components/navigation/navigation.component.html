@@ -1,0 +1,20 @@
+<mat-drawer-container class="container" *ngIf="isAuthorized">
+  <mat-drawer mode="side" opened>
+    <ul>
+      <li>test</li>
+      <li>test2</li>
+    </ul>
+
+  </mat-drawer>
+
+  <ng-container *ngTemplateOutlet="content"></ng-container>
+</mat-drawer-container>
+
+
+<span *ngIf="!isAuthorized">
+    <ng-container *ngTemplateOutlet="content"></ng-container>
+</span>
+
+<ng-template #content>
+  <ng-content></ng-content>
+</ng-template>
