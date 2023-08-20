@@ -1,6 +1,8 @@
 ﻿using CargoApp.Modules.Users.Core.Entities;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Microsoft.Extensions.Configuration;
 
 namespace CargoApp.Modules.Users.Core.DAL.Configuration;
 
@@ -11,5 +13,6 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
         builder.HasKey(x => x.Id);
         builder.HasIndex(x => x.Email).IsUnique();
         builder.Property(x => x.Password).IsRequired();
+        
     }
 }

@@ -25,7 +25,7 @@ export class SignInComponent {
         .singIn(this.singInForm.value as SingInForm)
         .subscribe({
           next: x => {
-            this.authService.setJwt(x.accessToken);
+            this.authService.setAuth(x);
             this.router.navigate(['/']);
           },
           error: (error: string) => console.log(error)

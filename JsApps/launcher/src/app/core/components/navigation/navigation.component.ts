@@ -17,7 +17,6 @@ export class NavigationComponent implements OnInit {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationStart) {
         this.isAuthorized = this.authService.isAuthenticated();
-        console.log(this.isAuthorized)
       }
     })
 

@@ -25,7 +25,7 @@ public static class Extensions
         });
         services.AddSingleton<IClock, Clock.Clock>();
         services.AddControllers()
-            .AddJsonOptions(o => o.JsonSerializerOptions.PropertyNamingPolicy = null);
+            .AddJsonOptions(o => o.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase);
         services.AddEndpointsApiExplorer();
         services.AddPostgres();
         services.AddAuth();
