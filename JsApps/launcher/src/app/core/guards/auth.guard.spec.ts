@@ -1,25 +1,46 @@
-import { TestBed } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
-import { HttpClientTestingModule } from '@angular/common/http/testing'; // Dodaj HttpClientTestingModule
-import {ActivatedRouteSnapshot, Router, RouterStateSnapshot} from '@angular/router';
-import { authGuard } from './auth.guard';
-import { AuthService } from '../services/auth.service';
+import {TestBed} from '@angular/core/testing';
+import {Router} from '@angular/router';
+import {authGuard} from './auth.guard';
+import {AuthService} from '../services/auth.service';
+import {lastValueFrom, of} from 'rxjs';
 
 describe('authGuard', () => {
-  let authService: AuthService;
-  let router: Router;
+  const mockRouter = jasmine.createSpyObj<Router>(['navigate']);
+  mockRouter.navigate.and.returnValue(lastValueFrom(of(true)));
 
-  beforeEach(() => {
+
+  const setup = (mockAuthService: unknown) => {
     TestBed.configureTestingModule({
-      imports: [
-        RouterTestingModule,
-        HttpClientTestingModule
-      ],
-      providers: [AuthService]
-    });
+      providers: [
+        authGuard,
+        {provide: AuthService, useValue: mockAuthService},
+        {provide: Router, useValue: mockRouter},
+      ]
+    })
 
-    authService = TestBed.inject(AuthService);
-    router = TestBed.inject(Router);
-  });
-  
+    // @ts-ignore
+    return TestBed.runInInjectionContext(authGuard);
+  }
+
+  it("should allow to continue", () => {
+    const mockAuthService = {
+      isAuthenticated: () => true
+    }
+
+    const guard = setup(mockAuthService);
+
+    expect(guard).toBeTrue();
+  })
+
+  it("should redirect to login page", () => {
+    const mockAuthService = {
+      isAuthenticated: () => false
+    }
+
+    const guard = setup(mockAuthService);
+
+    expect(guard).toBeFalse();
+    expect(mockRouter.navigate).toHaveBeenCalled();
+  })
+
 });
