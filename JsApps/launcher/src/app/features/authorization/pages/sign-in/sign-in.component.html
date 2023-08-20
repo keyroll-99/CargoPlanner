@@ -1,20 +1,35 @@
-<form [formGroup]="singInForm" (ngSubmit)="onSubmit()" >
-  <mat-form-field>
-    <mat-label>Email</mat-label>
-    <input type="email" matInput formControlName="email"
-           placeholder="Ex. pat@example.com">
-    <mat-error *ngIf="singInForm.controls['email'].hasError('required')">
-      Email is <strong>required</strong>
-    </mat-error>
-  </mat-form-field>
-  <mat-form-field>
-    <mat-label>Password</mat-label>
-    <input type="password" matInput formControlName="password" placeholder="password" />
-    <mat-error *ngIf="singInForm.controls['password'].hasError('require')">
-      Password is <strong>required</strong>
-    </mat-error>
-  </mat-form-field>
-  <button mat-stroked-button type="submit">
-    Sing in
-  </button>
-</form>
+<div class="sing-in-container">
+
+  <mat-card class="card">
+    <mat-card-title class="card-title">Welcome back</mat-card-title>
+    <h1>
+    </h1>
+    <form [formGroup]="singInForm" (ngSubmit)="onSubmit()" class="form">
+      <mat-form-field appearance="outline">
+        <mat-label>Email</mat-label>
+        <input type="email" matInput formControlName="email"
+               placeholder="Ex. pat@example.com">
+        <mat-error *ngIf="singInForm.controls['email'].hasError('required')">
+          Email is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Password</mat-label>
+        <input type="password" matInput formControlName="password" placeholder="password"/>
+        <mat-error *ngIf="singInForm.controls['password'].hasError('require')">
+          Password is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+      <div class="form-footer">
+        <mat-label class="from-label">
+          Sing in
+        </mat-label>
+        <button mat-fab color="primary" class="form-submit-button" type="submit" >
+          <ng-icon class="form-arrow-icon" name="bootstrapArrowRightShort"/>
+        </button>
+      </div>
+    </form>
+
+  </mat-card>
+
+</div>

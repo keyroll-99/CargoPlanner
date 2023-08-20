@@ -1,0 +1,51 @@
+.sing-in-container {
+  background-color: #ccd6db;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+
+  .card {
+    width: 40%;
+    height: 40%;
+    align-items: center;
+
+    .card-title {
+      font-size: 2.5rem;
+      padding-top: 120px;
+    }
+  }
+
+  .form {
+    height: 100%;
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    padding-top: 20px;
+
+    .form-footer {
+      display: flex;
+      width: 100%;
+      align-items: center;
+      justify-content: space-between;
+
+
+      .form-submit-button{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        .form-arrow-icon{
+          font-size: 40px;
+        }
+      }
+
+      .from-label {
+        font-size: 1.5rem;
+      }
+    }
+  }
+}
+
+
