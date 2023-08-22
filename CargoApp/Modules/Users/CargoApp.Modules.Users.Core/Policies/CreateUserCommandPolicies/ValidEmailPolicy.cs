@@ -3,7 +3,7 @@ using CargoApp.Core.ShareCore.Policies;
 using CargoApp.Modules.Users.Core.Commands;
 using Microsoft.AspNetCore.Http;
 
-namespace CargoApp.Modules.Users.Core.Policies;
+namespace CargoApp.Modules.Users.Core.Policies.CreateUserCommandPolicies;
 
 internal partial class ValidEmailPolicy : IPolicy<CreateUserCommand>
 {

@@ -11,4 +11,5 @@
       <ProjectReference Include="..\..\..\_Core\CargoApp.Core.Infrastructure\CargoApp.Core.Infrastructure.csproj" />
     </ItemGroup>
 
+
 </Project>

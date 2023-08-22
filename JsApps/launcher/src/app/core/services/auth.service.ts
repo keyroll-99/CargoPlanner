@@ -18,7 +18,11 @@ export class AuthService {
 
   public isAuthenticated(): boolean {
     const token = localStorage.getItem(this.accessTokenKey);
-    this.refreshToken();
+
+    if (token !== null && this.authModel === undefined) {
+      this.refreshToken();
+    }
+
     return token !== null;
   }
 

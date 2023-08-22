@@ -3,7 +3,7 @@ using CargoApp.Modules.Users.Core.Commands;
 using CargoApp.Modules.Users.Core.Repositories;
 using Microsoft.AspNetCore.Http;
 
-namespace CargoApp.Modules.Users.Core.Policies;
+namespace CargoApp.Modules.Users.Core.Policies.CreateUserCommandPolicies;
 
 internal class UniqueEmailPolicy : IPolicy<CreateUserCommand>
 {

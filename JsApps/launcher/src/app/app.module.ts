@@ -16,6 +16,7 @@ import {MatSidenavModule} from "@angular/material/sidenav";
 import {MatCardModule} from "@angular/material/card";
 import {NgIconsModule} from "@ng-icons/core";
 import { bootstrapArrowRightShort } from '@ng-icons/bootstrap-icons';
+import {MatListModule} from "@angular/material/list";
 
 @NgModule({
   declarations: [AppComponent, SignInComponent, HomeComponent, NavigationComponent],
@@ -30,7 +31,8 @@ import { bootstrapArrowRightShort } from '@ng-icons/bootstrap-icons';
     MatButtonModule,
     MatSidenavModule,
     MatCardModule,
-    NgIconsModule.withIcons({bootstrapArrowRightShort})
+    NgIconsModule.withIcons({bootstrapArrowRightShort}),
+    MatListModule
 
   ],
   providers: [],

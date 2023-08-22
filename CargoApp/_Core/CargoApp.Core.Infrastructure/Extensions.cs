@@ -33,14 +33,18 @@ public static class Extensions
 
         services.AddCors((setupAction) =>
         {
-            setupAction.AddPolicy("local", builder =>
-            {
-                builder.AllowAnyHeader();
-                builder.AllowAnyMethod();
-                builder.AllowAnyOrigin();
-            });
+            setupAction.AddPolicy("local",
+                builder =>
+                {
+                    builder
+                        .AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader()
+                        .AllowCredentials()
+                        .WithOrigins("http://localhost:4200");
+                });
         });
-        
+
         return services;
     }
 
@@ -58,6 +62,7 @@ public static class Extensions
 
             app.UseCors("local");
         }
+
         app.UseHttpsRedirection();
         app.UseAuthentication();
         app.UseAuthorization();

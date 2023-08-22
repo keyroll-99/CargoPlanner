@@ -3,7 +3,6 @@
 
 
 $kids-typography: mat.define-typography-config(
-  // Specify "Comic Sans" as the default font family for all levels.
   $font-family: 'Poppins',
 );
 @include mat.all-component-typographies($kids-typography);

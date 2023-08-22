@@ -30,6 +30,8 @@ public class Repository<TModel, TAppContext> : IRepository<TModel, Guid>
         return Entities.FirstOrDefaultAsync(x => x.Id == id);
     }
 
+    public Task<bool> ExistsById(Guid id)
+        => Entities.AnyAsync(x => x.Id == id);
     public async Task<TModel> CreateAsync(TModel model)
     {
         if (model.Id == Guid.Empty)

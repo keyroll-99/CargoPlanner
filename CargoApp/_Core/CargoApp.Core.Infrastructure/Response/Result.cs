@@ -4,22 +4,69 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CargoApp.Core.Infrastructure.Response;
 
-public class Result<TSuccess, TError>
-    where TSuccess : class
-    where TError : class
+public class Result
 {
-    protected Result(bool isSuccess, int statusCode, TSuccess? successModel, TError? errorModel)
+    public bool IsSuccess { get; }
+    public int StatusCode { get; }
+    public string? Error { get; }
+
+    protected Result(bool isSuccess, int statusCode)
     {
         IsSuccess = isSuccess;
         StatusCode = statusCode;
+    }
+
+    private Result(bool isSuccess, int statusCode, string? error)
+    {
+        IsSuccess = isSuccess;
+        StatusCode = statusCode;
+        Error = error;
+    }
+
+    public static implicit operator Result(string error) => new Result(false, StatusCodes.Status400BadRequest, error);
+    public static implicit operator ObjectResult(Result result) => result.GetObjectResult();
+
+    public static Result Success(int statusCode = StatusCodes.Status200OK) => new Result(true, statusCode);
+
+    public static Result Fail(string error, int statusCode = StatusCodes.Status400BadRequest) =>
+        new Result(false, statusCode, error);
+    
+    
+    public async Task<Result> Match(Func<Task> onSuccess, Func<string, Task<Result>> onError)
+    {
+        if (IsSuccess)
+        {
+            await onSuccess();
+            return this;
+        }
+
+        return await onError(Error);
+    }
+
+
+    public ObjectResult GetObjectResult()
+    {
+        var objectResult = new ObjectResult(IsSuccess ? null : Error)
+        {
+            StatusCode = StatusCode
+        };
+        return objectResult;
+    }
+}
+
+public class Result<TSuccess, TError> : Result
+    where TSuccess : class
+    where TError : class
+{
+    public TSuccess? SuccessModel { get; }
+    public TError? ErrorModel { get; }
+
+    protected Result(bool isSuccess, int statusCode, TSuccess? successModel, TError? errorModel) : base(isSuccess,
+        statusCode)
+    {
         SuccessModel = successModel;
         ErrorModel = errorModel;
     }
-
-    public bool IsSuccess { get; }
-    public int StatusCode { get; }
-    public TSuccess? SuccessModel { get; }
-    public TError? ErrorModel { get; }
 
     public static Result<TSuccess, TError> Fail(TError error, int statusCode = StatusCodes.Status400BadRequest)
     {
@@ -47,34 +94,37 @@ public class Result<TSuccess, TError>
         return result.SuccessModel!;
     }
 
+    public static implicit operator ObjectResult(Result<TSuccess, TError> result) => result.GetObjectResult();
+
     public static implicit operator TError(Result<TSuccess, TError> result)
     {
         InvalidResultCastException.ThrowIfCantCast(result, false);
         return result.ErrorModel!;
     }
 
-    public (TSuccess?, TError?) Match(Func<TSuccess, TSuccess> onSuccess, Func<TError, TError> onError)
+    public async Task<(TSuccess?, TError?)> Match(Func<TSuccess, Task<TSuccess>> onSuccess, Func<TError, Task<TError>> onError)
     {
         if (IsSuccess)
         {
-            return (onSuccess(SuccessModel!), null);
+            return (await onSuccess(SuccessModel!), null);
         }
 
-        return (null, onError(ErrorModel!));
+        return (null, await onError(ErrorModel!));
     }
-    
-    public (TSuccessResult?, TErrorResult?) Match<TSuccessResult, TErrorResult>(Func<TSuccess, TSuccessResult> onSuccess, Func<TError, TErrorResult> onError)
+
+    public async Task<(TSuccessResult?, TErrorResult?)> Match<TSuccessResult, TErrorResult>(
+        Func<TSuccess, Task<TSuccessResult>> onSuccess, Func<TError, Task<TErrorResult>> onError)
         where TSuccessResult : class
         where TErrorResult : class
     {
         if (IsSuccess)
         {
-            return (onSuccess(SuccessModel!), null);
+            return (await onSuccess(SuccessModel!), null);
         }
 
-        return (null, onError(ErrorModel!));
+        return (null, await onError(ErrorModel!));
     }
-    
+
     public (TSuccessResult?, TError?) MatchOnlySuccess<TSuccessResult>(Func<TSuccess, TSuccessResult> onSuccess)
         where TSuccessResult : class
     {
@@ -85,7 +135,7 @@ public class Result<TSuccess, TError>
 
         return (null, ErrorModel);
     }
-    
+
     public (TSuccess?, TError?) MatchOnlySuccess(Func<TSuccess, TSuccess> onSuccess)
     {
         if (IsSuccess)
@@ -95,7 +145,7 @@ public class Result<TSuccess, TError>
 
         return (null, ErrorModel);
     }
-    
+
     public (TSuccess?, TErrorResult?) MatchOnlyError<TErrorResult>(Func<TError, TErrorResult> onError)
         where TErrorResult : class
     {
@@ -106,7 +156,7 @@ public class Result<TSuccess, TError>
 
         return (null, onError(ErrorModel!));
     }
-    
+
     public (TSuccess?, TError?) MatchOnlyError(Func<TError, TError> onError)
     {
         if (IsSuccess)
@@ -117,7 +167,6 @@ public class Result<TSuccess, TError>
         return (null, onError(ErrorModel!));
     }
 
-    
     public ObjectResult GetObjectResult()
     {
         var objectResult = new ObjectResult(IsSuccess ? SuccessModel : ErrorModel)
@@ -131,10 +180,11 @@ public class Result<TSuccess, TError>
 public class Result<TSuccess> : Result<TSuccess, string>
     where TSuccess : class
 {
-    public Result(bool isSuccess, int statusCode, TSuccess? successModel, string? errorModel) : base(isSuccess, statusCode, successModel, errorModel)
+    public Result(bool isSuccess, int statusCode, TSuccess? successModel, string? errorModel) : base(isSuccess,
+        statusCode, successModel, errorModel)
     {
     }
-    
+
     public new static Result<TSuccess> Fail(string error, int statusCode = StatusCodes.Status400BadRequest)
     {
         return new Result<TSuccess>(false, statusCode, default, error);
