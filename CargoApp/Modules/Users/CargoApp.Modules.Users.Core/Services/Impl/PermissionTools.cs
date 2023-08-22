@@ -8,10 +8,10 @@ using CargoApp.Modules.Users.Core.Services.Abstract;
 
 namespace CargoApp.Modules.Users.Core.Services.Impl;
 
-public class PermissionTools : IPermissionTools
+internal class PermissionTools : IPermissionTools
 {
-    private IEnumerable<IPolicy<UpdatePermissionCommand>> _policies;
-    private IUserRepository _userRepository;
+    private readonly IEnumerable<IPolicy<UpdatePermissionCommand>> _policies;
+    private readonly IUserRepository _userRepository;
 
     public PermissionTools(IEnumerable<IPolicy<UpdatePermissionCommand>> policies, IUserRepository userRepository)
     {
