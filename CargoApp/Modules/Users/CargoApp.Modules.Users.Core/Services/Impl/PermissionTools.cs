@@ -1,4 +1,5 @@
-﻿using CargoApp.Core.Infrastructure.Policies;
+﻿using CargoApp.Core.Abstraction.Enums;
+using CargoApp.Core.Infrastructure.Policies;
 using CargoApp.Core.Infrastructure.Response;
 using CargoApp.Core.ShareCore.Policies;
 using CargoApp.Modules.Users.Core.Commands;

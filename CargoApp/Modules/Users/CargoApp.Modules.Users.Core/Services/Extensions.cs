@@ -13,6 +13,7 @@ internal static class Extensions
         return services
             .AddScoped<IAuthService, AuthService>()
             .AddScoped<IUser, UserService>()
-            .AddScoped<IRefreshTokenService, RefreshTokenService>();
+            .AddScoped<IRefreshTokenService, RefreshTokenService>()
+            .AddScoped<IPermissionTools, PermissionTools>();
     }
 }

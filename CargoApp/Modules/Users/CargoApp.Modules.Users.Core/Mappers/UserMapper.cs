@@ -5,5 +5,5 @@ namespace CargoApp.Modules.Users.Core.Mappers;
 
 public static class UserMapper
 {
-    public static UserDto AsUserDto(this User model) => new(model.Id, model.Email, model.IsActive);
+    public static UserDto AsUserDto(this User model) => new(model.Id, model.Email, model.IsActive, model.PermissionMask);
 }

@@ -1,4 +1,4 @@
-﻿namespace CargoApp.Modules.Users.Core.Entities;
+﻿namespace CargoApp.Core.Abstraction.Enums;
 
 [Flags]
 public enum PermissionEnum : long
@@ -8,3 +8,4 @@ public enum PermissionEnum : long
     Cars = 1L << 2,
     Cargoes = 1L << 3,
 }
+

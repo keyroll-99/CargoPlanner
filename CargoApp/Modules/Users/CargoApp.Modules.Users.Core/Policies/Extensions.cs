@@ -11,18 +11,6 @@ internal static class Extensions
     {
         services.AddPolicies(Assembly.GetExecutingAssembly());
         return services;
-        // var policyTypes = GetAllPolicesTypes();
-        // foreach (var policyType in policyTypes)
-        // {
-        //     var concretePolicies = GetAllPolicy(policyType);
-        //     foreach (var concretePolicy in concretePolicies)
-        //         services.Add(new ServiceDescriptor(
-        //             policyType,
-        //             concretePolicy,
-        //             ServiceLifetime.Scoped));
-        // }
-        //
-        // return services;
     }
 
     private static IEnumerable<Type> GetAllPolicesTypes()

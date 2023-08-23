@@ -64,7 +64,7 @@ internal class RefreshTokenService : IRefreshTokenService
             return "Token doesn't exists";
         }
 
-        return _authManager.CreateToken(user.Id, user.Email);
+        return _authManager.CreateToken(user.Id, user.Email, user.PermissionMask);
     }
 
     private async Task InvokeAllRefreshTokenAsync(Guid userId)

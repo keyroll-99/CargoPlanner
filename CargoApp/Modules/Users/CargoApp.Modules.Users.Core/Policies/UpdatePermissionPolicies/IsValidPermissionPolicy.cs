@@ -1,4 +1,5 @@
-﻿using CargoApp.Core.ShareCore.Policies;
+﻿using CargoApp.Core.Abstraction.Enums;
+using CargoApp.Core.ShareCore.Policies;
 using CargoApp.Modules.Users.Core.Commands;
 using CargoApp.Modules.Users.Core.Entities;
 using Microsoft.AspNetCore.Http;

@@ -1,4 +1,5 @@
-﻿using CargoApp.Modules.Users.Core.Entities;
+﻿using CargoApp.Core.Abstraction.Enums;
+using CargoApp.Modules.Users.Core.Entities;
 
 namespace CargoApp.Modules.Users.Core.Commands;
 

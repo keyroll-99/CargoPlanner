@@ -2,7 +2,9 @@
 using System.Security.Claims;
 using System.Text;
 using CargoApp.Core.Abstraction.Auth;
+using CargoApp.Core.Abstraction.Enums;
 using CargoApp.Core.Infrastructure.Auth;
+using CargoApp.Core.Infrastructure.Context;
 using CargoApp.Core.ShareCore.Clock;
 using Microsoft.IdentityModel.Tokens;
 using JsonWebToken = CargoApp.Core.Abstraction.Auth.JsonWebToken;
@@ -28,7 +30,7 @@ public class AuthManager : IAuthManager
         _issuer = authOptions.Issuer;
     }
 
-    public JsonWebToken CreateToken(Guid userId, string email)
+    public JsonWebToken CreateToken(Guid userId, string email, PermissionEnum permission)
     {
         var now = _clock.Now();
 
@@ -37,6 +39,7 @@ public class AuthManager : IAuthManager
             new(JwtRegisteredClaimNames.Sub, userId.ToString()),
             new(JwtRegisteredClaimNames.UniqueName, userId.ToString()),
             new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+            new(ClaimsConst.Permission, ((long) permission).ToString())
         };
 
         var expires = now.Add(_authOptions.Expiry);

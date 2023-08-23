@@ -5,6 +5,7 @@ using CargoApp.Core.ShareCore.Policies;
 using CargoApp.Modules.Contracts.Users.DTO;
 using CargoApp.Modules.Users.Core.Commands;
 using CargoApp.Modules.Users.Core.Entities;
+using CargoApp.Modules.Users.Core.Mappers;
 using CargoApp.Modules.Users.Core.Repositories;
 using CargoApp.Modules.Users.Core.Services.Abstract;
 using Microsoft.AspNetCore.Http;
@@ -49,7 +50,7 @@ internal class AuthService : IAuthService
         };
         await _userRepository.CreateAsync(model);
 
-        return new UserDto(model.Id, model.Email, model.IsActive);
+        return model.AsUserDto();
     }
 
     public async Task<Result<JsonWebToken, string>> SignInAsync(SingInCommand singInCommand)
@@ -61,7 +62,7 @@ internal class AuthService : IAuthService
             return Result<JsonWebToken, string>.Fail("Invalid Email or Password", StatusCodes.Status401Unauthorized);
         }
 
-        var token = _authManager.CreateToken(user.Id, user.Email);
+        var token = _authManager.CreateToken(user.Id, user.Email, user.PermissionMask);
         return token;
     }
 }

@@ -24,7 +24,7 @@ internal class CanRemovePermissionToUserPolicy : IPolicy<UpdatePermissionCommand
     {
         var user = await _userRepository.GetByIdAsync(model.UserId);
         return
-            !user?.PermissionMask.HasFlag(model.Permission) ??
+            user?.PermissionMask.HasFlag(model.Permission) ??
             true; // if a user is null it returns true, because this policy checks only, whether does user has permission
     }
 }
