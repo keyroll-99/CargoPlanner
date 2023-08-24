@@ -6,7 +6,7 @@ import {AppComponent} from './app.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatInputModule} from "@angular/material/input";
 import {ReactiveFormsModule} from "@angular/forms";
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {MatRippleModule} from "@angular/material/core";
 import {MatButtonModule} from "@angular/material/button";
 import {SignInComponent} from './features/authorization/pages/sign-in/sign-in.component';
@@ -17,6 +17,11 @@ import {MatCardModule} from "@angular/material/card";
 import {NgIconsModule} from "@ng-icons/core";
 import { bootstrapArrowRightShort } from '@ng-icons/bootstrap-icons';
 import {MatListModule} from "@angular/material/list";
+import {AuthInterceptor} from "./core/interceptors/auth.interceptor";
+
+export const httpInterceptorProviders = [
+  { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+];
 
 @NgModule({
   declarations: [AppComponent, SignInComponent, HomeComponent, NavigationComponent],
@@ -35,7 +40,7 @@ import {MatListModule} from "@angular/material/list";
     MatListModule
 
   ],
-  providers: [],
+  providers: [httpInterceptorProviders],
   bootstrap: [AppComponent],
 })
 export class AppModule {
