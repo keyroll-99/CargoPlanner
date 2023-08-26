@@ -1,24 +1,24 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpContext, HttpResponse} from "@angular/common/http";
+import {HttpClient} from "@angular/common/http";
 import SingInForm from "../../features/authorization/models/SingInForm";
 import {environment} from "../../../environments/environment";
 import AuthModel from "../models/authModel";
-import {Observable, retry} from "rxjs";
+import {tap} from "rxjs";
 import {User} from "../models/user";
-import {IGNORE_AUTH_TOKEN} from "../interceptors/auth.interceptor";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
+  public static readonly accessTokenKey = "accessToken"
+
+
   private _authModel: AuthModel | undefined = undefined;
   private _userModel: User | undefined = undefined;
-  private isRefreshingInProgress = false;
 
 
   private readonly baseUrl;
-  private readonly accessTokenKey = "accessToken"
 
 
   constructor(private httpClient: HttpClient) {
@@ -34,7 +34,7 @@ export class AuthService {
   }
 
   public isAuthenticated(): boolean {
-    const token = localStorage.getItem(this.accessTokenKey);
+    const token = localStorage.getItem(AuthService.accessTokenKey);
 
     return token !== null;
   }
@@ -44,19 +44,24 @@ export class AuthService {
   }
 
   public setAuth(authModel: AuthModel) {
-    localStorage.setItem(this.accessTokenKey, authModel.accessToken);
+    localStorage.setItem(AuthService.accessTokenKey, authModel.accessToken);
     this._authModel = authModel;
   }
 
-  public updateUserMode(){
-    this.httpClient.get<User>(`${this.baseUrl}/User/Me`).subscribe({
-      next: (resp) => {
-        this._userModel = resp
-      },
-      error: (error: HttpResponse<any>) => {
-        console.log(error)
-      },
-    })
+  public updateUserModel() {
+    return this.httpClient.get<User>(`${this.baseUrl}/User/Me`).pipe(
+      tap({
+        next: resp => {
+          this._userModel = resp
+        },
+        error: (error: string) => {
+          // todo logout?
+          console.log("error from tap")
+          console.log(error)
+        }
+      })
+    )
+
   }
 
 }

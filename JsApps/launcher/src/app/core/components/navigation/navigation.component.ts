@@ -10,8 +10,9 @@ import {PermissionEnum} from "../Enums/permission-enum";
   styleUrls: ['./navigation.component.scss']
 })
 export class NavigationComponent implements OnInit {
-  isAuthorized: boolean = false;
-  user: User | undefined
+  protected isAuthorized: boolean = false;
+  protected user: User | undefined
+  protected readonly PermissionEnum = PermissionEnum;
 
   constructor(private authService: AuthService, private router: Router) {
   }
@@ -20,22 +21,28 @@ export class NavigationComponent implements OnInit {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationStart) {
         this.isAuthorized = this.authService.isAuthenticated();
-        if(this.isAuthorized && this.user === undefined){
-          this.user = this.authService.userModel;
-        }
-
-      }})
-
+        this.setUser()
+      }
+    })
   }
 
-  hasAccess(permission: PermissionEnum): boolean{
-    if(this.user?.permission === undefined){
-      return  false;
+  hasAccess(permission: PermissionEnum): boolean {
+    if (this.user?.permission === undefined) {
+      return false;
     }
-    console.log(this.user);
     return (this.user.permission & permission) > 0;
   }
 
-
-  protected readonly PermissionEnum = PermissionEnum;
+  private setUser() {
+    if (this.isAuthorized && this.user === undefined) {
+      this.user = this.authService.userModel
+      if (this.user === undefined) {
+        this.authService.updateUserModel().subscribe({
+          next: resp => {
+            this.user = resp
+          }
+        })
+      }
+    }
+  }
 }

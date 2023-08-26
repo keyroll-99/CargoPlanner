@@ -1,10 +1,11 @@
 <mat-drawer-container class="container" *ngIf="isAuthorized">
   <mat-drawer mode="side" opened>
     <mat-nav-list>
-      <mat-list-item *ngIf="hasAccess(PermissionEnum.Locations)">Locations</mat-list-item>
-      <mat-list-item>Workers</mat-list-item>
-      <mat-list-item>Cars</mat-list-item>
-      <mat-list-item>Cargo</mat-list-item>
+      <mat-list-item routerLink="/locations" *ngIf="hasAccess(PermissionEnum.Locations)">Locations</mat-list-item>
+      <mat-list-item routerLink="/workers" *ngIf="hasAccess(PermissionEnum.Workers)">Workers</mat-list-item>
+      <mat-list-item routerLink="/cars" *ngIf="hasAccess(PermissionEnum.Cars)">Cars</mat-list-item>
+      <mat-list-item routerLink="/cargoes" *ngIf="hasAccess(PermissionEnum.Cargoes)">Cargoes</mat-list-item>
+      <mat-list-item routerLink="/settings">Settings</mat-list-item>
     </mat-nav-list>
   </mat-drawer>
 

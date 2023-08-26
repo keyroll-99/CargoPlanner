@@ -1,4 +1,4 @@
-﻿namespace CargoApp.Core.Infrastructure.Context;
+﻿namespace CargoApp.Core.Infrastructure.Auth;
 
 public static class ClaimsConst
 {
