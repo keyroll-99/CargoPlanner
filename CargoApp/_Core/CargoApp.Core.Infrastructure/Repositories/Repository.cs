@@ -1,4 +1,5 @@
-﻿using CargoApp.Core.Abstraction.Repositories;
+﻿using System.Collections;
+using CargoApp.Core.Abstraction.Repositories;
 using CargoApp.Core.ShareCore.Clock;
 using CargoApp.Core.ShareCore.Entites;
 using Microsoft.EntityFrameworkCore;
@@ -49,13 +50,6 @@ public class Repository<TModel, TAppContext> : IRepository<TModel, Guid>
         Entities.Update(model);
         await AppContext.SaveChangesAsync();
         return model;
-    }
-
-    public async Task<IList<TModel>> UpdateRangeAsync(IList<TModel> models)
-    {
-        Entities.UpdateRange(models);
-        await AppContext.SaveChangesAsync();
-        return models;
     }
 
     public async Task<bool> DeleteAsync(TModel model)

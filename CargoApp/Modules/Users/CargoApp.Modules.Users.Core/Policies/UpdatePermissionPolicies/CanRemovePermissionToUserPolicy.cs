@@ -17,7 +17,7 @@ internal class CanRemovePermissionToUserPolicy : IPolicy<UpdatePermissionCommand
         _userRepository = userRepository;
     }
     
-    public bool CanBeApplied(UpdatePermissionCommand model)
+    public bool IsApplicable(UpdatePermissionCommand model)
         => !model.AddPermission;
 
     public async ValueTask<bool> IsValidAsync(UpdatePermissionCommand model)

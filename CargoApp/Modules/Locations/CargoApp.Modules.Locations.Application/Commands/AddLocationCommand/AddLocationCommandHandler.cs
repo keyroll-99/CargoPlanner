@@ -28,7 +28,7 @@ public class AddLocationCommandHandler : IAddLocationCommandHandler
             return Result<string, string>.Success(existsLocation.Id.ToString());
         }
 
-        foreach (var policy in _policies.Where(x => x.CanBeApplied(command)))
+        foreach (var policy in _policies.Where(x => x.IsApplicable(command)))
         {
             if (!await policy.IsValidAsync(command))
             {

@@ -1,4 +1,4 @@
-﻿using CargoApp.Core.Abstraction.Enums;
+﻿using CargoApp.Core.ShareCore.Enums;
 using CargoApp.Core.ShareCore.Policies;
 using CargoApp.Modules.Users.Core.Commands;
 using CargoApp.Modules.Users.Core.Entities;
@@ -11,7 +11,7 @@ internal class IsValidPermissionPolicy : IPolicy<UpdatePermissionCommand>
     public string ErrorMessage => "Invalid permission value";
     public int StatusCode => StatusCodes.Status400BadRequest;
 
-    public bool CanBeApplied(UpdatePermissionCommand model)
+    public bool IsApplicable(UpdatePermissionCommand model)
         => true;
 
     public ValueTask<bool> IsValidAsync(UpdatePermissionCommand model)

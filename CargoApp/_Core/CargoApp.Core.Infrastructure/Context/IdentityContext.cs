@@ -1,6 +1,7 @@
 ﻿using System.Security.Claims;
 using CargoApp.Core.Abstraction.Context;
-using CargoApp.Core.Abstraction.Enums;
+using CargoApp.Core.Infrastructure.Auth;
+using CargoApp.Core.ShareCore.Enums;
 
 namespace CargoApp.Core.Infrastructure.Context;
 

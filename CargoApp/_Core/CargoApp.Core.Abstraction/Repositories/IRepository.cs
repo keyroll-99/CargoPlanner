@@ -7,6 +7,5 @@ public interface IRepository<TModel, in TId>
     Task<bool> ExistsById(TId id);
     Task<TModel> CreateAsync(TModel model);
     Task<TModel> UpdateAsync(TModel model);
-    Task<IList<TModel>> UpdateRangeAsync(IList<TModel> models);
     Task<bool> DeleteAsync(TModel model);
 }

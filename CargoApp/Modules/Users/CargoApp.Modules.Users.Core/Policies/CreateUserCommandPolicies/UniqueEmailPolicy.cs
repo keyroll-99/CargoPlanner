@@ -19,7 +19,7 @@ internal class UniqueEmailPolicy : IPolicy<CreateUserCommand>
 
     public string ErrorMessage => "User with this email exists";
 
-    public bool CanBeApplied(CreateUserCommand model)
+    public bool IsApplicable(CreateUserCommand model)
     {
         return true;
     }

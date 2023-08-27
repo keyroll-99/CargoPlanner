@@ -1,6 +1,6 @@
 ﻿using CargoApp.Core.Infrastructure.CQRS.Query;
 
-namespace CargoApp.Modules.Locations.Application.Queries.SearchLocation;
+namespace CargoApp.Modules.Locations.Application.Queries.SearchLocations;
 
 public class SearchLocationQuery : IQuery
 {

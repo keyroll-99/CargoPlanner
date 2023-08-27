@@ -1,7 +1,9 @@
-﻿using CargoApp.Modules.Locations.Application.Commands.AddLocationCommand;
+﻿using CargoApp.Core.Infrastructure.Auth;
+using CargoApp.Core.ShareCore.Enums;
+using CargoApp.Modules.Locations.Application.Commands.AddLocationCommand;
 using CargoApp.Modules.Locations.Application.DTO;
-using CargoApp.Modules.Locations.Application.Queries.GetAllLocation;
-using CargoApp.Modules.Locations.Application.Queries.SearchLocation;
+using CargoApp.Modules.Locations.Application.Queries.GetAllLocations;
+using CargoApp.Modules.Locations.Application.Queries.SearchLocations;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -10,6 +12,7 @@ namespace CargoApp.Modules.Locations.Api.Controllers;
 
 [Route($"{ModuleInstaller.BasePath}/[action]")]
 [Authorize]
+[RequirePermission(PermissionEnum.Locations)]
 public class LocationController : ControllerBase
 {
     private readonly ISearchLocationQueryHandler _searchLocationQueryHandler;

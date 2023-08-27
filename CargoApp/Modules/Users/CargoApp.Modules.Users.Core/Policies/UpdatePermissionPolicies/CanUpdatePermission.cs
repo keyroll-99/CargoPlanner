@@ -1,6 +1,6 @@
 ﻿using CargoApp.Core.Abstraction.Context;
-using CargoApp.Core.Abstraction.Enums;
 using CargoApp.Core.Infrastructure.Context;
+using CargoApp.Core.ShareCore.Enums;
 using CargoApp.Core.ShareCore.Policies;
 using CargoApp.Modules.Users.Core.Commands;
 using Microsoft.AspNetCore.Http;
@@ -19,11 +19,11 @@ public class CanUpdatePermission : IPolicy<UpdatePermissionCommand>
     public string ErrorMessage => "You cannot update user permission";
     public int StatusCode => StatusCodes.Status401Unauthorized;
 
-    public bool CanBeApplied(UpdatePermissionCommand model)
+    public bool IsApplicable(UpdatePermissionCommand model)
         => true;
 
-    public async ValueTask<bool> IsValidAsync(UpdatePermissionCommand model)
+    public ValueTask<bool> IsValidAsync(UpdatePermissionCommand model)
     {
-        return _context.IdentityContext.HasPermission(PermissionEnum.Workers);
+        return ValueTask.FromResult(_context.IdentityContext.HasPermission(PermissionEnum.Workers));
     }
 }

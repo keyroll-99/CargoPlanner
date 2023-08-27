@@ -1,4 +1,4 @@
-﻿using CargoApp.Core.Abstraction.Enums;
+﻿using CargoApp.Core.ShareCore.Enums;
 
 namespace CargoApp.Modules.Contracts.Users.DTO;
 

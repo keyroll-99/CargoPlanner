@@ -3,7 +3,7 @@ using CargoApp.Modules.Locations.Application.DTO;
 using CargoApp.Modules.Locations.Application.Mappers.Location;
 using CargoApp.Modules.Locations.Application.Repositories;
 
-namespace CargoApp.Modules.Locations.Application.Queries.GetAllLocation;
+namespace CargoApp.Modules.Locations.Application.Queries.GetAllLocations;
 
 public class GetAllLocationHandler : IGetAllLocationHandler
 {

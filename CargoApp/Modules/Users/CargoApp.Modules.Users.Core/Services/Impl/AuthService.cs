@@ -37,7 +37,7 @@ internal class AuthService : IAuthService
 
     public async Task<Result<UserDto, string>> CreateUserAsync(CreateUserCommand createUserCommand)
     {
-        foreach (var policy in _createUserPolicy.Where(x => x.CanBeApplied(createUserCommand)))
+        foreach (var policy in _createUserPolicy.Where(x => x.IsApplicable(createUserCommand)))
             if (!await policy.IsValidAsync(createUserCommand))
                 return policy.ErrorMessage;
 

@@ -1,5 +1,5 @@
-﻿using CargoApp.Core.Abstraction.Enums;
-using CargoApp.Core.ShareCore.Entites;
+﻿using CargoApp.Core.ShareCore.Entites;
+using CargoApp.Core.ShareCore.Enums;
 
 namespace CargoApp.Modules.Users.Core.Entities;
 

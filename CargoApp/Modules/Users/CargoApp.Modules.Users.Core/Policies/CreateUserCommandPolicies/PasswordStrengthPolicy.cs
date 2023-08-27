@@ -9,7 +9,7 @@ internal class PasswordStrengthPolicy : IPolicy<CreateUserCommand>
     public string ErrorMessage => "Password is not strong enough";
     public int StatusCode => StatusCodes.Status400BadRequest;
 
-    public bool CanBeApplied(CreateUserCommand model)
+    public bool IsApplicable(CreateUserCommand model)
     {
         return true;
     }

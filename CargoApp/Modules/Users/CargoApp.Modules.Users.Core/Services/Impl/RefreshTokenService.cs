@@ -69,13 +69,7 @@ internal class RefreshTokenService : IRefreshTokenService
 
     private async Task InvokeAllRefreshTokenAsync(Guid userId)
     {
-        var allNotUsedTokens = await _refreshTokenRepository.GetAllTokenByUserIdAsync(userId, x => !x.IsUsed);
-        foreach (var token in allNotUsedTokens)
-        {
-            token.IsUsed = true;
-        }
-
-        await _refreshTokenRepository.UpdateRangeAsync(allNotUsedTokens);
+        await _refreshTokenRepository.RevokeAllUserTokens(userId);
     }
 
     private async Task<string> GetUniqueRefreshToken()

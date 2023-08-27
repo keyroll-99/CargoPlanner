@@ -2,10 +2,10 @@
 using System.Security.Claims;
 using System.Text;
 using CargoApp.Core.Abstraction.Auth;
-using CargoApp.Core.Abstraction.Enums;
 using CargoApp.Core.Infrastructure.Auth;
 using CargoApp.Core.Infrastructure.Context;
 using CargoApp.Core.ShareCore.Clock;
+using CargoApp.Core.ShareCore.Enums;
 using Microsoft.IdentityModel.Tokens;
 using JsonWebToken = CargoApp.Core.Abstraction.Auth.JsonWebToken;
 using JwtRegisteredClaimNames = Microsoft.IdentityModel.JsonWebTokens.JwtRegisteredClaimNames;

@@ -23,7 +23,8 @@ internal class RefreshTokenRepository : Repository<RefreshToken, UserDbContext>,
         return Entities.Include(x => x.User).FirstOrDefaultAsync(x => x.Token == token);
     }
 
-    public Task<List<RefreshToken>> GetAllTokenByUserIdAsync(Guid userId, Expression<Func<RefreshToken, bool>>? additionalFilter = null)
+    public Task<List<RefreshToken>> GetAllTokenByUserIdAsync(Guid userId,
+        Expression<Func<RefreshToken, bool>>? additionalFilter = null)
     {
         var result = Entities.Where(x => x.UserId == userId);
         if (additionalFilter is not null)
@@ -32,5 +33,11 @@ internal class RefreshTokenRepository : Repository<RefreshToken, UserDbContext>,
         }
 
         return result.ToListAsync();
+    }
+
+    public Task RevokeAllUserTokens(Guid userId)
+    {
+        return Entities.Where(x => x.UserId == userId && !x.IsUsed)
+            .ExecuteUpdateAsync(x => x.SetProperty(b => b.IsUsed, true));
     }
 }

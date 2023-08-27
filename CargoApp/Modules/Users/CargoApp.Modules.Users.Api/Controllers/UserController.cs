@@ -1,4 +1,6 @@
 ﻿using CargoApp.Core.Abstraction.Context;
+using CargoApp.Core.Infrastructure.Auth;
+using CargoApp.Core.ShareCore.Enums;
 using CargoApp.Modules.Contracts.Users;
 using CargoApp.Modules.Contracts.Users.DTO;
 using CargoApp.Modules.Users.Core.Commands;
@@ -11,6 +13,7 @@ namespace CargoApp.Modules.Users.Controllers;
 
 [ApiController]
 [Authorize]
+[RequirePermission(PermissionEnum.Workers)]
 [Route($"{ModuleInstaller.BasePath}/[controller]")]
 public class UserController
 {

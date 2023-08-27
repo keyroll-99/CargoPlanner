@@ -3,29 +3,29 @@ using CargoApp.Modules.Locations.Application.Commands.AddLocationCommand;
 using CargoApp.Modules.Locations.Application.DTO;
 using Microsoft.AspNetCore.Http;
 
-namespace CargoApp.Modules.Locations.Application.Policies;
+namespace CargoApp.Modules.Locations.Application.Policies.AddLocation;
 
 public class IsLocationValidPolicy : IPolicy<AddLocationCommand>
 {
     public string ErrorMessage => "Cannot add location";
     public int StatusCode => StatusCodes.Status400BadRequest;
 
-    public bool CanBeApplied(AddLocationCommand model)
+    public bool IsApplicable(AddLocationCommand model)
         => true;
 
     public ValueTask<bool> IsValidAsync(AddLocationCommand model)
     {
         var location = model.Location;
 
-        return new ValueTask<bool>(isLocationValid(model.Location));
+        return new ValueTask<bool>(IsLocationValid(model.Location));
     }
 
-    private bool isLocationValid(LocationDto location)
+    private static bool IsLocationValid(LocationDto location)
         => !string.IsNullOrWhiteSpace(location.Name) &&
            !string.IsNullOrWhiteSpace(location.DisplayName) &&
            location.OsmId > 0
-           && isAddressValid(location.Address);
+           && IsAddressValid(location.Address);
 
-    private bool isAddressValid(AddressDto address)
+    private static bool IsAddressValid(AddressDto address)
         => !string.IsNullOrWhiteSpace(address.Country);
 }

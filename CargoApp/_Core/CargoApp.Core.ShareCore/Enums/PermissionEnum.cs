@@ -1,4 +1,4 @@
-﻿namespace CargoApp.Core.Abstraction.Enums;
+﻿namespace CargoApp.Core.ShareCore.Enums;
 
 [Flags]
 public enum PermissionEnum : long

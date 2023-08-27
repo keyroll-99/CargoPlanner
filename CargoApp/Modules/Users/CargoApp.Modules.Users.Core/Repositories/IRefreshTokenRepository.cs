@@ -9,4 +9,5 @@ internal interface IRefreshTokenRepository : IRepository<RefreshToken, Guid>
     Task<bool> TokenExistsAsync(string token);
     Task<RefreshToken?> GetByTokenAsync(string token);
     Task<List<RefreshToken>> GetAllTokenByUserIdAsync(Guid userId,  Expression<Func<RefreshToken, bool>>? additionalFilter = null);
+    Task RevokeAllUserTokens(Guid userId);
 }

@@ -27,7 +27,7 @@ public static class Extensions
     {
         foreach (var policy in policies)
         {
-            if (policy.CanBeApplied(model) && !(await policy.IsValidAsync(model)))
+            if (policy.IsApplicable(model) && !(await policy.IsValidAsync(model)))
             {
                 return Result.Fail(policy.ErrorMessage, policy.StatusCode);
             }

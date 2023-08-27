@@ -2,7 +2,7 @@
 using CargoApp.Modules.Locations.Application.DTO;
 using CargoApp.Modules.Locations.Application.ExternalServices.Locations;
 
-namespace CargoApp.Modules.Locations.Application.Queries.SearchLocation;
+namespace CargoApp.Modules.Locations.Application.Queries.SearchLocations;
 
 internal class SearchLocationQueryHandler : ISearchLocationQueryHandler
 {

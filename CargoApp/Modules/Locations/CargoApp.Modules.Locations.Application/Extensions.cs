@@ -1,8 +1,8 @@
 ﻿using System.Reflection;
 using CargoApp.Core.Infrastructure.Policies;
 using CargoApp.Modules.Locations.Application.Commands.AddLocationCommand;
-using CargoApp.Modules.Locations.Application.Queries.GetAllLocation;
-using CargoApp.Modules.Locations.Application.Queries.SearchLocation;
+using CargoApp.Modules.Locations.Application.Queries.GetAllLocations;
+using CargoApp.Modules.Locations.Application.Queries.SearchLocations;
 using CargoApp.Modules.Locations.Application.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 
