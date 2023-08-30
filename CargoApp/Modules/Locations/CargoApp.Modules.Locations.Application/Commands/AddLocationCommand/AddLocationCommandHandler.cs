@@ -1,4 +1,5 @@
 ﻿using CargoApp.Core.Abstraction.Repositories;
+using CargoApp.Core.Infrastructure.Policies;
 using CargoApp.Core.Infrastructure.Response;
 using CargoApp.Core.ShareCore.Policies;
 using CargoApp.Modules.Locations.Application.Mappers.Location;
@@ -8,12 +9,13 @@ using Microsoft.AspNetCore.Http;
 
 namespace CargoApp.Modules.Locations.Application.Commands.AddLocationCommand;
 
-public class AddLocationCommandHandler : IAddLocationCommandHandler
+internal class AddLocationCommandHandler : IAddLocationCommandHandler
 {
     private readonly ILocationRepository _locationRepository;
     private readonly IEnumerable<IPolicy<AddLocationCommand>> _policies;
-    
-    public AddLocationCommandHandler(ILocationRepository locationRepository, IEnumerable<IPolicy<AddLocationCommand>> policies)
+
+    public AddLocationCommandHandler(ILocationRepository locationRepository,
+        IEnumerable<IPolicy<AddLocationCommand>> policies)
     {
         _locationRepository = locationRepository;
         _policies = policies;
@@ -28,16 +30,13 @@ public class AddLocationCommandHandler : IAddLocationCommandHandler
             return Result<string, string>.Success(existsLocation.Id.ToString());
         }
 
-        foreach (var policy in _policies.Where(x => x.IsApplicable(command)))
-        {
-            if (!await policy.IsValidAsync(command))
+        var policyResult = await _policies.UsePolicies(command);
+        return await policyResult.Match<Result<string, string>>(
+            async () =>
             {
-                return Result<string, string>.Fail(policy.ErrorMessage, policy.StatusCode);
-            }
-        }
-
-        var location = command.Location.AsEntity();
-        var result = await _locationRepository.CreateAsync(location);
-        return Result<string, string>.Success(result.Id.ToString(), StatusCodes.Status201Created);
+                var location = command.Location.AsEntity();
+                var result = await _locationRepository.CreateAsync(location);
+                return Result<string, string>.Success(result.Id.ToString(), StatusCodes.Status201Created);
+            }, (error) => Task.FromResult(Result<string, string>.Fail(error)));
     }
 }

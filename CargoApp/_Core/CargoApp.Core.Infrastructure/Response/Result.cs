@@ -42,8 +42,17 @@ public class Result
 
         return await onError(Error);
     }
+    
+    public async Task<TResult> Match<TResult>(Func<Task<TResult>> onSuccess, Func<string, Task<TResult>> onError)
+    {
+        if (IsSuccess)
+        {
+            return await onSuccess();
+        }
 
-
+        return await onError(Error);
+    }
+    
     public ObjectResult GetObjectResult()
     {
         var objectResult = new ObjectResult(IsSuccess ? null : Error)

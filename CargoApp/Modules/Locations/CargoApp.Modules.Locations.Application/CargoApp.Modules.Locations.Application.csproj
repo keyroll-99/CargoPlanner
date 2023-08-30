@@ -12,6 +12,7 @@
     </ItemGroup>
     <ItemGroup>
         <InternalsVisibleTo Include="CargoApp.Modules.Locations.Infrastructure"/>
+        <InternalsVisibleTo Include="CargoApp.Modules.Locations.Api"/>
         <InternalsVisibleTo Include="CargoApp.Modules.Locations.Tests"/>
         <InternalsVisibleTo Include="DynamicProxyGenAssembly2"/>
     </ItemGroup>

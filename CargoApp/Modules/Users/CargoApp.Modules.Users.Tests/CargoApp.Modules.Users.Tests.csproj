@@ -29,4 +29,6 @@
       <ProjectReference Include="..\CargoApp.Modules.Users.Core\CargoApp.Modules.Users.Core.csproj" />
     </ItemGroup>
 
+
+
 </Project>

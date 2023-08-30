@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace CargoApp.Modules.Locations.Application.Policies.AddLocation;
 
-public class IsLocationValidPolicy : IPolicy<AddLocationCommand>
+internal class IsLocationValidPolicy : IPolicy<AddLocationCommand>
 {
     public string ErrorMessage => "Cannot add location";
     public int StatusCode => StatusCodes.Status400BadRequest;

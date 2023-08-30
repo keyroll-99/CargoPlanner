@@ -11,7 +11,10 @@ public class Location : BaseEntity
     public long OsmId { get; private set;}
     public Guid AddressId { get; private set; }
     public Address? Address { get; private set; }
-    
+
+    public Location()
+    {
+    }
 
     public Location(Guid id, DateTime createAt, double lat, double lon, string name, string displayName, long osmId, Address address) : base(id, createAt)
     {
