@@ -29,8 +29,5 @@
       <ProjectReference Include="..\CargoApp.Modules.Locations.Core\CargoApp.Modules.Locations.Core.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Queries\" />
-    </ItemGroup>
 
 </Project>
