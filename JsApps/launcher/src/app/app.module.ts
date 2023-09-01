@@ -18,15 +18,17 @@ import {NgIconsModule} from "@ng-icons/core";
 import { bootstrapArrowRightShort } from '@ng-icons/bootstrap-icons';
 import {MatListModule} from "@angular/material/list";
 import {AuthInterceptor} from "./core/interceptors/auth.interceptor";
-import { LocationComponent } from './features/location/pages/location/location.component';
 import {LeafletModule} from "@asymmetrik/ngx-leaflet";
+import {LocationComponent} from "./features/location/pages/location.component";
+import { MapComponent } from './features/location/component/map/map.component';
+import { LocationSearchComponent } from './features/location/component/location-search/location-search.component';
 
 export const httpInterceptorProviders = [
   { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
 ];
 
 @NgModule({
-  declarations: [AppComponent, SignInComponent, HomeComponent, NavigationComponent, LocationComponent],
+  declarations: [AppComponent, SignInComponent, HomeComponent, NavigationComponent, LocationComponent, MapComponent, LocationSearchComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

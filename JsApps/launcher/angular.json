@@ -34,9 +34,15 @@
                 "output": "assets/"
               }
             ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "./src",
+                "./src/style"
+              ]
+            },
             "styles": [
               "@angular/material/prebuilt-themes/indigo-pink.css",
-              "src/styles.scss"
+              "src/style/styles.scss"
             ],
             "scripts": []
           },

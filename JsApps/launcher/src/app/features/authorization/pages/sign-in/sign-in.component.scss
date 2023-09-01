@@ -1,3 +1,5 @@
+@import 'style/mixins';
+
 .sing-in-container {
   background-color: #ccd6db;
 
@@ -11,6 +13,16 @@
     width: 40%;
     align-items: center;
 
+    @include handheld{
+      width: 80%;
+    }
+
+    @include mobile{
+      width: 100%;
+      height: 100%;
+      justify-content: center;
+    }
+
     .card-title {
       font-size: 2.5rem;
     }
@@ -22,6 +34,10 @@
     display: flex;
     flex-direction: column;
     padding-top: 20px;
+
+    @include mobile{
+      height: 40%;
+    }
 
     .form-footer {
       display: flex;
