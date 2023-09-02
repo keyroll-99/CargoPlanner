@@ -8,10 +8,11 @@ import {
   HttpInterceptor,
   HttpRequest
 } from '@angular/common/http';
-import {BehaviorSubject, filter, Observable, switchMap, take} from 'rxjs';
+import {BehaviorSubject, catchError, filter, Observable, switchMap, take} from 'rxjs';
 import {AuthService} from "../services/auth.service";
 import AuthModel from "../models/authModel";
 import {environment} from "../../../environments/environment";
+import {Router} from "@angular/router";
 
 export const IGNORE_AUTH_TOKEN = new HttpContextToken(() => false);
 
@@ -24,7 +25,7 @@ export class AuthInterceptor implements HttpInterceptor {
   private isRefreshingInProgress: boolean = false;
   private baseUrl: string
 
-  constructor(private authService: AuthService, private httpClient: HttpClient) {
+  constructor(private authService: AuthService, private httpClient: HttpClient, private router: Router) {
     this.baseUrl = environment.apiUrl;
   }
 
@@ -52,12 +53,19 @@ export class AuthInterceptor implements HttpInterceptor {
       return this.httpClient.post<AuthModel>(`${this.baseUrl}Users/Auth/Refresh`, undefined, {
         withCredentials: true,
         context: new HttpContext().set(IGNORE_AUTH_TOKEN, true)
-      }).pipe(switchMap((response: AuthModel) => {
-        this.authService.setAuth(response);
-        this.isRefreshingInProgress = false;
-        this.refreshTokenSubject.next(response.accessToken);
-        return next.handle(this.getRequestWithAuthHeader(request, response.accessToken))
-      }))
+      }).pipe(
+        catchError((err) => {
+          this.authService.logout();
+          this.router.navigate(["/login"])
+          throw err
+        }),
+        switchMap((response: AuthModel) => {
+            this.authService.setAuth(response);
+            this.isRefreshingInProgress = false;
+            this.refreshTokenSubject.next(response.accessToken);
+            return next.handle(this.getRequestWithAuthHeader(request, response.accessToken))
+          }
+        ))
     } else {
       return this.refreshTokenSubject.pipe(
         filter(token => token != null),
@@ -65,7 +73,7 @@ export class AuthInterceptor implements HttpInterceptor {
         switchMap((accessToken) => {
           return next.handle(this.getRequestWithAuthHeader(request, accessToken))
         })
-      )
+      );
     }
   }
 

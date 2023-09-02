@@ -1,16 +1,16 @@
 import {TestBed} from '@angular/core/testing';
 
-import {AuthService} from './auth.service';
+import {LocationSearchService} from './location-search.service';
 import {HttpClientTestingModule} from "@angular/common/http/testing";
 
-describe('AuthService', () => {
-  let service: AuthService;
+describe('LocationSearchService', () => {
+  let service: LocationSearchService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule]
     });
-    service = TestBed.inject(AuthService);
+    service = TestBed.inject(LocationSearchService);
   });
 
   it('should be created', () => {

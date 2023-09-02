@@ -1,14 +1,14 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
 import {authGuard} from "./core/guards/auth.guard";
 import {SignInComponent} from "./features/authorization/pages/sign-in/sign-in.component";
 import {HomeComponent} from "./features/home/pages/home/home.component";
 import {loginPageGuard} from "./core/guards/login-page.guard";
-import {LocationComponent} from "./features/location/pages/location.component";
+import {MainLocationComponent} from "./features/location/pages/main/main-location/main-location.component";
 
 const routes: Routes = [
   { path: 'login', component: SignInComponent, canActivate:[loginPageGuard]},
-  {path: "locations", component: LocationComponent, canActivate: [authGuard]},
+  {path: "locations", component: MainLocationComponent, canActivate: [authGuard]},
   { path: '', component: HomeComponent, canActivate:[authGuard] },
 ];
 

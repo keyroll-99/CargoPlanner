@@ -61,7 +61,11 @@ export class AuthService {
         }
       })
     )
+  }
 
+  //TODO: Request to backend to remove cookie
+  public logout() {
+    localStorage.removeItem(AuthService.accessTokenKey);
   }
 
 }

@@ -15,20 +15,20 @@ import {NavigationComponent} from './core/components/navigation/navigation.compo
 import {MatSidenavModule} from "@angular/material/sidenav";
 import {MatCardModule} from "@angular/material/card";
 import {NgIconsModule} from "@ng-icons/core";
-import { bootstrapArrowRightShort } from '@ng-icons/bootstrap-icons';
+import {bootstrapArrowRightShort} from '@ng-icons/bootstrap-icons';
 import {MatListModule} from "@angular/material/list";
 import {AuthInterceptor} from "./core/interceptors/auth.interceptor";
 import {LeafletModule} from "@asymmetrik/ngx-leaflet";
-import {LocationComponent} from "./features/location/pages/location.component";
-import { MapComponent } from './features/location/component/map/map.component';
-import { LocationSearchComponent } from './features/location/component/location-search/location-search.component';
+import {MapComponent} from './features/location/component/map/map.component';
+import {LocationSearchComponent} from './features/location/component/location-search/location-search.component';
+import {MainLocationComponent} from './features/location/pages/main/main-location/main-location.component';
 
 export const httpInterceptorProviders = [
   { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
 ];
 
 @NgModule({
-  declarations: [AppComponent, SignInComponent, HomeComponent, NavigationComponent, LocationComponent, MapComponent, LocationSearchComponent],
+  declarations: [AppComponent, SignInComponent, HomeComponent, NavigationComponent, MapComponent, LocationSearchComponent, MainLocationComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
