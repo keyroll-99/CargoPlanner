@@ -6,6 +6,23 @@ services:
         build: ./Osrm
         ports:
             - "8000:5000"
+    rabbit:
+        image: rabbitmq:3-management
+        container_name: rabbit
+        ports:
+        - "5672:5672"
+        - "15672:15672"
+        volumes:
+            - ./rabbitmq/data/:/var/lib/rabbitmq/
+            - ./rabbitmq/log/:/var/log/rabbitmq
+        networks:
+            - rabbitmq_go_net
+
+
+networks:
+    rabbitmq_go_net:
+        driver: bridge
+
     # planner:
     #     build: ./Planner/Planner
     
