@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\..\_Core\CargoApp.Core.Abstraction\CargoApp.Core.Abstraction.csproj" />
+      <ProjectReference Include="..\..\..\_Core\CargoApp.Core.Infrastructure\CargoApp.Core.Infrastructure.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="DAL\Migrations\" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <InternalsVisibleTo Include="CargoApp.Modules.Companies.Api" />
+        <InternalsVisibleTo Include="CargoApp.Modules.Companies.Tests" />
+        <InternalsVisibleTo Include="DynamicProxyGenAssembly2" />
+    </ItemGroup>
+
+
+</Project>

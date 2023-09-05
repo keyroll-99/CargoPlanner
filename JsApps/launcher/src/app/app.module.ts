@@ -22,6 +22,8 @@ import {LeafletModule} from "@asymmetrik/ngx-leaflet";
 import {MapComponent} from './features/location/component/map/map.component';
 import {LocationSearchComponent} from './features/location/component/location-search/location-search.component';
 import {MainLocationComponent} from './features/location/pages/main/main-location/main-location.component';
+import {MatTreeModule} from "@angular/material/tree";
+import {MatIconModule} from "@angular/material/icon";
 
 export const httpInterceptorProviders = [
   { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
@@ -29,22 +31,24 @@ export const httpInterceptorProviders = [
 
 @NgModule({
   declarations: [AppComponent, SignInComponent, HomeComponent, NavigationComponent, MapComponent, LocationSearchComponent, MainLocationComponent],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    MatInputModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-    MatRippleModule,
-    MatButtonModule,
-    MatSidenavModule,
-    MatCardModule,
-    NgIconsModule.withIcons({bootstrapArrowRightShort}),
-    MatListModule,
-    LeafletModule
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        MatInputModule,
+        ReactiveFormsModule,
+        HttpClientModule,
+        MatRippleModule,
+        MatButtonModule,
+        MatSidenavModule,
+        MatCardModule,
+        NgIconsModule.withIcons({bootstrapArrowRightShort}),
+        MatListModule,
+        LeafletModule,
+        MatTreeModule,
+        MatIconModule
 
-  ],
+    ],
   providers: [httpInterceptorProviders],
   bootstrap: [AppComponent],
 })

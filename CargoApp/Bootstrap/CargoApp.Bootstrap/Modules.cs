@@ -1,4 +1,5 @@
 ﻿using CargoApp.Modules.Cargoes.Api;
+using CargoApp.Modules.Companies.Api;
 using CargoApp.Modules.Locations.Api;
 using CargoApp.Modules.Users;
 
@@ -10,6 +11,7 @@ internal static class Modules
     {
         services.AddUsers();
         services.AddLocations();
+        services.AddCompanies();
         // services.AddCargoes();
         return services;
     }

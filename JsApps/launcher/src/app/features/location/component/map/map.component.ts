@@ -20,7 +20,7 @@ export class MapComponent {
   }
 
   generateMarker(data: any, index: number) {
-    return Leaflet.marker(data.position)
+    return Leaflet.marker(data.position, {icon: new Leaflet.Icon({iconUrl: "/assets/leaflet/marker-icon.png"})})
       .on('click', (event) => this.markerClicked(event, index))
       .on('dragend', (event) => this.markerDragEnd(event, index));
   }

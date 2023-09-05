@@ -1,4 +1,4 @@
-﻿using CargoApp.Modules.Cargoes.Domain.Entities;
+﻿using CargoApp.Modules.Cargoes.Core.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

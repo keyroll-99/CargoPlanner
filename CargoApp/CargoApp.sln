@@ -28,7 +28,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CargoApp.Modules.Cargoes.In
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CargoApp.Modules.Cargoes.Application", "Modules\Cargoes\CargoApp.Modules.Cargoes.Application\CargoApp.Modules.Cargoes.Application.csproj", "{5EFFCE8E-1C2D-45E1-89B6-B3E0BE1B5C55}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CargoApp.Modules.Cargoes.Domain", "Modules\Cargoes\CargoApp.Modules.Cargoes.Domain\CargoApp.Modules.Cargoes.Domain.csproj", "{1B45FF19-4767-4221-A628-BA58AC5CC9D4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CargoApp.Modules.Cargoes.Core", "Modules\Cargoes\CargoApp.Modules.Cargoes.Core\CargoApp.Modules.Cargoes.Core.csproj", "{1B45FF19-4767-4221-A628-BA58AC5CC9D4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CargoApp.Core.ShareCore", "_Core\CargoApp.Core.ShareCore\CargoApp.Core.ShareCore.csproj", "{E4D8EBF5-84F5-4FD6-B22B-36ABBBDAFE46}"
 EndProject
@@ -47,6 +47,12 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CargoApp.Modules.Locations.Core", "Modules\Locations\CargoApp.Modules.Locations.Core\CargoApp.Modules.Locations.Core.csproj", "{316FCC5D-ECD3-4236-A4CA-FF22B01D20F5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CargoApp.Modules.Locations.Tests", "Modules\Locations\CargoApp.Modules.Locations.Tests\CargoApp.Modules.Locations.Tests.csproj", "{65D24AC1-96A0-4084-9987-187C212CB524}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Companies", "Companies", "{87E10E9C-25AF-4E4C-891B-CDED5C43E123}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CargoApp.Modules.Companies.Api", "Modules\Companies\CargoApp.Modules.Companies.Api\CargoApp.Modules.Companies.Api.csproj", "{03DEE7EC-3A1D-477C-A010-F62381B5DA89}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CargoApp.Modules.Companies.Core", "Modules\Companies\CargoApp.Modules.Companies.Core\CargoApp.Modules.Companies.Core.csproj", "{90182BBA-4549-4A11-A407-8AB44A8DE7EC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -75,6 +81,9 @@ Global
 		{007F9AA3-48D0-4AA1-8D9E-6D7348906FDA} = {84497E7C-7204-48E4-8D3B-93BA6E1F7997}
 		{316FCC5D-ECD3-4236-A4CA-FF22B01D20F5} = {84497E7C-7204-48E4-8D3B-93BA6E1F7997}
 		{65D24AC1-96A0-4084-9987-187C212CB524} = {84497E7C-7204-48E4-8D3B-93BA6E1F7997}
+		{87E10E9C-25AF-4E4C-891B-CDED5C43E123} = {F667422E-76EE-4887-8585-BC44FBF07F5E}
+		{03DEE7EC-3A1D-477C-A010-F62381B5DA89} = {87E10E9C-25AF-4E4C-891B-CDED5C43E123}
+		{90182BBA-4549-4A11-A407-8AB44A8DE7EC} = {87E10E9C-25AF-4E4C-891B-CDED5C43E123}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{C0124348-3DFA-45BE-8817-05D2C43F1D98}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -145,5 +154,13 @@ Global
 		{65D24AC1-96A0-4084-9987-187C212CB524}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{65D24AC1-96A0-4084-9987-187C212CB524}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{65D24AC1-96A0-4084-9987-187C212CB524}.Release|Any CPU.Build.0 = Release|Any CPU
+		{03DEE7EC-3A1D-477C-A010-F62381B5DA89}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{03DEE7EC-3A1D-477C-A010-F62381B5DA89}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{03DEE7EC-3A1D-477C-A010-F62381B5DA89}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{03DEE7EC-3A1D-477C-A010-F62381B5DA89}.Release|Any CPU.Build.0 = Release|Any CPU
+		{90182BBA-4549-4A11-A407-8AB44A8DE7EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{90182BBA-4549-4A11-A407-8AB44A8DE7EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{90182BBA-4549-4A11-A407-8AB44A8DE7EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{90182BBA-4549-4A11-A407-8AB44A8DE7EC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

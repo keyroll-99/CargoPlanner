@@ -26,6 +26,7 @@ internal static class LocationMapper
             name: location.Name,
             displayName: location.DisplayName,
             osmId: location.OsmId,
+            companyId: 1,
             address: location.Address.AsEntity()
         );
     }

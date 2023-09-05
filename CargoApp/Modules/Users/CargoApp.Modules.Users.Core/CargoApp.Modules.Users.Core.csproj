@@ -16,10 +16,6 @@
         <InternalsVisibleTo Include="CargoApp.Modules.Users.Api" />
         <InternalsVisibleTo Include="CargoApp.Modules.Users.Tests" />
         <InternalsVisibleTo Include="DynamicProxyGenAssembly2" />
-
-
-
-
     </ItemGroup>
 
 

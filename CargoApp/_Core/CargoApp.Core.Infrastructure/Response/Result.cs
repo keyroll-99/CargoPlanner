@@ -53,6 +53,18 @@ public class Result
         return await onError(Error);
     }
     
+    public async Task<(TSuccessResult?, TErrorResult?, bool)> Match<TSuccessResult, TErrorResult>(Func<Task<TSuccessResult>> onSuccess, Func<string, Task<TErrorResult>> onError)
+    where TSuccessResult: class
+    where TErrorResult: class
+    {
+        if (IsSuccess)
+        {
+            return (await onSuccess(), null, true);
+        }
+
+        return (null, await onError(Error), false);
+    }
+    
     public ObjectResult GetObjectResult()
     {
         var objectResult = new ObjectResult(IsSuccess ? null : Error)
@@ -140,6 +152,16 @@ public class Result<TSuccess, TError> : Result
         if (IsSuccess)
         {
             return (onSuccess(SuccessModel!), null);
+        }
+
+        return (null, ErrorModel);
+    }
+    public async Task<(TSuccessResult?, TError?)> MatchOnlySuccessAsync<TSuccessResult>(Func<TSuccess, Task<TSuccessResult>> onSuccess)
+        where TSuccessResult : class
+    {
+        if (IsSuccess)
+        {
+            return (await onSuccess(SuccessModel!), null);
         }
 
         return (null, ErrorModel);
