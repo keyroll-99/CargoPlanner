@@ -11,7 +11,7 @@ public class SearchLocationQueryTest
 {
     private readonly ILocationClientFactory _locationClientFactory = Substitute.For<ILocationClientFactory>();
     private readonly ILocationClient _locationClient = Substitute.For<ILocationClient>();
-    private readonly ISearchLocationQueryHandler _service;
+    private readonly SearchLocationQueryHandler _service;
 
     public SearchLocationQueryTest()
     {
@@ -32,7 +32,7 @@ public class SearchLocationQueryTest
             .Returns(Result<IEnumerable<LocationDto>>.Success(new List<LocationDto>()));
 
         // Act
-        var result = await _service.Handle(query);
+        var result = await _service.Handle(query, new CancellationToken(false));
 
         // Arrange 
         await _locationClient

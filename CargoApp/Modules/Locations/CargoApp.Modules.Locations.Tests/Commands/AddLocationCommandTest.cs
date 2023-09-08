@@ -11,7 +11,7 @@ namespace CargoApp.Modules.Locations.Tests.Commands;
 
 public class AddLocationCommandTest
 {
-    private readonly IAddLocationCommandHandler _services;
+    private readonly AddLocationCommandHandler _services;
     private IPolicy<AddLocationCommand> _policyMock = Substitute.For<IPolicy<AddLocationCommand>>();
     private ILocationRepository _locationRepositoryMock = Substitute.For<ILocationRepository>();
 
@@ -28,17 +28,29 @@ public class AddLocationCommandTest
     {
         // Arrange
         var locationId = Guid.NewGuid();
-        
+
         _locationRepositoryMock.GetByOsmIdAsync(Arg.Any<long>()).Returns(new Location()
         {
             Id = locationId
         });
 
         // Act
-        var result =
-            await _services.Handle(new AddLocationCommand(new LocationDto(2.0, 2.0, "test", 100, "test",
-                new AddressDto(null, null, null, null, null, null, null))));
-        
+        var result = await _services.Handle(new AddLocationCommand(
+                new LocationDto(
+                    2.0,
+                    2.0,
+                    "test",
+                    100,
+                    "test",
+                    new AddressDto(
+                        null,
+                        null,
+                        null,
+                        null,
+                        null, 
+                        null, 
+                        null))),
+            new CancellationToken(false));
         // Assert
         result.IsSuccess.Should().BeTrue();
         result.SuccessModel.Should().Be(locationId.ToString());
@@ -52,19 +64,31 @@ public class AddLocationCommandTest
         _policyMock.IsApplicable(Arg.Any<AddLocationCommand>()).Returns(true);
         _policyMock.IsValidAsync(Arg.Any<AddLocationCommand>()).Returns(false);
         _policyMock.ErrorMessage.Returns("error");
-        
+
         // Act
-        var result =
-            await _services.Handle(new AddLocationCommand(new LocationDto(2.0, 2.0, "test", 100, "test",
-                new AddressDto(null, null, null, null, null, null, null))));
-        
+        var result = await _services.Handle(new AddLocationCommand(
+                new LocationDto(
+                    2.0,
+                    2.0,
+                    "test",
+                    100,
+                    "test",
+                    new AddressDto(
+                        null,
+                        null,
+                        null,
+                        null,
+                        null, 
+                        null, 
+                        null))),
+            new CancellationToken(false));
+
         // Assert
         result.IsSuccess.Should().BeFalse();
         result.ErrorModel.Should().Be("error");
-
     }
+
     [Fact]
-    
     public async Task CreateLocation_WhenPolicyReturnSuccess_ThenAddLocation()
     {
         // Arrange
@@ -76,12 +100,26 @@ public class AddLocationCommandTest
         {
             Id = sampleGuid
         });
-        
+
         // Act
         var result =
-            await _services.Handle(new AddLocationCommand(new LocationDto(2.0, 2.0, "test", 100, "test",
-                new AddressDto(null, null, null, null, null, null, null))));
-        
+            await _services.Handle(new AddLocationCommand(
+                new LocationDto(
+                    2.0,
+                    2.0,
+                    "test",
+                    100,
+                    "test",
+                    new AddressDto(
+                        null,
+                        null,
+                        null,
+                        null,
+                        null, 
+                        null, 
+                        null))),
+                new CancellationToken(false));
+
         // Assert
         result.IsSuccess.Should().BeTrue();
         result.SuccessModel.Should().Be(sampleGuid.ToString());

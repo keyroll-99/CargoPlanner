@@ -4,6 +4,7 @@ using CargoApp.Modules.Locations.Application.Commands.AddLocationCommand;
 using CargoApp.Modules.Locations.Application.DTO;
 using CargoApp.Modules.Locations.Application.Queries.GetAllLocations;
 using CargoApp.Modules.Locations.Application.Queries.SearchLocations;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -15,16 +16,11 @@ namespace CargoApp.Modules.Locations.Api.Controllers;
 [RequirePermission(PermissionEnum.Locations)]
 public class LocationController : ControllerBase
 {
-    private readonly ISearchLocationQueryHandler _searchLocationQueryHandler;
-    private readonly IAddLocationCommandHandler _addLocationCommandHandler;
-    private readonly IGetAllLocationHandler _getAllLocationHandler;
+    private readonly IMediator _mediator;
 
-
-    public LocationController(ISearchLocationQueryHandler searchLocationQueryHandler, IAddLocationCommandHandler addLocationCommandHandler, IGetAllLocationHandler getAllLocationHandler)
+    public LocationController(IMediator mediator)
     {
-        _searchLocationQueryHandler = searchLocationQueryHandler;
-        _addLocationCommandHandler = addLocationCommandHandler;
-        _getAllLocationHandler = getAllLocationHandler;
+        _mediator = mediator;
     }
 
     [HttpGet]
@@ -33,7 +29,7 @@ public class LocationController : ControllerBase
 
     public async Task<IActionResult> Search([FromQuery] string query)
     {
-        var result = await _searchLocationQueryHandler.Handle(new SearchLocationQuery{Query = query});
+        var result = await _mediator.Send(new SearchLocationQuery{Query = query});
 
         return result.GetObjectResult();
     }
@@ -42,7 +38,7 @@ public class LocationController : ControllerBase
     [ProducesResponseType(typeof(IEnumerable<LocationDto>), StatusCodes.Status200OK)]
     public async Task<IActionResult> GetAll()
     {
-        return (await _getAllLocationHandler.Handle(new GetAllLocationQuery())).GetObjectResult();
+        return (await _mediator.Send(new GetAllLocationQuery())).GetObjectResult();
     }
 
     [HttpPost]
@@ -50,7 +46,7 @@ public class LocationController : ControllerBase
     [ProducesResponseType(typeof(LocationDto), StatusCodes.Status201Created)]
     public async Task<IActionResult> Add([FromBody]LocationDto newLocation)
     {
-        var result = await _addLocationCommandHandler.Handle(new AddLocationCommand(newLocation));
+        var result = await _mediator.Send(new AddLocationCommand(newLocation));
         return result.GetObjectResult();
     }
 }

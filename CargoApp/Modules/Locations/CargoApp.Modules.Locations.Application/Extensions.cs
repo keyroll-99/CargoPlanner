@@ -12,9 +12,7 @@ internal static class Extensions
 {
     public static IServiceCollection AddApplication(this IServiceCollection services)
     {
-        services.AddScoped<IAddLocationCommandHandler, AddLocationCommandHandler>();
-        services.AddScoped<IGetAllLocationHandler, GetAllLocationHandler>();
-        services.AddSingleton<ISearchLocationQueryHandler, SearchLocationQueryHandler>();
+        services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
         services.AddPolicies(Assembly.GetExecutingAssembly());
         return services;
     }
