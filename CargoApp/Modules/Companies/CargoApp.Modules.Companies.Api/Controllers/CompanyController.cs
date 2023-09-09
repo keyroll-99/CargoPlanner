@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace CargoApp.Modules.Companies.Api.Controllers;
 
 [ApiController]
-[RequirePermission(PermissionEnum.Workers)]
+[RequirePermission(PermissionEnum.Admin)]
 [Route($"{ModuleInstaller.BasePath}/[action]")]
 public class CompanyController : ControllerBase
 {
@@ -19,7 +19,6 @@ public class CompanyController : ControllerBase
         _mediator = mediator;
     }
 
-    [RequirePermission(PermissionEnum.Admin)]
     [ProducesResponseType(typeof(string), StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
     [HttpPost]

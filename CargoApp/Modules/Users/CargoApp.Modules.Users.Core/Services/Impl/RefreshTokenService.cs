@@ -2,6 +2,7 @@
 using CargoApp.Core.Abstraction.Auth;
 using CargoApp.Core.Infrastructure.Response;
 using CargoApp.Core.ShareCore.Clock;
+using CargoApp.Module.Contracts.Companies;
 using CargoApp.Modules.Users.Core.Entities;
 using CargoApp.Modules.Users.Core.Repositories;
 using CargoApp.Modules.Users.Core.Services.Abstract;
@@ -11,22 +12,26 @@ namespace CargoApp.Modules.Users.Core.Services.Impl;
 internal class RefreshTokenService : IRefreshTokenService
 {
     private readonly IRefreshTokenRepository _refreshTokenRepository;
-    private readonly IUserRepository _userRepository;
     private readonly IAuthManager _authManager;
     private readonly IClock _clock;
+    private readonly ICompany _companyService;
 
-    public RefreshTokenService(IRefreshTokenRepository refreshTokenRepository, IUserRepository userRepository, IClock clock, IAuthManager authManager)
+    public RefreshTokenService(
+        IRefreshTokenRepository refreshTokenRepository,
+        IClock clock,
+        IAuthManager authManager,
+        ICompany companyService)
     {
         _refreshTokenRepository = refreshTokenRepository;
-        _userRepository = userRepository;
         _clock = clock;
         _authManager = authManager;
+        _companyService = companyService;
     }
 
     public async Task<string> GenerateTokenAsync(Guid userId)
     {
         var token = await GetUniqueRefreshToken();
-        await _refreshTokenRepository.CreateAsync(RefreshToken.Create(userId, token, _clock));
+        await _refreshTokenRepository.AddAsync(RefreshToken.Create(userId, token, _clock));
         return token;
     }
 
@@ -48,7 +53,7 @@ internal class RefreshTokenService : IRefreshTokenService
             await InvokeAllRefreshTokenAsync(dbModel.UserId);
             return Result<string, string>.Fail("Refresh token has been used");
         }
-        
+
         var newTokenTask = await GenerateTokenAsync(dbModel.UserId);
         dbModel.IsUsed = true;
         await _refreshTokenRepository.UpdateAsync(dbModel);
@@ -64,7 +69,11 @@ internal class RefreshTokenService : IRefreshTokenService
             return "Token doesn't exists";
         }
 
-        return _authManager.CreateToken(user.Id, user.Email, user.PermissionMask);
+        var company = user.EmployeeId.HasValue
+            ? await _companyService.FindEmployeeCompany(user.EmployeeId.Value)
+            : null;
+
+        return _authManager.CreateToken(user.Id, user.Email, user.PermissionMask, company?.Id ?? Guid.Empty);
     }
 
     private async Task InvokeAllRefreshTokenAsync(Guid userId)
@@ -82,6 +91,7 @@ internal class RefreshTokenService : IRefreshTokenService
             {
                 continue;
             }
+
             return token;
         }
     }

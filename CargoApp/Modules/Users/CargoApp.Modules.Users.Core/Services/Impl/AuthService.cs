@@ -2,6 +2,7 @@
 using CargoApp.Core.Infrastructure.Response;
 using CargoApp.Core.ShareCore.Clock;
 using CargoApp.Core.ShareCore.Policies;
+using CargoApp.Module.Contracts.Companies;
 using CargoApp.Modules.Contracts.Users.DTO;
 using CargoApp.Modules.Users.Core.Commands;
 using CargoApp.Modules.Users.Core.Entities;
@@ -20,19 +21,22 @@ internal class AuthService : IAuthService
     private readonly IClock _clock;
     private readonly IAuthManager _authManager;
     private readonly IPasswordHasher<User> _passwordHasher;
+    private readonly ICompany _companyServices;
 
     public AuthService(
         IUserRepository userRepository,
         IEnumerable<IPolicy<CreateUserCommand>> createUserPolicy,
         IAuthManager authManager,
-        IPasswordHasher<User> passwordHasher, 
-        IClock clock)
+        IPasswordHasher<User> passwordHasher,
+        IClock clock,
+        ICompany companyServices)
     {
         _userRepository = userRepository;
         _createUserPolicy = createUserPolicy;
         _authManager = authManager;
         _passwordHasher = passwordHasher;
         _clock = clock;
+        _companyServices = companyServices;
     }
 
     public async Task<Result<UserDto, string>> CreateUserAsync(CreateUserCommand createUserCommand)
@@ -48,7 +52,7 @@ internal class AuthService : IAuthService
             Password = _passwordHasher.HashPassword(default, createUserCommand.Password),
             IsActive = true
         };
-        await _userRepository.CreateAsync(model);
+        await _userRepository.AddAsync(model);
 
         return model.AsUserDto();
     }
@@ -62,7 +66,11 @@ internal class AuthService : IAuthService
             return Result<JsonWebToken, string>.Fail("Invalid Email or Password", StatusCodes.Status401Unauthorized);
         }
 
-        var token = _authManager.CreateToken(user.Id, user.Email, user.PermissionMask);
+        var company = user.EmployeeId.HasValue
+            ? await _companyServices.FindEmployeeCompany(user.EmployeeId.Value)
+            : null;
+
+        var token = _authManager.CreateToken(user.Id, user.Email, user.PermissionMask, company?.Id ?? Guid.Empty);
         return token;
     }
 }

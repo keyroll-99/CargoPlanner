@@ -5,5 +5,5 @@ namespace CargoApp.Modules.Companies.Core.Repositories;
 
 internal interface ICompanyRepository : IRepository<Company, Guid>
 {
-    
+    public Task<Company?> GetCompanyByEmployeeId(Guid employeeId);
 }

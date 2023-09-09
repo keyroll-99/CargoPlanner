@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace CargoApp.Modules.Companies.Core.DAL.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial_Companies : Migration
+    public partial class init_companies : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -30,21 +30,23 @@ namespace CargoApp.Modules.Companies.Core.DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Worker",
+                name: "Employee",
                 schema: "companies",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    UserId = table.Column<Guid>(type: "uuid", nullable: false),
+                    Name = table.Column<string>(type: "text", nullable: false),
+                    Surname = table.Column<string>(type: "text", nullable: false),
+                    Email = table.Column<string>(type: "text", nullable: false),
                     WorkingPosition = table.Column<int>(type: "integer", nullable: false),
                     CompanyId = table.Column<Guid>(type: "uuid", nullable: false),
                     CreateAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Worker", x => x.Id);
+                    table.PrimaryKey("PK_Employee", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Worker_Companies_CompanyId",
+                        name: "FK_Employee_Companies_CompanyId",
                         column: x => x.CompanyId,
                         principalSchema: "companies",
                         principalTable: "Companies",
@@ -52,9 +54,9 @@ namespace CargoApp.Modules.Companies.Core.DAL.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Worker_CompanyId",
+                name: "IX_Employee_CompanyId",
                 schema: "companies",
-                table: "Worker",
+                table: "Employee",
                 column: "CompanyId");
         }
 
@@ -62,7 +64,7 @@ namespace CargoApp.Modules.Companies.Core.DAL.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Worker",
+                name: "Employee",
                 schema: "companies");
 
             migrationBuilder.DropTable(

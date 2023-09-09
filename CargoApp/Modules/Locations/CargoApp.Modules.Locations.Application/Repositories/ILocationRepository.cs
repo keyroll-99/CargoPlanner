@@ -6,5 +6,5 @@ namespace CargoApp.Modules.Locations.Application.Repositories;
 public interface ILocationRepository : IRepository<Location, Guid>
 {
     Task<bool> ExistsByOsmIdAsync(long osmId);
-    Task<Location?> GetByOsmIdAsync(long osmId);
+    Task<Location?> GetByOsmIdAndCompanyIdAsync(long osmId, Guid companyId);
 }

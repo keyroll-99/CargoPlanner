@@ -11,7 +11,7 @@ internal class CompanyConfiguration : IEntityTypeConfiguration<Company>
         builder.HasKey(x => x.Id);
         
         builder
-            .HasMany(x => x.Workers)
+            .HasMany(x => x.Employees)
             .WithOne(x => x.Company)
             .HasForeignKey(x => x.CompanyId)
             .OnDelete(DeleteBehavior.NoAction);

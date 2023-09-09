@@ -16,6 +16,6 @@ public class LocationRepository : Repository<Location, LocationDbContext>, ILoca
     public Task<bool> ExistsByOsmIdAsync(long osmId)
         => Entities.AnyAsync(x => x.OsmId == osmId);
 
-    public Task<Location?> GetByOsmIdAsync(long osmId)
-        => Entities.FirstOrDefaultAsync(x => x.OsmId == osmId);
+    public Task<Location?> GetByOsmIdAndCompanyIdAsync(long osmId, Guid companyId)
+        => Entities.FirstOrDefaultAsync(x => x.OsmId == osmId && x.CompanyId == companyId);
 }

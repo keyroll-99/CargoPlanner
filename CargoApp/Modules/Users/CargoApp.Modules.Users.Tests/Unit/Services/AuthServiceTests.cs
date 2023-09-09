@@ -1,6 +1,7 @@
 ﻿using CargoApp.Core.Abstraction.Auth;
 using CargoApp.Core.ShareCore.Clock;
 using CargoApp.Core.ShareCore.Policies;
+using CargoApp.Module.Contracts.Companies;
 using CargoApp.Modules.Users.Core.Commands;
 using CargoApp.Modules.Users.Core.Entities;
 using CargoApp.Modules.Users.Core.Policies;
@@ -22,6 +23,7 @@ public class AuthServiceTests
     private readonly IAuthManager _authManager = Substitute.For<IAuthManager>();
     private readonly IPasswordHasher<User> _passwordHasher = Substitute.For<IPasswordHasher<User>>();
     private readonly IClock _clock = Substitute.For<IClock>();
+    private readonly ICompany _company = Substitute.For<ICompany>();
     private readonly IAuthService _service;
 
     public AuthServiceTests()
@@ -31,7 +33,7 @@ public class AuthServiceTests
             _samplePolicy
         };
         _service = new AuthService(_userRepository, createUserPolicies, _authManager,
-            _passwordHasher, _clock);
+            _passwordHasher, _clock, _company);
     }
 
     [Fact]
@@ -62,7 +64,7 @@ public class AuthServiceTests
         result.SuccessModel.Email.Should().Be(createUserCommand.Email);
         result.SuccessModel.IsActive.Should().BeTrue();
 
-        _userRepository.Received(1).CreateAsync(Arg.Any<User>());
+        _userRepository.Received(1).AddAsync(Arg.Any<User>());
         _passwordHasher.Received(1)
             .HashPassword(Arg.Any<User>(), Arg.Is<string>(match => match == createUserCommand.Password));
     }

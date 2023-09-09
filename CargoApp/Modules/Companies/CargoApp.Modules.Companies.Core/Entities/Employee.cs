@@ -2,23 +2,27 @@
 
 namespace CargoApp.Modules.Companies.Core.Entities;
 
-public class Worker : BaseEntity
+public class Employee : BaseEntity
 {
-    public Guid UserId { get; set; }
+    public string Name { get; set; }
+    public string Surname { get; set; }
+    public string Email { get; set; }
     public WorkingPositionEnum WorkingPosition { get; set; }
     public Guid CompanyId { get; set; }
     public Company Company { get; set; }
 
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 // Empty constructor for EF
-    public Worker()
+    public Employee()
     {
     }
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 
-    public Worker(Guid id, DateTime createAt, Guid userId, WorkingPositionEnum workingPosition, Guid companyId, Company company) : base(id, createAt)
+    public Employee(Guid id, DateTime createAt, string name, string surname, string email, WorkingPositionEnum workingPosition, Guid companyId, Company company) : base(id, createAt)
     {
-        UserId = userId;
+        Name = name;
+        Surname = surname;
+        Email = email;
         WorkingPosition = workingPosition;
         CompanyId = companyId;
         Company = company;

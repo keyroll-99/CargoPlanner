@@ -1,4 +1,8 @@
-﻿using CargoApp.Core.ShareCore.Policies;
+﻿using CargoApp.Core.Abstraction.Context;
+using CargoApp.Core.Infrastructure.Context;
+using CargoApp.Core.ShareCore.Enums;
+using CargoApp.Core.ShareCore.Policies;
+using CargoApp.Core.TestCore;
 using CargoApp.Modules.Locations.Application.Commands.AddLocationCommand;
 using CargoApp.Modules.Locations.Application.DTO;
 using CargoApp.Modules.Locations.Application.Repositories;
@@ -14,13 +18,24 @@ public class AddLocationCommandTest
     private readonly AddLocationCommandHandler _services;
     private IPolicy<AddLocationCommand> _policyMock = Substitute.For<IPolicy<AddLocationCommand>>();
     private ILocationRepository _locationRepositoryMock = Substitute.For<ILocationRepository>();
+    private IContext _context = Substitute.For<IContext>();
 
     public AddLocationCommandTest()
     {
         _services = new AddLocationCommandHandler(
             _locationRepositoryMock,
-            new List<IPolicy<AddLocationCommand>> { _policyMock }
+            new List<IPolicy<AddLocationCommand>> { _policyMock },
+            _context
         );
+
+        _context.IdentityContext.Returns(new TestIdentityContext
+        {
+            CompanyId = Guid.NewGuid(),
+            Id = Guid.NewGuid(),
+            Claims = new Dictionary<string, IEnumerable<string>>(),
+            Permissions = PermissionEnum.Admin,
+            IsAuthenticated = true
+        });
     }
 
     [Fact]
@@ -29,7 +44,7 @@ public class AddLocationCommandTest
         // Arrange
         var locationId = Guid.NewGuid();
 
-        _locationRepositoryMock.GetByOsmIdAsync(Arg.Any<long>()).Returns(new Location()
+        _locationRepositoryMock.GetByOsmIdAndCompanyIdAsync(Arg.Any<long>(), Arg.Any<Guid>()).Returns(new Location()
         {
             Id = locationId
         });
@@ -60,7 +75,7 @@ public class AddLocationCommandTest
     public async Task CreateLocation_WhenPolicyReturnError_ThenReturnError()
     {
         // Arrange
-        _locationRepositoryMock.GetByOsmIdAsync(Arg.Any<long>()).Returns(null as Location);
+        _locationRepositoryMock.GetByOsmIdAndCompanyIdAsync(Arg.Any<long>(), Arg.Any<Guid>()).Returns(null as Location);
         _policyMock.IsApplicable(Arg.Any<AddLocationCommand>()).Returns(true);
         _policyMock.IsValidAsync(Arg.Any<AddLocationCommand>()).Returns(false);
         _policyMock.ErrorMessage.Returns("error");
@@ -93,10 +108,10 @@ public class AddLocationCommandTest
     {
         // Arrange
         var sampleGuid = Guid.NewGuid();
-        _locationRepositoryMock.GetByOsmIdAsync(Arg.Any<long>()).Returns(null as Location);
+        _locationRepositoryMock.GetByOsmIdAndCompanyIdAsync(Arg.Any<long>(), Arg.Any<Guid>()).Returns(null as Location);
         _policyMock.IsApplicable(Arg.Any<AddLocationCommand>()).Returns(true);
         _policyMock.IsValidAsync(Arg.Any<AddLocationCommand>()).Returns(true);
-        _locationRepositoryMock.CreateAsync(Arg.Any<Location>()).Returns(new Location()
+        _locationRepositoryMock.AddAsync(Arg.Any<Location>()).Returns(new Location()
         {
             Id = sampleGuid
         });
@@ -123,6 +138,6 @@ public class AddLocationCommandTest
         // Assert
         result.IsSuccess.Should().BeTrue();
         result.SuccessModel.Should().Be(sampleGuid.ToString());
-        await _locationRepositoryMock.Received(1).CreateAsync(Arg.Any<Location>());
+        await _locationRepositoryMock.Received(1).AddAsync(Arg.Any<Location>());
     }
 }

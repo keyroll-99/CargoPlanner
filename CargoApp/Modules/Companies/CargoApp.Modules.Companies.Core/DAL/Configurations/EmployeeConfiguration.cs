@@ -4,15 +4,15 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace CargoApp.Modules.Companies.Core.DAL.Configurations;
 
-internal class WorkerConfiguration : IEntityTypeConfiguration<Worker>
+internal class EmployeeConfiguration : IEntityTypeConfiguration<Employee>
 {
-    public void Configure(EntityTypeBuilder<Worker> builder)
+    public void Configure(EntityTypeBuilder<Employee> builder)
     {
         builder.HasKey(x => x.Id);
 
         builder
             .HasOne(x => x.Company)
-            .WithMany(x => x.Workers)
+            .WithMany(x => x.Employees)
             .HasForeignKey(x => x.CompanyId)
             .OnDelete(DeleteBehavior.NoAction);
     }

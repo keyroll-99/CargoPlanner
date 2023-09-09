@@ -1,9 +1,11 @@
-﻿using CargoApp.Core.Infrastructure.Response;
+﻿using CargoApp.Core.Infrastructure.Policies;
+using CargoApp.Core.Infrastructure.Response;
 using CargoApp.Core.ShareCore.Clock;
 using CargoApp.Core.ShareCore.Policies;
 using CargoApp.Modules.Companies.Core.Entities;
 using CargoApp.Modules.Companies.Core.Repositories;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 
 namespace CargoApp.Modules.Companies.Core.Commands.CreateCompany;
 
@@ -22,16 +24,15 @@ internal class CreateCompanyCommandHandler : IRequestHandler<CreateCompanyComman
 
     public async Task<Result<string>> Handle(CreateCompanyCommand request, CancellationToken cancellationToken)
     {
-        var createCompanyResult = await Company.CreateFromCommand(request, _policies, _clock);
-
-        await createCompanyResult.MatchOnlySuccessAsync(async company => await _companyRepository.CreateAsync(company));
-
-        if (createCompanyResult.IsSuccess)
+        var policyResult = await _policies.UsePolicies(request);
+        if (!policyResult.IsSuccess)
         {
-            return Result<string>.Success(createCompanyResult.SuccessModel.Id.ToString(),
-                createCompanyResult.StatusCode);
+            return Result<string>.Fail(policyResult.Error, policyResult.StatusCode);
         }
 
-        return Result<string>.Fail(createCompanyResult.Error, createCompanyResult.StatusCode);
+        var company = new Company(Guid.NewGuid(), _clock.Now(), request.Name, request.CompanyType);
+        await _companyRepository.AddAsync(company);
+        
+        return Result<string>.Success(company.Id.ToString(), StatusCodes.Status201Created);
     }
 }

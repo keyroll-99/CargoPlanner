@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace CargoApp.Modules.Companies.Core.DAL.Migrations
 {
     [DbContext(typeof(CompanyDbContext))]
-    [Migration("20230904205636_Initial_Companies")]
-    partial class Initial_Companies
+    [Migration("20230909173430_init_companies")]
+    partial class init_companies
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -47,7 +47,7 @@ namespace CargoApp.Modules.Companies.Core.DAL.Migrations
                     b.ToTable("Companies", "companies");
                 });
 
-            modelBuilder.Entity("CargoApp.Modules.Companies.Core.Entities.Worker", b =>
+            modelBuilder.Entity("CargoApp.Modules.Companies.Core.Entities.Employee", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -59,8 +59,17 @@ namespace CargoApp.Modules.Companies.Core.DAL.Migrations
                     b.Property<DateTime>("CreateAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uuid");
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Surname")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<int>("WorkingPosition")
                         .HasColumnType("integer");
@@ -69,13 +78,13 @@ namespace CargoApp.Modules.Companies.Core.DAL.Migrations
 
                     b.HasIndex("CompanyId");
 
-                    b.ToTable("Worker", "companies");
+                    b.ToTable("Employee", "companies");
                 });
 
-            modelBuilder.Entity("CargoApp.Modules.Companies.Core.Entities.Worker", b =>
+            modelBuilder.Entity("CargoApp.Modules.Companies.Core.Entities.Employee", b =>
                 {
                     b.HasOne("CargoApp.Modules.Companies.Core.Entities.Company", "Company")
-                        .WithMany("Workers")
+                        .WithMany("Employees")
                         .HasForeignKey("CompanyId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
@@ -85,7 +94,7 @@ namespace CargoApp.Modules.Companies.Core.DAL.Migrations
 
             modelBuilder.Entity("CargoApp.Modules.Companies.Core.Entities.Company", b =>
                 {
-                    b.Navigation("Workers");
+                    b.Navigation("Employees");
                 });
 #pragma warning restore 612, 618
         }

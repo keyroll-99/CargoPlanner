@@ -18,7 +18,7 @@ internal static class LocationMapper
         );
     }
     
-    public static Core.Entities.Location AsEntity(this LocationDto location)
+    public static Core.Entities.Location AsEntity(this LocationDto location, Guid companyId)
     {
         return new Core.Entities.Location(
             lat: location.Lat,
@@ -26,7 +26,7 @@ internal static class LocationMapper
             name: location.Name,
             displayName: location.DisplayName,
             osmId: location.OsmId,
-            companyId: 1,
+            companyId: companyId,
             address: location.Address.AsEntity()
         );
     }

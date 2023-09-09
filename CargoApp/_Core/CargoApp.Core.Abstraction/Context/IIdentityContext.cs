@@ -8,4 +8,5 @@ public interface IIdentityContext
     public Guid Id { get; }
     Dictionary<string, IEnumerable<string>> Claims { get; }
     public PermissionEnum Permissions { get; }
+    public Guid CompanyId { get; }
 }

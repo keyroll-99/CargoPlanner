@@ -11,7 +11,8 @@ public class IdentityContext : IIdentityContext
     public Guid Id { get; }
     public Dictionary<string, IEnumerable<string>> Claims { get; }
     public PermissionEnum Permissions { get; }
-
+    public Guid CompanyId { get; }
+    
     public IdentityContext(ClaimsPrincipal principal)
     {
         IsAuthenticated = principal.Identity?.IsAuthenticated is true;
@@ -20,6 +21,14 @@ public class IdentityContext : IIdentityContext
             .ToDictionary(x => x.Key, x => x.Select(c => c.Value.ToString()));
 
         Claims.TryGetValue(ClaimsConst.Permission, out IEnumerable<string>? permissions);
+        Claims.TryGetValue(ClaimsConst.CompanyId, out IEnumerable<string>? companiesIds);
+
+        var companyId = companiesIds?.FirstOrDefault();
+        if (companyId is not null && Guid.TryParse(companyId, out var companyIdAsGuid))
+        {
+            CompanyId = companyIdAsGuid;
+        }
+        
         var permission = permissions?.FirstOrDefault();
         if (permission is not null && long.TryParse(permission, out var parsedPermission))
         {

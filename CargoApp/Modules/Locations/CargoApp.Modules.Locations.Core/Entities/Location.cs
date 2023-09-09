@@ -9,7 +9,7 @@ public class Location : BaseEntity
     public string Name { get; private set; }
     public string DisplayName { get; private set; }
     public long OsmId { get; private set;}
-    public long CompanyId { get; private set; }
+    public Guid CompanyId { get; private set; }
     public Guid AddressId { get; private set; }
     public Address? Address { get; private set; }
 
@@ -17,7 +17,7 @@ public class Location : BaseEntity
     {
     }
 
-    public Location(Guid id, DateTime createAt, double lat, double lon, string name, string displayName, long osmId, long companyId, Address address) : base(id, createAt)
+    public Location(Guid id, DateTime createAt, double lat, double lon, string name, string displayName, long osmId, Guid companyId, Address address) : base(id, createAt)
     {
         Lat = lat;
         Lon = lon;
@@ -27,7 +27,7 @@ public class Location : BaseEntity
         Address = address;
         CompanyId = companyId;
     }
-    public Location(double lat, double lon, string name, string displayName, long companyId, long osmId, Address address)
+    public Location(double lat, double lon, string name, string displayName, Guid companyId, long osmId, Address address)
     {
         Lat = lat;
         Lon = lon;
@@ -38,7 +38,7 @@ public class Location : BaseEntity
         CompanyId = companyId;
     }
 
-    public Location(Guid id, DateTime createAt, double lat, double lon, string name, string displayName, long osmId, long companyId, Guid addressId) : base(id, createAt)
+    public Location(Guid id, DateTime createAt, double lat, double lon, string name, string displayName, long osmId, Guid companyId, Guid addressId) : base(id, createAt)
     {
         Lat = lat;
         Lon = lon;
@@ -49,7 +49,7 @@ public class Location : BaseEntity
         CompanyId = companyId;
     }
 
-    public Location(double lat, double lon, string name, string displayName, long osmId, long companyId, Guid addressId, Address? address)
+    public Location(double lat, double lon, string name, string displayName, long osmId, Guid companyId, Guid addressId, Address? address)
     {
         Lat = lat;
         Lon = lon;

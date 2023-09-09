@@ -4,5 +4,5 @@ namespace CargoApp.Core.Abstraction.Auth;
 
 public interface IAuthManager
 {
-    JsonWebToken CreateToken(Guid userId, string email, PermissionEnum permission);
+    JsonWebToken CreateToken(Guid userId, string email, PermissionEnum permission, Guid companyId);
 }

@@ -3,7 +3,7 @@ using CargoApp.Core.Infrastructure.Policies;
 using CargoApp.Core.Infrastructure.Postgres;
 using CargoApp.Modules.Companies.Core.DAL;
 using CargoApp.Modules.Companies.Core.Repositories;
-using MediatR;
+using CargoApp.Modules.Companies.Core.Services;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace CargoApp.Modules.Companies.Core;
@@ -15,7 +15,10 @@ internal static class Extensions
         services.AddPostgres<CompanyDbContext>();
 
         services.AddScoped<ICompanyRepository, CompanyRepository>();
+        services.AddScoped<IWorkerRepository, WorkerRepository>();
         services.AddPolicies(Assembly.GetExecutingAssembly());
+
+        services.AddServices();
 
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
         

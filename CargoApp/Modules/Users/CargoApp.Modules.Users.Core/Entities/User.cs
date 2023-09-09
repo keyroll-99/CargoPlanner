@@ -10,4 +10,5 @@ public class User : BaseEntity
     public bool IsActive { get; set; }
     public ICollection<RefreshToken> RefreshTokens { get; init; } = new List<RefreshToken>();
     public PermissionEnum PermissionMask { get; set; } 
+    public Guid? EmployeeId { get; set; }
 }

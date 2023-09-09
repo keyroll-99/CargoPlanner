@@ -9,10 +9,12 @@
     <ItemGroup>
       <ProjectReference Include="..\..\..\_Core\CargoApp.Core.Abstraction\CargoApp.Core.Abstraction.csproj" />
       <ProjectReference Include="..\..\..\_Core\CargoApp.Core.Infrastructure\CargoApp.Core.Infrastructure.csproj" />
+      <ProjectReference Include="..\..\_Contracts\CargoApp.Module.Contracts.Companies\CargoApp.Module.Contracts.Companies.csproj" />
     </ItemGroup>
 
     <ItemGroup>
       <Folder Include="DAL\Migrations\" />
+      <Folder Include="Queries\" />
     </ItemGroup>
 
     <ItemGroup>

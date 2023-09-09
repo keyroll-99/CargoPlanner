@@ -18,10 +18,10 @@ internal partial class ValidEmailPolicy : IPolicy<CreateUserCommand>
 
     public ValueTask<bool> IsValidAsync(CreateUserCommand model)
     {
-        return ValueTask.FromResult(MyRegex().IsMatch(model.Email));
+        return ValueTask.FromResult(MailRegex().IsMatch(model.Email));
     }
 
     [GeneratedRegex(
         "^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$")]
-    private static partial Regex MyRegex();
+    private static partial Regex MailRegex();
 }

@@ -30,7 +30,7 @@ public class AuthManager : IAuthManager
         _issuer = authOptions.Issuer;
     }
 
-    public JsonWebToken CreateToken(Guid userId, string email, PermissionEnum permission)
+    public JsonWebToken CreateToken(Guid userId, string email, PermissionEnum permission, Guid companyId)
     {
         var now = _clock.Now();
 
@@ -39,7 +39,8 @@ public class AuthManager : IAuthManager
             new(JwtRegisteredClaimNames.Sub, userId.ToString()),
             new(JwtRegisteredClaimNames.UniqueName, userId.ToString()),
             new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-            new(ClaimsConst.Permission, ((long) permission).ToString())
+            new(ClaimsConst.Permission, ((long) permission).ToString()),
+            new(ClaimsConst.CompanyId, companyId.ToString())
         };
 
         var expires = now.Add(_authOptions.Expiry);
