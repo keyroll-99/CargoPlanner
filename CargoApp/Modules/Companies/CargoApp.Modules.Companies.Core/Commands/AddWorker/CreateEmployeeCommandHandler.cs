@@ -13,19 +13,19 @@ namespace CargoApp.Modules.Companies.Core.Commands.AddWorker;
 internal class CreateEmployeeCommandHandler : IRequestHandler<CreateEmployeeCommand, Result<string>>
 {
     private readonly ICompanyRepository _companyRepository;
-    private readonly IWorkerRepository _workerRepository;
+    private readonly IEmployeeRepository _employeeRepository;
     private readonly IEnumerable<IPolicy<CreateEmployeeCommand>> _policies;
     private readonly IClock _clock;
     private readonly IContext _context;
 
     public CreateEmployeeCommandHandler(
         ICompanyRepository companyRepository,
-        IWorkerRepository workerRepository,
+        IEmployeeRepository employeeRepository,
         IEnumerable<IPolicy<CreateEmployeeCommand>> policies,
         IClock clock, IContext context)
     {
         _companyRepository = companyRepository;
-        _workerRepository = workerRepository;
+        _employeeRepository = employeeRepository;
         _policies = policies;
         _clock = clock;
         _context = context;
@@ -59,7 +59,7 @@ internal class CreateEmployeeCommandHandler : IRequestHandler<CreateEmployeeComm
             company
         );
 
-        await _workerRepository.AddAsync(worker);
+        await _employeeRepository.AddAsync(worker);
 
         // TODO publish rabbit event
         

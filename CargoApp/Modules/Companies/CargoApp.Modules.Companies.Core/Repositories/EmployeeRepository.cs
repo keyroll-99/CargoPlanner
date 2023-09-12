@@ -5,9 +5,9 @@ using CargoApp.Modules.Companies.Core.Entities;
 
 namespace CargoApp.Modules.Companies.Core.Repositories;
 
-internal class WorkerRepository : Repository<Employee, CompanyDbContext>, IWorkerRepository
+internal class EmployeeRepository : Repository<Employee, CompanyDbContext>, IEmployeeRepository
 {
-    public WorkerRepository(CompanyDbContext appContext, IClock clock) : base(appContext, clock)
+    public EmployeeRepository(CompanyDbContext appContext, IClock clock) : base(appContext, clock)
     {
     }
 }

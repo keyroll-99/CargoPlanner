@@ -15,7 +15,7 @@ internal static class Extensions
         services.AddPostgres<CompanyDbContext>();
 
         services.AddScoped<ICompanyRepository, CompanyRepository>();
-        services.AddScoped<IWorkerRepository, WorkerRepository>();
+        services.AddScoped<IEmployeeRepository, EmployeeRepository>();
         services.AddPolicies(Assembly.GetExecutingAssembly());
 
         services.AddServices();

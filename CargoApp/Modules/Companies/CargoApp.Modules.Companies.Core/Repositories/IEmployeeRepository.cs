@@ -3,7 +3,7 @@ using CargoApp.Modules.Companies.Core.Entities;
 
 namespace CargoApp.Modules.Companies.Core.Repositories;
 
-internal interface IWorkerRepository : IRepository<Employee, Guid>
+internal interface IEmployeeRepository : IRepository<Employee, Guid>
 {
     
 }
