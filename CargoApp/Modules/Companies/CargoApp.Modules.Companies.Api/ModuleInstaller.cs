@@ -3,6 +3,7 @@ using CargoApp.Modules.Companies.Core;
 using Microsoft.Extensions.DependencyInjection;
 
 [assembly: InternalsVisibleTo("CargoApp.Bootstrap")]
+
 namespace CargoApp.Modules.Companies.Api;
 
 internal static class ModuleInstaller
