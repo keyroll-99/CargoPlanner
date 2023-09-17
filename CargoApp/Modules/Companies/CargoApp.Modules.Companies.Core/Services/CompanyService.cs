@@ -1,6 +1,6 @@
-﻿using CargoApp.Module.Contracts.Companies;
-using CargoApp.Module.Contracts.Companies.DTO;
-using CargoApp.Modules.Companies.Core.Repositories;
+﻿using CargoApp.Modules.Companies.Core.Repositories;
+using CargoApp.Modules.Contracts.Companies;
+using CargoApp.Modules.Contracts.Companies.DTO;
 
 namespace CargoApp.Modules.Companies.Core.Services;
 

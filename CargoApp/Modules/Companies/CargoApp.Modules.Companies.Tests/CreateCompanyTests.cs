@@ -7,7 +7,7 @@ using FluentAssertions;
 using Microsoft.AspNetCore.Http;
 using NSubstitute;
 using Xunit;
-using Company = CargoApp.Module.Contracts.Companies.DTO.Company;
+using Company = CargoApp.Modules.Contracts.Companies.DTO.Company;
 
 namespace CargoApp.Modules.Companies.Tests;
 

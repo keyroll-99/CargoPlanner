@@ -19,4 +19,5 @@
       <ProjectReference Include="..\CargoApp.Core.ShareCore\CargoApp.Core.ShareCore.csproj" />
     </ItemGroup>
 
+
 </Project>

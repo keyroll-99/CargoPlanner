@@ -1,4 +1,4 @@
-﻿using CargoApp.Module.Contracts.Companies;
+﻿using CargoApp.Modules.Contracts.Companies;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace CargoApp.Modules.Companies.Core.Services;

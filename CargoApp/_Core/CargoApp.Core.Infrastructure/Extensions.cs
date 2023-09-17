@@ -3,6 +3,7 @@ using System.Text.Json;
 using CargoApp.Core.Infrastructure.Auth;
 using CargoApp.Core.Infrastructure.Context;
 using CargoApp.Core.Infrastructure.Postgres;
+using CargoApp.Core.Infrastructure.Rabbit;
 using CargoApp.Core.Infrastructure.Repositories;
 using CargoApp.Core.ShareCore.Clock;
 using Microsoft.AspNetCore.Builder;
@@ -30,6 +31,7 @@ public static class Extensions
         services.AddPostgres();
         services.AddAuth();
         services.AddContext();
+        services.AddRabbit();
 
         services.AddCors((setupAction) =>
         {

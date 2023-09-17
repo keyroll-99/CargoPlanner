@@ -1,4 +1,5 @@
 ﻿using CargoApp.Core.Abstraction.Context;
+using CargoApp.Core.Abstraction.QueueMessages;
 using CargoApp.Core.ShareCore.Clock;
 using CargoApp.Core.ShareCore.Policies;
 using CargoApp.Modules.Companies.Core.Commands.AddWorker;
@@ -18,6 +19,7 @@ public class CreateCompanyCommandHandlerTests
     private readonly IPolicy<CreateEmployeeCommand> _mockPolicy = Substitute.For<IPolicy<CreateEmployeeCommand>>();
     private readonly IClock _clock = Substitute.For<IClock>();
     private readonly IContext _context = Substitute.For<IContext>();
+    private readonly IEventManager _eventManager = Substitute.For<IEventManager>();
 
     private readonly CreateEmployeeCommandHandler _handler;
 
@@ -28,7 +30,8 @@ public class CreateCompanyCommandHandlerTests
             _employeeRepository,
             new List<IPolicy<CreateEmployeeCommand>>() { _mockPolicy },
             _clock,
-            _context
+            _context,
+            _eventManager
         );
     }
 

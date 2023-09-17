@@ -54,11 +54,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CargoApp.Modules.Companies.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CargoApp.Modules.Companies.Core", "Modules\Companies\CargoApp.Modules.Companies.Core\CargoApp.Modules.Companies.Core.csproj", "{90182BBA-4549-4A11-A407-8AB44A8DE7EC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CargoApp.Module.Contracts.Companies", "Modules\_Contracts\CargoApp.Module.Contracts.Companies\CargoApp.Module.Contracts.Companies.csproj", "{F484CC3A-1B95-4DFF-BBBF-80F59C5CD7FA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CargoApp.Modules.Contracts.Companies", "Modules\_Contracts\CargoApp.Modules.Contracts.Companies\CargoApp.Modules.Contracts.Companies.csproj", "{F484CC3A-1B95-4DFF-BBBF-80F59C5CD7FA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CargoApp.Core.TestCore", "_Core\CargoApp.Core.TestCore\CargoApp.Core.TestCore.csproj", "{0CCDAA19-D469-43E9-8CB0-3CC21FD1E228}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CargoApp.Modules.Companies.Tests", "Modules\Companies\CargoApp.Modules.Companies.Tests\CargoApp.Modules.Companies.Tests.csproj", "{EE0B0934-EB89-4DE5-BEF9-409B6476A351}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CargoApp.Modules.Contracts.Events", "Modules\_Contracts\CargoApp.Modules.Contracts.Events\CargoApp.Modules.Contracts.Events.csproj", "{0E105590-8D99-4D7D-9891-294DAA7C9BD3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -93,6 +95,7 @@ Global
 		{F484CC3A-1B95-4DFF-BBBF-80F59C5CD7FA} = {776E5EA9-CAA1-4053-8A56-08E50CC06D21}
 		{0CCDAA19-D469-43E9-8CB0-3CC21FD1E228} = {CCEAE8C3-5642-40A8-8FB7-BF4784F13572}
 		{EE0B0934-EB89-4DE5-BEF9-409B6476A351} = {87E10E9C-25AF-4E4C-891B-CDED5C43E123}
+		{0E105590-8D99-4D7D-9891-294DAA7C9BD3} = {776E5EA9-CAA1-4053-8A56-08E50CC06D21}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{C0124348-3DFA-45BE-8817-05D2C43F1D98}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -183,5 +186,9 @@ Global
 		{EE0B0934-EB89-4DE5-BEF9-409B6476A351}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EE0B0934-EB89-4DE5-BEF9-409B6476A351}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EE0B0934-EB89-4DE5-BEF9-409B6476A351}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0E105590-8D99-4D7D-9891-294DAA7C9BD3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0E105590-8D99-4D7D-9891-294DAA7C9BD3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0E105590-8D99-4D7D-9891-294DAA7C9BD3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0E105590-8D99-4D7D-9891-294DAA7C9BD3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

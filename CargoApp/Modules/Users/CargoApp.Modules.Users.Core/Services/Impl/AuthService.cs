@@ -2,7 +2,7 @@
 using CargoApp.Core.Infrastructure.Response;
 using CargoApp.Core.ShareCore.Clock;
 using CargoApp.Core.ShareCore.Policies;
-using CargoApp.Module.Contracts.Companies;
+using CargoApp.Modules.Contracts.Companies;
 using CargoApp.Modules.Contracts.Users.DTO;
 using CargoApp.Modules.Users.Core.Commands;
 using CargoApp.Modules.Users.Core.Entities;
