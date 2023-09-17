@@ -7,6 +7,7 @@ using CargoApp.Modules.Users.Core.Services.Abstract;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Serilog;
 
 namespace CargoApp.Modules.Users.Controllers;
 
@@ -17,11 +18,13 @@ public class AuthController : ControllerBase
     private readonly IAuthService _authService;
     private readonly IRefreshTokenService _refreshTokenService;
     private const string RefreshTokenCookieName = "refreshToken";
+    private readonly ILogger _logger;
 
-    public AuthController(IAuthService authService, IRefreshTokenService refreshTokenService)
+    public AuthController(IAuthService authService, IRefreshTokenService refreshTokenService, ILogger logger)
     {
         _authService = authService;
         _refreshTokenService = refreshTokenService;
+        _logger = logger;
     }
 
     [HttpPost]

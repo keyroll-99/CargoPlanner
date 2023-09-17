@@ -13,7 +13,25 @@ public static class Extensions
         var options = services.GetOptions<RabbitOptions>(OptionsName);
 
         services.AddSingleton<RabbitFactory>(_ => new RabbitFactory(options.HostName));
-        services.AddTransient<IEventManager, RabbitEventManager>();
+        services.AddSingleton<IEventManager, RabbitEventManager>();
+        
+        return services;
+    }
+
+    public static IServiceCollection AddConsumer<T>(this IServiceCollection services)
+        where T : IEventConsumer<object>
+    {
+        var consumerType = typeof(T);
+
+        var methodInfo = consumerType.GetMethod("ProcessEvent");
+        var methodParameterInfo = methodInfo?.GetParameters().FirstOrDefault();
+        var queueName = methodParameterInfo?.GetType().FullName;
+        if (queueName is null)
+        {
+            return services;
+        }
+        
+        services.Add(new ServiceDescriptor(consumerType, consumerType, ServiceLifetime.Scoped));
         
         return services;
     }

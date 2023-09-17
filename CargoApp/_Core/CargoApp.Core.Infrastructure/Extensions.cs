@@ -46,7 +46,7 @@ public static class Extensions
                         .WithOrigins("http://localhost:4200");
                 });
         });
-
+        
         return services;
     }
 

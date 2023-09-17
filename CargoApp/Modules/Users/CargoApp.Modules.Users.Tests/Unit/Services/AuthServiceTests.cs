@@ -1,11 +1,9 @@
 ﻿using CargoApp.Core.Abstraction.Auth;
 using CargoApp.Core.ShareCore.Clock;
 using CargoApp.Core.ShareCore.Policies;
-using CargoApp.Module.Contracts.Companies;
 using CargoApp.Modules.Contracts.Companies;
 using CargoApp.Modules.Users.Core.Commands;
 using CargoApp.Modules.Users.Core.Entities;
-using CargoApp.Modules.Users.Core.Policies;
 using CargoApp.Modules.Users.Core.Policies.CreateUserCommandPolicies;
 using CargoApp.Modules.Users.Core.Repositories;
 using CargoApp.Modules.Users.Core.Services.Abstract;

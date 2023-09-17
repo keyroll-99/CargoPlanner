@@ -2,5 +2,5 @@
 
 public class RabbitOptions
 {
-    public string HostName { get; private set;  }
+    public string HostName { get; init;  }
 }
