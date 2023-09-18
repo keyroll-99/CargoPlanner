@@ -35,7 +35,7 @@ export class MapComponent {
       },
     },0);
 
-    marker.addTo(this.map).bindPopup("kupa").bindTooltip("dupa");
+    marker.addTo(this.map).bindPopup("popup view").bindTooltip("tooltip");
   }
 
   mapClicked($event: any) {
