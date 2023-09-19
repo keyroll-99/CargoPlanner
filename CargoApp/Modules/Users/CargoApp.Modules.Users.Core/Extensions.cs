@@ -1,6 +1,7 @@
 ﻿using System.Runtime.CompilerServices;
 using CargoApp.Core.Infrastructure.Postgres;
 using CargoApp.Modules.Users.Core.DAL;
+using CargoApp.Modules.Users.Core.Events;
 using CargoApp.Modules.Users.Core.Policies;
 using CargoApp.Modules.Users.Core.Repositories;
 using CargoApp.Modules.Users.Core.Security;
@@ -19,6 +20,10 @@ internal static class Extensions
         services.AddPolicies();
         services.AddSecurity();
         services.AddServices();
+
+        services.AddScoped<EmployeeCreateEventConsumer>();
+
+        services.AddHostedService<Test>();
 
         return services;
     }

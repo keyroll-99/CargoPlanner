@@ -17,22 +17,4 @@ public static class Extensions
         
         return services;
     }
-
-    public static IServiceCollection AddConsumer<T>(this IServiceCollection services)
-        where T : IEventConsumer<object>
-    {
-        var consumerType = typeof(T);
-
-        var methodInfo = consumerType.GetMethod("ProcessEvent");
-        var methodParameterInfo = methodInfo?.GetParameters().FirstOrDefault();
-        var queueName = methodParameterInfo?.GetType().FullName;
-        if (queueName is null)
-        {
-            return services;
-        }
-        
-        services.Add(new ServiceDescriptor(consumerType, consumerType, ServiceLifetime.Scoped));
-        
-        return services;
-    }
 }

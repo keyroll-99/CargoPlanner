@@ -1,6 +1,6 @@
 ﻿namespace CargoApp.Core.Abstraction.QueueMessages;
 
-public interface IEventConsumer<in T>
+public interface IEventConsumer<in T> where T: class
 {
-    Task ProcessEvent(T @event);
+    Task Process(T @event);
 }
