@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.VisualStudio.TestPlatform.TestHost;
 
-namespace CargoApp.Modules.Users.Test.Integration;
+namespace CargoApp.Modules.Users.Tests.Integration;
 
 internal sealed class CargoAppTest : WebApplicationFactory<Program>
 {

@@ -66,7 +66,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Modules", "Modules", "{43DC
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Users ", "Users ", "{D308841E-59F8-4E67-91AC-5C4333E66B54}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CargoApp.Modules.Users.Test.Integration", "Tests\Modules\Users\CargoApp.Modules.Users.Test.Integration\CargoApp.Modules.Users.Test.Integration.csproj", "{A6C87F9F-C90B-407D-A148-E9586DE762D9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CargoApp.Modules.Users.Tests.Integration", "Tests\Modules\Users\CargoApp.Modules.Users.Tests.Integration\CargoApp.Modules.Users.Tests.Integration.csproj", "{A6C87F9F-C90B-407D-A148-E9586DE762D9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CargoApp.Modules.Users.Tests.Unit", "Tests\Modules\Users\CargoApp.Modules.Users.Tests.Unit\CargoApp.Modules.Users.Tests.Unit.csproj", "{807AF3E2-2431-4AE4-A45D-3465F05856C9}"
 EndProject

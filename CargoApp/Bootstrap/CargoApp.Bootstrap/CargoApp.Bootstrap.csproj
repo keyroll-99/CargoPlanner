@@ -29,7 +29,7 @@
     </ItemGroup>
     
     <ItemGroup>
-        <InternalsVisibleTo Include="CargoApp.Modules.Users.Test.Integration" />
+        <InternalsVisibleTo Include="CargoApp.Modules.Users.Tests.Integration" />
     </ItemGroup>
 
 </Project>

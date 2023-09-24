@@ -2,8 +2,9 @@ using CargoApp.Core.Infrastructure.Postgres;
 using CargoApp.IntegrationTests;
 using Xunit;
 
-namespace CargoApp.Modules.Users.Test.Integration;
+namespace CargoApp.Modules.Users.Tests.Integration;
 
+[Collection("Api")]
 public abstract class BaseControllerTest : IClassFixture<OptionsProvider>
 {
     internal readonly HttpClient Client;

@@ -7,7 +7,6 @@
 
         <IsPackable>false</IsPackable>
         <IsTestProject>true</IsTestProject>
-        <RootNamespace>CargoApp.Modules.Users.Test.Integration</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
