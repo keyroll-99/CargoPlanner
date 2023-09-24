@@ -27,5 +27,9 @@
         <ProjectReference Include="..\..\Modules\Locations\CargoApp.Modules.Locations.Api\CargoApp.Modules.Locations.Api.csproj" />
         <ProjectReference Include="..\..\Modules\Users\CargoApp.Modules.Users.Api\CargoApp.Modules.Users.Api.csproj"/>
     </ItemGroup>
+    
+    <ItemGroup>
+        <InternalsVisibleTo Include="CargoApp.Modules.Users.Test.Integration" />
+    </ItemGroup>
 
 </Project>

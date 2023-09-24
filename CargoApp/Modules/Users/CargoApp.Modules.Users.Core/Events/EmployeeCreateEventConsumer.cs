@@ -7,7 +7,7 @@ using Serilog;
 
 namespace CargoApp.Modules.Users.Core.Events;
 
-internal class EmployeeCreateEventConsumer : IEventConsumer<EmployeeCreateEvent>
+internal sealed class EmployeeCreateEventConsumer : IEventConsumer<EmployeeCreateEvent>
 {
     private readonly ILogger _logger;
     private readonly IRepositoryProvider _repositoryProvider;

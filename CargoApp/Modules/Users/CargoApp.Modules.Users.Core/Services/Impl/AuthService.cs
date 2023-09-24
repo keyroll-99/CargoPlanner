@@ -14,7 +14,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace CargoApp.Modules.Users.Core.Services.Impl;
 
-internal class AuthService : IAuthService
+internal sealed class AuthService : IAuthService
 {
     private readonly IEnumerable<IPolicy<CreateUserCommand>> _createUserPolicy;
     private readonly IUserRepository _userRepository;
@@ -54,7 +54,7 @@ internal class AuthService : IAuthService
         };
         await _userRepository.AddAsync(model);
 
-        return model.AsUserDto();
+        return Result<UserDto, string>.Success(model.AsUserDto(), StatusCodes.Status201Created);
     }
 
     public async Task<Result<JsonWebToken, string>> SignInAsync(SingInCommand singInCommand)

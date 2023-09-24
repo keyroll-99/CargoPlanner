@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace CargoApp.Modules.Users.Core.Policies.UpdatePermissionPolicies;
 
-internal class CanRemovePermissionToUserPolicy : IPolicy<UpdatePermissionCommand>
+internal sealed class CanRemovePermissionToUserPolicy : IPolicy<UpdatePermissionCommand>
 {
     public string ErrorMessage => "User has already this policy";
     public int StatusCode => StatusCodes.Status400BadRequest;

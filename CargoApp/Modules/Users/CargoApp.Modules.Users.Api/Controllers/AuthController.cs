@@ -28,7 +28,7 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost]
-    [ProducesResponseType(typeof(UserDto), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(UserDto), StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> CreateUser(CreateUserCommand createUserCommand)
     {

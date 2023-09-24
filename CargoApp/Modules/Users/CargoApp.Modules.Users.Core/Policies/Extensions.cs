@@ -12,17 +12,4 @@ internal static class Extensions
         services.AddPolicies(Assembly.GetExecutingAssembly());
         return services;
     }
-
-    private static IEnumerable<Type> GetAllPolicesTypes()
-    {
-        return Assembly.GetExecutingAssembly().GetTypes()
-            .Where(x => x is { IsAbstract: false, IsClass: true } && typeof(IPolicyMarker).IsAssignableFrom(x)).ToList()
-            .SelectMany(z => z.GetInterfaces().Where(x => x.IsGenericType)).Distinct();
-    }
-
-    private static IEnumerable<Type> GetAllPolicy(Type type)
-    {
-        return Assembly.GetExecutingAssembly().GetTypes().Where(x =>
-            x is { IsAbstract: false, IsClass: true } && type.IsAssignableFrom(x));
-    }
 }

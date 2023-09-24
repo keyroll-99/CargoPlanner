@@ -9,7 +9,7 @@ using CargoApp.Modules.Users.Core.Services.Abstract;
 
 namespace CargoApp.Modules.Users.Core.Services.Impl;
 
-internal class PermissionTools : IPermissionTools
+internal sealed class PermissionTools : IPermissionTools
 {
     private readonly IEnumerable<IPolicy<UpdatePermissionCommand>> _policies;
     private readonly IUserRepository _userRepository;

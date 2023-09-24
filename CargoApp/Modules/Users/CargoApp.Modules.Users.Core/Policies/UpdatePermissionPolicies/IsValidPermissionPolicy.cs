@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace CargoApp.Modules.Users.Core.Policies.UpdatePermissionPolicies;
 
-internal class IsValidPermissionPolicy : IPolicy<UpdatePermissionCommand>
+internal sealed class IsValidPermissionPolicy : IPolicy<UpdatePermissionCommand>
 {
     public string ErrorMessage => "Invalid permission value";
     public int StatusCode => StatusCodes.Status400BadRequest;

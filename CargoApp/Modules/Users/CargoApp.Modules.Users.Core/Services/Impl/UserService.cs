@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace CargoApp.Modules.Users.Core.Services.Impl;
 
-internal class UserService : IUser
+internal sealed class UserService : IUser
 {
     private readonly IUserRepository _userRepository;
 

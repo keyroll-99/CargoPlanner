@@ -25,9 +25,11 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\CargoApp.Modules.Users.Api\CargoApp.Modules.Users.Api.csproj" />
-      <ProjectReference Include="..\CargoApp.Modules.Users.Core\CargoApp.Modules.Users.Core.csproj" />
+      <ProjectReference Include="..\..\..\..\Modules\Users\CargoApp.Modules.Users.Api\CargoApp.Modules.Users.Api.csproj" />
+      <ProjectReference Include="..\..\..\..\Modules\Users\CargoApp.Modules.Users.Core\CargoApp.Modules.Users.Core.csproj" />
+      <ProjectReference Include="..\..\..\..\_Core\CargoApp.Core.TestCore\CargoApp.Core.TestCore.csproj" />
     </ItemGroup>
+
 
 
 

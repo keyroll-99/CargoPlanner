@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace CargoApp.Modules.Users.Core.Policies.CreateUserCommandPolicies;
 
-internal class UniqueEmailPolicy : IPolicy<CreateUserCommand>
+internal sealed class UniqueEmailPolicy : IPolicy<CreateUserCommand>
 {
     private readonly IUserRepository _userRepository;
 

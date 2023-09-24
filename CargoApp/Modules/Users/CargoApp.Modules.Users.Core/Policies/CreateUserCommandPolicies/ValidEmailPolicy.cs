@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace CargoApp.Modules.Users.Core.Policies.CreateUserCommandPolicies;
 
-internal partial class ValidEmailPolicy : IPolicy<CreateUserCommand>
+internal sealed partial class ValidEmailPolicy : IPolicy<CreateUserCommand>
 {
     public string ErrorMessage => "Invalid Email.";
     public int StatusCode => StatusCodes.Status400BadRequest;

@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace CargoApp.Modules.Users.Core.Policies.UpdatePermissionPolicies;
 
-public class CanUpdatePermission : IPolicy<UpdatePermissionCommand>
+internal sealed class CanUpdatePermission : IPolicy<UpdatePermissionCommand>
 {
     private readonly IContext _context;
 

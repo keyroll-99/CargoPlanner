@@ -27,12 +27,11 @@
 
     <ItemGroup>
       <ProjectReference Include="..\CargoApp.Core.Abstraction\CargoApp.Core.Abstraction.csproj" />
-
-
-
-
     </ItemGroup>
-
+    
+    <ItemGroup>
+        <InternalsVisibleTo Include="CargoApp.Modules.Users.Test.Integration" />
+    </ItemGroup>
 
 
 
