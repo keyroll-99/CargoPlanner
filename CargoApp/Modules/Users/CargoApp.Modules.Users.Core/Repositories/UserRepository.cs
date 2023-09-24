@@ -1,5 +1,7 @@
 ﻿using CargoApp.Core.Infrastructure.Repositories;
+using CargoApp.Core.Infrastructure.Response;
 using CargoApp.Core.ShareCore.Clock;
+using CargoApp.Modules.Contracts.Events.Companies;
 using CargoApp.Modules.Users.Core.DAL;
 using CargoApp.Modules.Users.Core.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -20,5 +22,24 @@ internal class UserRepository : Repository<User, UserDbContext>, IUserRepository
     public Task<User?> GetByEmailAsync(string email)
     {
         return Entities.SingleOrDefaultAsync(x => x.Email == email);
+    }
+
+    public async Task<Result<User>> AddAsync(EmployeeCreateEvent @event)
+    {
+        var user = new User
+        {
+            Id = Guid.NewGuid(),
+            Email = @event.Email,
+            // TODO: password recovery
+            Password = "#TemporaryPassword#",
+            CreateAt = Clock.Now(),
+            EmployeeId = @event.Id,
+            IsActive = true,
+            PermissionMask = 0,
+            RefreshTokens = new List<RefreshToken>()
+        };
+
+        await AddAsync(user);
+        return user;
     }
 }

@@ -1,17 +1,21 @@
-﻿using RabbitMQ.Client;
+﻿using CargoApp.Core.Abstraction.QueueMessages;
+using RabbitMQ.Client;
+using Serilog;
 
 namespace CargoApp.Core.Infrastructure.Rabbit;
 
-public class RabbitFactory
+public static class RabbitFactory
 {
-    public ConnectionFactory ConnectionFactory { get; private set; }
-    
-    
-    public RabbitFactory(string hostName)
+    public static IEventManager CreateEventManager(string hostName, ILogger logger)
     {
-        ConnectionFactory = new ConnectionFactory
+        var factory = new ConnectionFactory
         {
-            HostName = hostName,
+            HostName = "localhost", 
+            DispatchConsumersAsync = true
         };
+        var connection = factory.CreateConnection();
+        var channel = connection.CreateModel();
+
+        return new RabbitEventManager(channel, logger);
     }
 }

@@ -29,7 +29,7 @@ internal class RefreshTokenRepository : Repository<RefreshToken, UserDbContext>,
         var result = Entities.Where(x => x.UserId == userId);
         if (additionalFilter is not null)
         {
-            result.Where(additionalFilter);
+            result = result.Where(additionalFilter);
         }
 
         return result.ToListAsync();

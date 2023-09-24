@@ -9,60 +9,39 @@ namespace CargoApp.Core.Infrastructure.Rabbit;
 
 internal class RabbitEventManager : IEventManager
 {
-    private readonly RabbitFactory _rabbitFactory;
     private readonly ILogger _logger;
-
-    public RabbitEventManager(RabbitFactory rabbitFactory, ILogger logger)
+    private readonly IModel _chanel;
+    
+    public RabbitEventManager(IModel chanel, ILogger logger)
     {
-        _rabbitFactory = rabbitFactory;
         _logger = logger;
+        _chanel = chanel;
     }
 
     public void PublishEvent<T>(T @event)
     {
-        var factory = new ConnectionFactory { HostName = "localhost" };
-        using var connection = factory.CreateConnection();
-        using var channel = connection.CreateModel();
-
-        channel.ExchangeDeclare(exchange: "logs", type: ExchangeType.Fanout);
-
-        var message = "dupa";
+        _chanel.QueueDeclare(typeof(T).FullName, true, false, false);
+        var properties = _chanel.CreateBasicProperties();
+        properties.Persistent = true;
+        
+        var message = JsonSerializer.Serialize(@event);
         var body = Encoding.UTF8.GetBytes(message);
-        channel.BasicPublish(exchange: "logs",
-            routingKey: string.Empty,
-            basicProperties: null,
-            body: body);
-        _logger.Information($" [x] Sent {message}");
-
+        _chanel.BasicPublish(string.Empty, typeof(T).FullName, null, body);
     }
 
-    public void RegisterConsumer<T>(IEventConsumer<T> consumerClass)
-        where T: class
+    public async Task ReceiveAsync<T>(Func<T, Task> action)
     {
-        using var connection = _rabbitFactory.ConnectionFactory.CreateConnection();
-        using var channel = connection.CreateModel();
-        var eventType = typeof(T);
+        _chanel.QueueDeclare(typeof(T).FullName, true, false, false);
+        var consumer = new AsyncEventingBasicConsumer(_chanel);
 
-        channel.ExchangeDeclare(exchange: "CargoApp", type: ExchangeType.Topic);
-
-        var queueName = channel.QueueDeclare().QueueName;
-        
-        channel.QueueBind(
-            queue: queueName,
-            exchange: "CargoApp",
-            routingKey: eventType.FullName
-        );
-
-        var consumer = new EventingBasicConsumer(channel);
-
-        consumer.Received += (model, ea) =>
+        consumer.Received += async (@object, @event) =>
         {
-            var body = ea.Body.ToArray();
-            var message = Encoding.UTF8.GetString(body);
-            var routingKey = ea.RoutingKey;
-            consumerClass.Process(null as T);
+            var json = Encoding.UTF8.GetString(@event.Body.Span);
+            var item = JsonSerializer.Deserialize<T>(json);
+            await action(item);
         };
 
-        channel.BasicConsume(queue: queueName, autoAck: true, consumer: consumer);
+        _chanel.BasicConsume(typeof(T).FullName, true, consumer);
+        await Task.Yield();
     }
 }

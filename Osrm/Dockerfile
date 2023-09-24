@@ -2,11 +2,12 @@ FROM osrm/osrm-backend  as builder
 
 WORKDIR /map
 
-
-COPY ./maps/* /map
-
 ARG OSM_FILE=poland-latest.osm.pbf
 ARG OSRM_FILE=poland-latest.osm
+
+COPY ./maps/$OSM_FILE /map
+
+
 
 ENV OSM_FILE=$OSM_FILE
 ENV OSRM_FILE=$OSRM_FILE

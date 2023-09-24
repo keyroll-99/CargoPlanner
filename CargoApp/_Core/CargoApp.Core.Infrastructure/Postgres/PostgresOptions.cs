@@ -1,6 +1,6 @@
 ﻿namespace CargoApp.Core.Infrastructure.Postgres;
 
-public class PostgresOptions
+internal class PostgresOptions
 {
     public string ConnectionString { get; set; }
 }
