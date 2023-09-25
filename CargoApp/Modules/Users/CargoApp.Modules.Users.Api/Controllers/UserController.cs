@@ -13,7 +13,6 @@ namespace CargoApp.Modules.Users.Controllers;
 
 [ApiController]
 [Authorize]
-[RequirePermission(PermissionEnum.Workers)]
 [Route($"{ModuleInstaller.BasePath}/[controller]")]
 public class UserController
 {
@@ -37,6 +36,7 @@ public class UserController
     }
 
     [HttpPost("[action]")]
+    [RequirePermission(PermissionEnum.Workers)]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> RemovePermission(UpdatePermissionCommand command)
@@ -46,6 +46,7 @@ public class UserController
     }
 
     [HttpPost("[action]")]
+    [RequirePermission(PermissionEnum.Workers)]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> AddPermission(UpdatePermissionCommand command)

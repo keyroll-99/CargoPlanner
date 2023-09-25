@@ -3,7 +3,7 @@ using CargoApp.IntegrationTests;
 using FluentAssertions;
 using Xunit;
 
-namespace CargoApp.Modules.Users.Tests.Integration.Modules.Users;
+namespace CargoApp.Modules.Users.Tests.Integration.Controllers;
 
 public class HomeController : BaseControllerTest
 {

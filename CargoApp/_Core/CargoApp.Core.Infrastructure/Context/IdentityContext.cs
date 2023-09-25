@@ -41,4 +41,15 @@ public static class IdentityContextExtensions
 {
     public static bool HasPermission(this IIdentityContext identityContext, PermissionEnum permissionEnum)
         => identityContext.Permissions.HasFlag(permissionEnum);
+
+    public static bool HasOneOfPermission(this IIdentityContext identityContext,
+        IEnumerable<PermissionEnum> permissionEnums)
+    {
+        return permissionEnums.Any(x => identityContext.Permissions.HasFlag(x));
+    }
+    public static bool HasAllPermission(this IIdentityContext identityContext,
+        IEnumerable<PermissionEnum> permissionEnums)
+    {
+        return permissionEnums.All(x => identityContext.Permissions.HasFlag(x));
+    }
 }
