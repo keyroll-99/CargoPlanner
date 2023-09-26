@@ -1,4 +1,5 @@
 ﻿using CargoApp.Core.ShareCore.Policies;
+using CargoApp.Modules.Companies.Core.Commands.AddEmployee;
 using CargoApp.Modules.Companies.Core.Repositories;
 using Microsoft.AspNetCore.Http;
 using Serilog;

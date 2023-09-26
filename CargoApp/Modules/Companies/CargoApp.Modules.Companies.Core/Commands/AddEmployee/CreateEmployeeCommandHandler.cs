@@ -4,6 +4,7 @@ using CargoApp.Core.Infrastructure.Policies;
 using CargoApp.Core.Infrastructure.Response;
 using CargoApp.Core.ShareCore.Clock;
 using CargoApp.Core.ShareCore.Policies;
+using CargoApp.Modules.Companies.Core.Commands.AddEmployee;
 using CargoApp.Modules.Companies.Core.Entities;
 using CargoApp.Modules.Companies.Core.Repositories;
 using CargoApp.Modules.Contracts.Events.Companies;

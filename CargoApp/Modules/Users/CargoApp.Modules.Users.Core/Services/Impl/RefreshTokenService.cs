@@ -54,6 +54,11 @@ internal class RefreshTokenService : IRefreshTokenService
             return Result<string, string>.Fail("Refresh token has been used");
         }
 
+        if (!dbModel.User.IsActive)
+        {
+            return Result<string, string>.Fail("User is inactive");
+        }
+
         var newTokenTask = await GenerateTokenAsync(dbModel.UserId);
         dbModel.IsUsed = true;
         await _refreshTokenRepository.UpdateAsync(dbModel);

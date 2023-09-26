@@ -8,6 +8,7 @@ public class Employee : BaseEntity
     public string Surname { get; set; }
     public string Email { get; set; }
     public WorkingPositionEnum WorkingPosition { get; set; }
+    public bool IsActive { get; set; }
     public Guid CompanyId { get; set; }
     public Company Company { get; set; }
 

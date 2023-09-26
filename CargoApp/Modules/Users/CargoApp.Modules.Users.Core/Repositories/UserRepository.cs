@@ -24,6 +24,11 @@ internal class UserRepository : Repository<User, UserDbContext>, IUserRepository
         return Entities.SingleOrDefaultAsync(x => x.Email == email);
     }
 
+    public Task<User?> GetByEmployeeId(Guid employeeId)
+    {
+        return Entities.FirstOrDefaultAsync(x => x.EmployeeId == employeeId);
+    }
+
     public async Task<Result<User>> AddAsync(EmployeeCreateEvent @event)
     {
         var user = new User

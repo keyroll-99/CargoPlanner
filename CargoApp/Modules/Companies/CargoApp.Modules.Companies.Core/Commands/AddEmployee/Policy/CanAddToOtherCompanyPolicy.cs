@@ -2,6 +2,7 @@
 using CargoApp.Core.Infrastructure.Context;
 using CargoApp.Core.ShareCore.Enums;
 using CargoApp.Core.ShareCore.Policies;
+using CargoApp.Modules.Companies.Core.Commands.AddEmployee;
 using Microsoft.AspNetCore.Http;
 
 namespace CargoApp.Modules.Companies.Core.Commands.AddWorker.Policy;

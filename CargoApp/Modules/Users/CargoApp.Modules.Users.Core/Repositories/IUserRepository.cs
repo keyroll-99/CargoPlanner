@@ -10,5 +10,6 @@ internal interface IUserRepository : IRepository<User, Guid>
 {
     public Task<bool> ExistsByEmailAsync(string email);
     public Task<User?> GetByEmailAsync(string email);
+    public Task<User?> GetByEmployeeId(Guid employeeId);
     public Task<Result<User>> AddAsync(EmployeeCreateEvent @event);
 }

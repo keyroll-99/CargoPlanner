@@ -1,6 +1,8 @@
 ﻿using CargoApp.Core.Infrastructure.Auth;
 using CargoApp.Core.ShareCore.Enums;
+using CargoApp.Modules.Companies.Core.Commands.AddEmployee;
 using CargoApp.Modules.Companies.Core.Commands.AddWorker;
+using CargoApp.Modules.Companies.Core.Commands.FireEmployee;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -23,6 +25,13 @@ public class EmployeeController : ControllerBase
     [ProducesResponseType(typeof(string), StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> AddEmployee(CreateEmployeeCommand request)
+    {
+        var result = await _mediator.Send(request);
+        return result.GetObjectResult();
+    }
+
+    [HttpPut]
+    public async Task<IActionResult> FireEmployee(FireEmployeeCommand request)
     {
         var result = await _mediator.Send(request);
         return result.GetObjectResult();

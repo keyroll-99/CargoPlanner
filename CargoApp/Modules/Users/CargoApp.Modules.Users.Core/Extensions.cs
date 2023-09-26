@@ -24,6 +24,7 @@ internal static class Extensions
         services.AddServices();
 
         services.AddEventConsumer<EmployeeCreateEventConsumer, EmployeeCreateEvent>();
+        services.AddEventConsumer<EmployeeFiredEventConsumer, EmployeeFiredEvent>();
 
         return services;
     }

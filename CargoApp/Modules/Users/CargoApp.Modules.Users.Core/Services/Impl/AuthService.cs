@@ -61,7 +61,7 @@ internal sealed class AuthService : IAuthService
     {
         var user = await _userRepository.GetByEmailAsync(singInCommand.Email);
         if (user is null || _passwordHasher.VerifyHashedPassword(default, user.Password, singInCommand.Password) ==
-            PasswordVerificationResult.Failed)
+            PasswordVerificationResult.Failed || !user.IsActive)
         {
             return Result<JsonWebToken, string>.Fail("Invalid Email or Password", StatusCodes.Status401Unauthorized);
         }

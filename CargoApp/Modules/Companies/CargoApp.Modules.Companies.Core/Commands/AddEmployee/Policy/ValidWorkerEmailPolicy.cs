@@ -1,5 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 using CargoApp.Core.ShareCore.Policies;
+using CargoApp.Modules.Companies.Core.Commands.AddEmployee;
 using Microsoft.AspNetCore.Http;
 
 namespace CargoApp.Modules.Companies.Core.Commands.AddWorker.Policy;
