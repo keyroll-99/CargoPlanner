@@ -1,7 +1,7 @@
 using CargoApp.Core.Abstraction.Mail;
 using Serilog;
 
-namespace CargoApp.Core.Infrastructure.Mail;
+namespace CargoApp.Core.Infrastructure.Mail.FakeMail;
 
 public class FakeMailManager : IMailManager
 {
@@ -14,7 +14,11 @@ public class FakeMailManager : IMailManager
 
     public Task SendMail(MailModel mailModel)
     {
-        _logger.Information("Send mail to {to}, mail body {body}", mailModel.To, mailModel.Body);
+        _logger.Information(
+            "Send mail to {to}, subject {subject}, mail body {body}", 
+            mailModel.To, 
+            mailModel.Subject,
+            mailModel.Body);
         return Task.CompletedTask;
     }
 }

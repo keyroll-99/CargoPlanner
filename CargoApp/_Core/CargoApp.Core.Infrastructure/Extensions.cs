@@ -2,6 +2,7 @@
 using System.Text.Json;
 using CargoApp.Core.Infrastructure.Auth;
 using CargoApp.Core.Infrastructure.Context;
+using CargoApp.Core.Infrastructure.Mail;
 using CargoApp.Core.Infrastructure.Postgres;
 using CargoApp.Core.Infrastructure.Rabbit;
 using CargoApp.Core.Infrastructure.Repositories;
@@ -32,6 +33,7 @@ public static class Extensions
         services.AddAuth();
         services.AddContext();
         services.AddRabbit();
+        services.AddMail();
 
         services.AddCors((setupAction) =>
         {

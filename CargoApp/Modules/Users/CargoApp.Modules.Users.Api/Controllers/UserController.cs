@@ -1,4 +1,5 @@
 ﻿using CargoApp.Core.Abstraction.Context;
+using CargoApp.Core.Abstraction.Mail;
 using CargoApp.Core.Infrastructure.Auth;
 using CargoApp.Core.ShareCore.Enums;
 using CargoApp.Modules.Contracts.Users;
@@ -7,6 +8,7 @@ using CargoApp.Modules.Users.Core.Commands;
 using CargoApp.Modules.Users.Core.Services.Abstract;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CargoApp.Modules.Users.Controllers;
@@ -19,12 +21,14 @@ public class UserController
     private readonly IUser _userService;
     private readonly IContext _context;
     private readonly IPermissionTools _permissionTools;
+    private readonly IMailManager _mailManager;
 
-    public UserController(IUser userService, IContext context, IPermissionTools permissionTools)
+    public UserController(IUser userService, IContext context, IPermissionTools permissionTools, IMailManager mailManager)
     {
         _userService = userService;
         _context = context;
         _permissionTools = permissionTools;
+        _mailManager = mailManager;
     }
 
     [HttpGet("Me")]
@@ -35,6 +39,13 @@ public class UserController
         return result.GetObjectResult();
     }
 
+    [HttpPost("[action]")]
+    public async Task<IActionResult> InitPasswordRecovery()
+    {
+        await _mailManager.SendMail(MailModel.CreateModel("test_body", "test_to", "test_subject"));
+        return new OkObjectResult(string.Empty);
+    }
+    
     [HttpPost("[action]")]
     [RequirePermission(PermissionEnum.Workers)]
     [ProducesResponseType(StatusCodes.Status200OK)]
