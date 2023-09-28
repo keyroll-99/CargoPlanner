@@ -637,3 +637,5 @@ FodyWeavers.xsd
 
 rabbitmq/*
 postgres-data/*
+
+appsettings.Development.Secret.json

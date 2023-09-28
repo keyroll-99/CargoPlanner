@@ -6,4 +6,5 @@ public class SmtpOptions
     public int Port { get; init; }
     public bool EnableSsl { get; init; }
     public required string MailFrom { get; init; }
+    public required string Password { get; init; }
 }

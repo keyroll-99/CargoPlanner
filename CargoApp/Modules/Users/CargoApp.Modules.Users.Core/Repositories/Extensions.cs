@@ -8,6 +8,7 @@ internal static class Extensions
     {
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
+        services.AddScoped<IPasswordRecoveryRepository, PasswordRecoveryRepository>();
         return services;
     }
 }

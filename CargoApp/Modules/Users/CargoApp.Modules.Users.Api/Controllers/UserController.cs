@@ -22,13 +22,20 @@ public class UserController
     private readonly IContext _context;
     private readonly IPermissionTools _permissionTools;
     private readonly IMailManager _mailManager;
+    private readonly IPasswordRecoveryService _passwordRecoveryService;
 
-    public UserController(IUser userService, IContext context, IPermissionTools permissionTools, IMailManager mailManager)
+    public UserController(
+        IUser userService,
+        IContext context,
+        IPermissionTools permissionTools,
+        IMailManager mailManager,
+        IPasswordRecoveryService passwordRecoveryService)
     {
         _userService = userService;
         _context = context;
         _permissionTools = permissionTools;
         _mailManager = mailManager;
+        _passwordRecoveryService = passwordRecoveryService;
     }
 
     [HttpGet("Me")]
@@ -40,12 +47,12 @@ public class UserController
     }
 
     [HttpPost("[action]")]
-    public async Task<IActionResult> InitPasswordRecovery()
+    public async Task<IActionResult> InitPasswordRecovery(InitPasswordRecoveryCommand command)
     {
-        await _mailManager.SendMail(MailModel.CreateModel("test_body", "test_to", "test_subject"));
-        return new OkObjectResult(string.Empty);
+        var result = await _passwordRecoveryService.InitPasswordRecovery(command);
+        return result.GetObjectResult();
     }
-    
+
     [HttpPost("[action]")]
     [RequirePermission(PermissionEnum.Workers)]
     [ProducesResponseType(StatusCodes.Status200OK)]

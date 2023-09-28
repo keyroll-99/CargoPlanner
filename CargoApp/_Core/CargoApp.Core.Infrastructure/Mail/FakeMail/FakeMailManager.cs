@@ -12,7 +12,7 @@ public class FakeMailManager : IMailManager
         _logger = logger;
     }
 
-    public Task SendMail(MailModel mailModel)
+    public Task SendMailAsync(MailModel mailModel)
     {
         _logger.Information(
             "Send mail to {to}, subject {subject}, mail body {body}", 

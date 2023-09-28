@@ -12,6 +12,7 @@ internal class UserDbContext : DbContext
     }
     
     public DbSet<User> Users { get; set; }
+    public DbSet<PasswordRecovery> PasswordRecoveries { get; set; }
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
