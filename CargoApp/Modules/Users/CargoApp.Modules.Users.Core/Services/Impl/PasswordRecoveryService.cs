@@ -1,6 +1,7 @@
 using System.Reflection;
 using CargoApp.Core.Abstraction.Mail;
 using CargoApp.Core.Infrastructure.Mail;
+using CargoApp.Core.Infrastructure.Metadata;
 using CargoApp.Core.Infrastructure.Response;
 using CargoApp.Core.ShareCore.Clock;
 using CargoApp.Modules.Users.Core.Commands;
@@ -18,17 +19,20 @@ internal class PasswordRecoveryService : IPasswordRecoveryService
     private readonly IClock _clock;
     private readonly IUserRepository _userRepository;
     private readonly IMailManager _mailManager;
+    private readonly Metadata _metadata;
 
     public PasswordRecoveryService(
         IPasswordRecoveryRepository passwordRecoveryRepository,
         IUserRepository userRepository,
         IClock clock,
-        IMailManager mailManager)
+        IMailManager mailManager,
+        Metadata metadata)
     {
         _passwordRecoveryRepository = passwordRecoveryRepository;
         _userRepository = userRepository;
         _clock = clock;
         _mailManager = mailManager;
+        _metadata = metadata;
     }
 
     public async Task<Result> InitPasswordRecovery(InitPasswordRecoveryCommand command)
@@ -42,8 +46,10 @@ internal class PasswordRecoveryService : IPasswordRecoveryService
         var passwordRecovery = PasswordRecovery.CreatePasswordRecovery(user, _clock);
         await _passwordRecoveryRepository.AddAsync(passwordRecovery);
         var dummyModel = new PasswordRecoveryMail(
-            "https://localhost:4000",
-            passwordRecovery.Id.ToString());
+            _metadata.FrontUrl,
+            passwordRecovery.Id.ToString(),
+            _metadata.FrontUrl);
+        
         await _mailManager.SendMailAsync(
             MailModel.CreateModel(
                 user.Email,

@@ -4,14 +4,15 @@ using CargoApp.Core.Abstraction.Mail;
 
 namespace CargoApp.Core.Infrastructure.Mail.Smtp;
 
-public class SmtpMailManager : IMailManager
+internal class SmtpMailManager : IMailManager
 {
     private readonly SmtpOptions _smtpOptions;
     private readonly SmtpClient _smtpClient;
     private readonly IMailProcessor _mailProcessor;
     
-    public SmtpMailManager(MailOptions mailOptions)
+    public SmtpMailManager(MailOptions mailOptions, IMailProcessor mailProcessor)
     {
+        _mailProcessor = mailProcessor;
         ArgumentNullException.ThrowIfNull(mailOptions?.SmtpOptions);
         _smtpOptions = mailOptions.SmtpOptions!;
 
