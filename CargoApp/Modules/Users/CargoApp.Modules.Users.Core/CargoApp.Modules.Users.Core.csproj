@@ -19,10 +19,12 @@
         <InternalsVisibleTo Include="CargoApp.Modules.Users.Tests.Unit" />
         <InternalsVisibleTo Include="CargoApp.Modules.Users.Tests.Integration" />
         <InternalsVisibleTo Include="DynamicProxyGenAssembly2" />
-
     </ItemGroup>
 
-
-
+    <ItemGroup>
+        <EmbeddedResource Include="EmailTemplates\PasswordRecovery\PasswordRecoveryMail.cshtml">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </EmbeddedResource>
+    </ItemGroup>
 
 </Project>

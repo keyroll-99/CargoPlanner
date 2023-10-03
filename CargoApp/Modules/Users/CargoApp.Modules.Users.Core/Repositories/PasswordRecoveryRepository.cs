@@ -7,7 +7,7 @@ namespace CargoApp.Modules.Users.Core.Repositories;
 
 internal class PasswordRecoveryRepository : Repository<PasswordRecovery, UserDbContext>, IPasswordRecoveryRepository
 {
-    protected PasswordRecoveryRepository(UserDbContext appContext, IClock clock) : base(appContext, clock)
+    public PasswordRecoveryRepository(UserDbContext appContext, IClock clock) : base(appContext, clock)
     {
     }
 }

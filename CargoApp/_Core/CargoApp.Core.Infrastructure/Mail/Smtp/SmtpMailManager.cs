@@ -8,7 +8,8 @@ public class SmtpMailManager : IMailManager
 {
     private readonly SmtpOptions _smtpOptions;
     private readonly SmtpClient _smtpClient;
-
+    private readonly IMailProcessor _mailProcessor;
+    
     public SmtpMailManager(MailOptions mailOptions)
     {
         ArgumentNullException.ThrowIfNull(mailOptions?.SmtpOptions);
@@ -32,5 +33,12 @@ public class SmtpMailManager : IMailManager
         mailMessage.IsBodyHtml = true;
         
         return _smtpClient.SendMailAsync(mailMessage);
+    }
+
+    public async Task SendMailAsync<T>(MailModel mailModel, T templateModel)
+    {
+        var template = await _mailProcessor.Process(templateModel);
+        mailModel.Body = template;
+        await SendMailAsync(mailModel);
     }
 }

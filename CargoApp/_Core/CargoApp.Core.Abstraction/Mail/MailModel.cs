@@ -2,7 +2,7 @@ namespace CargoApp.Core.Abstraction.Mail;
 
 public record MailModel
 {
-    public string Body { get; private set; }
+    public string Body { get; set; }
     public string To { get; private set; }
     public string Subject { get; private set; }
 
@@ -21,5 +21,15 @@ public record MailModel
         }
 
         return new MailModel(body, to, subject);
+    }    
+    
+    public static MailModel CreateModel(string to, string subject)
+    {
+        if (string.IsNullOrWhiteSpace(to) || string.IsNullOrWhiteSpace(subject))
+        {
+            throw new ArgumentException("Invalid argument for mail model");
+        }
+
+        return new MailModel(string.Empty, to, subject);
     }
 };

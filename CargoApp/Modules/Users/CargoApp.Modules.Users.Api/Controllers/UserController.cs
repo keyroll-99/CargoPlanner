@@ -14,7 +14,6 @@ using Microsoft.AspNetCore.Mvc;
 namespace CargoApp.Modules.Users.Controllers;
 
 [ApiController]
-[Authorize]
 [Route($"{ModuleInstaller.BasePath}/[controller]")]
 public class UserController
 {
@@ -38,6 +37,7 @@ public class UserController
         _passwordRecoveryService = passwordRecoveryService;
     }
 
+    [Authorize]
     [HttpGet("Me")]
     [ProducesResponseType(typeof(UserDto), StatusCodes.Status200OK)]
     public async Task<IActionResult> GetLoggedUser()
@@ -53,6 +53,7 @@ public class UserController
         return result.GetObjectResult();
     }
 
+    [Authorize]
     [HttpPost("[action]")]
     [RequirePermission(PermissionEnum.Workers)]
     [ProducesResponseType(StatusCodes.Status200OK)]
@@ -63,6 +64,7 @@ public class UserController
         return result.GetObjectResult();
     }
 
+    [Authorize]
     [HttpPost("[action]")]
     [RequirePermission(PermissionEnum.Workers)]
     [ProducesResponseType(StatusCodes.Status200OK)]

@@ -26,6 +26,8 @@ internal static class Extensions
                 throw new ArgumentOutOfRangeException();
         }
 
+        services.AddSingleton<IMailProcessor, MailProcessor>();
+
         return services;
     }
 }

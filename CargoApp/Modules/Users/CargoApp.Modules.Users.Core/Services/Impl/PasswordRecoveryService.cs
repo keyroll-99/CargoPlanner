@@ -1,10 +1,14 @@
+using System.Reflection;
 using CargoApp.Core.Abstraction.Mail;
+using CargoApp.Core.Infrastructure.Mail;
 using CargoApp.Core.Infrastructure.Response;
 using CargoApp.Core.ShareCore.Clock;
 using CargoApp.Modules.Users.Core.Commands;
+using CargoApp.Modules.Users.Core.EmailTemplates.PasswordRecovery;
 using CargoApp.Modules.Users.Core.Entities;
 using CargoApp.Modules.Users.Core.Repositories;
 using CargoApp.Modules.Users.Core.Services.Abstract;
+using RazorLight;
 
 namespace CargoApp.Modules.Users.Core.Services.Impl;
 
@@ -37,8 +41,14 @@ internal class PasswordRecoveryService : IPasswordRecoveryService
 
         var passwordRecovery = PasswordRecovery.CreatePasswordRecovery(user, _clock);
         await _passwordRecoveryRepository.AddAsync(passwordRecovery);
-        await _mailManager.SendMailAsync(MailModel.CreateModel($"recovery link {passwordRecovery.Id}", user.Email,
-            "Password recovery"));
+        var dummyModel = new PasswordRecoveryMail(
+            "https://localhost:4000",
+            passwordRecovery.Id.ToString());
+        await _mailManager.SendMailAsync(
+            MailModel.CreateModel(
+                user.Email,
+            "Password recovery"),
+            dummyModel);
         return Result.Success();
     }
 }
