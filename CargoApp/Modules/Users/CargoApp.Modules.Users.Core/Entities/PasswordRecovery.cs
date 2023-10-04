@@ -26,5 +26,11 @@ public class PasswordRecovery : BaseEntity
             Id = Guid.NewGuid(),
             CreateAt = clock.Now()
         };
-    } 
+    }
+
+    public bool IsValid(IClock clock)
+    {
+        var now = clock.Now();
+        return !IsUsed && ExpiredAt > now;
+    }
 }

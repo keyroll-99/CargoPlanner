@@ -20,21 +20,15 @@ public class UserController
     private readonly IUser _userService;
     private readonly IContext _context;
     private readonly IPermissionTools _permissionTools;
-    private readonly IMailManager _mailManager;
-    private readonly IPasswordRecoveryService _passwordRecoveryService;
 
     public UserController(
         IUser userService,
         IContext context,
-        IPermissionTools permissionTools,
-        IMailManager mailManager,
-        IPasswordRecoveryService passwordRecoveryService)
+        IPermissionTools permissionTools)
     {
         _userService = userService;
         _context = context;
         _permissionTools = permissionTools;
-        _mailManager = mailManager;
-        _passwordRecoveryService = passwordRecoveryService;
     }
 
     [Authorize]
@@ -46,12 +40,6 @@ public class UserController
         return result.GetObjectResult();
     }
 
-    [HttpPost("[action]")]
-    public async Task<IActionResult> InitPasswordRecovery(InitPasswordRecoveryCommand command)
-    {
-        var result = await _passwordRecoveryService.InitPasswordRecovery(command);
-        return result.GetObjectResult();
-    }
 
     [Authorize]
     [HttpPost("[action]")]
