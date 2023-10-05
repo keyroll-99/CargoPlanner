@@ -32,7 +32,7 @@ public class RabbitEventConsumer<TProcessor ,TEvent> : BackgroundService
             }
             catch (System.Exception e)
             {
-                _logger.Error(e, "Error while execute message {messagePath}", typeof(TEvent).FullName);
+                _logger.Fatal(e, "Error while execute message {messagePath}", typeof(TEvent).FullName);
             }
         });
 

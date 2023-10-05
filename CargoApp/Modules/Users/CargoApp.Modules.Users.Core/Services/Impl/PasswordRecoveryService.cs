@@ -101,8 +101,10 @@ internal class PasswordRecoveryService : IPasswordRecoveryService
         var user = recoveryModel.User;
 
         user.Password = _passwordHasher.HashPassword(null, command.Password);
-
+        recoveryModel.IsUsed = true;
+        
         await _userRepository.UpdateAsync(user);
+        await _passwordRecoveryRepository.UpdateAsync(recoveryModel);
         
         return Result.Success();
     }

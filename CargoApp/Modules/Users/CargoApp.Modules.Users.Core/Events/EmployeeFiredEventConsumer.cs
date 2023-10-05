@@ -1,22 +1,24 @@
 using CargoApp.Core.Abstraction.QueueMessages;
 using CargoApp.Core.Abstraction.Repositories;
+using CargoApp.Core.Abstraction.Services;
 using CargoApp.Modules.Contracts.Events.Companies;
 using CargoApp.Modules.Users.Core.Repositories;
+using IServiceProvider = CargoApp.Core.Abstraction.Services.IServiceProvider;
 
 namespace CargoApp.Modules.Users.Core.Events;
 
 internal sealed class EmployeeFiredEventConsumer : IEventConsumer<EmployeeFiredEvent>
 {
-    private IRepositoryProvider _repositoryProvider;
+    private IServiceProvider _serviceProvider;
 
-    public EmployeeFiredEventConsumer(IRepositoryProvider repositoryProvider)
+    public EmployeeFiredEventConsumer(IServiceProvider serviceProvider)
     {
-        _repositoryProvider = repositoryProvider;
+        _serviceProvider = serviceProvider;
     }
 
     public async Task Process(EmployeeFiredEvent @event)
     {
-        var userRepository = await _repositoryProvider.GetRepository<IUserRepository>();
+        var userRepository = await _serviceProvider.GetService<IUserRepository>();
         
         var user = await userRepository.GetByEmployeeId(@event.EmployeeId);
         if(user is not null)

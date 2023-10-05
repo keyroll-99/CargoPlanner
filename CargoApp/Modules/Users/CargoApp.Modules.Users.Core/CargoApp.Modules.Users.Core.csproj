@@ -25,6 +25,10 @@
         <EmbeddedResource Include="EmailTemplates\PasswordRecovery\PasswordRecoveryMail.cshtml">
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </EmbeddedResource>
+        <None Remove="EmailTemplates\NewUser\WelcomeMail.cshtml" />
+        <EmbeddedResource Include="EmailTemplates\NewUser\WelcomeMail.cshtml">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </EmbeddedResource>
     </ItemGroup>
 
 

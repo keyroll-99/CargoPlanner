@@ -1,6 +1,8 @@
 ﻿using CargoApp.Core.Abstraction.Repositories;
+using CargoApp.Core.Abstraction.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using IServiceProvider = CargoApp.Core.Abstraction.Services.IServiceProvider;
 
 namespace CargoApp.Core.Infrastructure.Postgres;
 
@@ -20,7 +22,7 @@ public static class Extensions
         var options = services.GetOptions<PostgresOptions>(SectionName);
         services.AddDbContext<T>(x => x.UseNpgsql(options.ConnectionString));
         services.AddHostedService<DatabaseInitializer<T>>();
-        services.AddSingleton<IRepositoryProvider, RepositoryProvider>();
+        services.AddSingleton<IServiceProvider, ServiceProvider>();
         return services;
     }
 }

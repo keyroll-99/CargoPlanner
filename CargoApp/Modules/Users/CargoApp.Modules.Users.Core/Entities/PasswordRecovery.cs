@@ -8,7 +8,7 @@ public class PasswordRecovery : BaseEntity
     public required Guid UserId { get; init; }
     public required User User { get; init; }
     public DateTime ExpiredAt { get; private set; }
-    public bool IsUsed { get; private set; } = true;
+    public bool IsUsed { get; set; } = true;
 
     public void Revoke()
     {
