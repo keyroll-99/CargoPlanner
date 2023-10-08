@@ -6,7 +6,7 @@ namespace CargoApp.Modules.Users.Core.Entities;
 public class PasswordRecovery : BaseEntity
 {
     public required Guid UserId { get; init; }
-    public required User User { get; init; }
+    public User User { get; init; }
     public DateTime ExpiredAt { get; private set; }
     public bool IsUsed { get; set; } = true;
 
@@ -21,6 +21,18 @@ public class PasswordRecovery : BaseEntity
         {
             User = user,
             UserId = user.Id,
+            ExpiredAt = clock.Now().AddHours(3),
+            IsUsed = false,
+            Id = Guid.NewGuid(),
+            CreateAt = clock.Now()
+        };
+    }   
+    
+    public static PasswordRecovery CreatePasswordRecovery(Guid userId, IClock clock)
+    {
+        return new PasswordRecovery
+        {
+            UserId = userId,
             ExpiredAt = clock.Now().AddHours(3),
             IsUsed = false,
             Id = Guid.NewGuid(),

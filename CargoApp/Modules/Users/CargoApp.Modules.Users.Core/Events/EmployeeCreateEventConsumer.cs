@@ -56,7 +56,7 @@ internal sealed class EmployeeCreateEventConsumer : IEventConsumer<EmployeeCreat
 
         var passwordRecoveryRepository = await _serviceProvider.GetService<IPasswordRecoveryRepository>();
         var user = addUserResult.SuccessModel;
-        var recoveryModel = PasswordRecovery.CreatePasswordRecovery(user!, _clock);
+        var recoveryModel = PasswordRecovery.CreatePasswordRecovery(user!.Id, _clock);
         //TODO: user try add two times
         await passwordRecoveryRepository.AddAsync(recoveryModel);
         

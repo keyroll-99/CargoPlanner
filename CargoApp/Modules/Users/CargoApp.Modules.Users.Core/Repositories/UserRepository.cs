@@ -35,7 +35,6 @@ internal class UserRepository : Repository<User, UserDbContext>, IUserRepository
         {
             Id = Guid.NewGuid(),
             Email = @event.Email,
-            // TODO: password recovery
             Password = "#TemporaryPassword#",
             CreateAt = Clock.Now(),
             EmployeeId = @event.Id,
