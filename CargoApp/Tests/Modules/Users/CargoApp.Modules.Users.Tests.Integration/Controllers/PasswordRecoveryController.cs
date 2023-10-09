@@ -69,14 +69,14 @@ public class PasswordRecoveryController : BaseControllerTest, IDisposable
     {
         // Arrange
         var recoveryKey = Guid.NewGuid();
-        
+
         // Act
         var response = await Client.GetAsync($"/Users/PasswordRecovery/IsRecoveryKeyValid?recoveryKey={recoveryKey}");
-        
+
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
     }
-    
+
     [Fact]
     public async Task when_given_correct_recovery_key_then_return_204_no_content()
     {
@@ -88,12 +88,54 @@ public class PasswordRecoveryController : BaseControllerTest, IDisposable
         _testDatabase.UserDbContext.PasswordRecoveries.Add(recoveryModel);
 
         await _testDatabase.UserDbContext.SaveChangesAsync();
-        
+
         // Act
         var response = await Client.GetAsync($"/Users/PasswordRecovery/IsRecoveryKeyValid?recoveryKey={recoveryKey}");
-        
+
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.NoContent);
+    }
+
+    [Theory]
+    [InlineData("pass", "Password is not strong enough")]
+    [InlineData("new-super_password", "Invalid recovery key")]
+    public async Task change_password_when_given_invalid_data_then_return_400_bad_request(string password, string error)
+    {
+        // Arrange
+        var user = await _testDatabase.CreateUserAsync();
+        var recoveryModel = PasswordRecovery.CreatePasswordRecovery(user.Id, new Clock());
+        _testDatabase.UserDbContext.PasswordRecoveries.Add(recoveryModel);
+        await _testDatabase.UserDbContext.SaveChangesAsync();
+
+        var command = new ChangePasswordCommand(password);
+
+        // Act
+        var result =
+            await Client.PatchAsJsonAsync($"/Users/PasswordRecovery/ChangePassword/{Guid.NewGuid()}", command);
+        
+        // Assert
+        result.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+        var body = (await result.Content.ReadAsStringAsync());
+        body.Should().Be(error);
+    }
+    
+    [Fact]
+    public async Task change_password_when_given_correct_data_then_return_204_no_content()
+    {
+        // Arrange
+        var user = await _testDatabase.CreateUserAsync();
+        var recoveryModel = PasswordRecovery.CreatePasswordRecovery(user.Id, new Clock());
+        _testDatabase.UserDbContext.PasswordRecoveries.Add(recoveryModel);
+        await _testDatabase.UserDbContext.SaveChangesAsync();
+
+        var command = new ChangePasswordCommand("new-super_password");
+
+        // Act
+        var result =
+            await Client.PatchAsJsonAsync($"/Users/PasswordRecovery/ChangePassword/{recoveryModel.Id}", command);
+        
+        // Assert
+        result.StatusCode.Should().Be(HttpStatusCode.NoContent);
     }
 
     public void Dispose()
