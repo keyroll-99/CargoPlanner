@@ -43,6 +43,6 @@ public class PasswordRecovery : BaseEntity
     public bool IsValid(IClock clock)
     {
         var now = clock.Now();
-        return !IsUsed && ExpiredAt > now;
+        return !IsUsed && ExpiredAt >= now;
     }
 }

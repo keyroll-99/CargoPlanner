@@ -54,7 +54,7 @@ public class AuthController : BaseControllerTest, IDisposable
     public async Task sign_in_should_return_200_ok_and_user_data()
     {
         // Arrange
-        var dbUser = await CreateUserAsync();
+        var dbUser = await _testDatabase.CreateUserAsync();
         _companyServiceMock.FindEmployeeCompany(Arg.Any<Guid>()).Returns(new Company(Guid.NewGuid(), "test"));
 
         // Act
@@ -70,7 +70,7 @@ public class AuthController : BaseControllerTest, IDisposable
     public async Task get_users_me_should_return_200_ok_and_user_data()
     {
         // Arrange
-        var dbUser = await CreateUserAsync();
+        var dbUser = await _testDatabase.CreateUserAsync();
         Authorize(dbUser.Id, dbUser.Email, dbUser.PermissionMask);
 
         // Act
@@ -79,26 +79,5 @@ public class AuthController : BaseControllerTest, IDisposable
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.OK);
     }
-
-    private async Task<User> CreateUserAsync()
-    {
-        var passwordManager = new PasswordHasher<User>();
-        const string password = "secret";
-        const string email = "test@email.com";
-        var user = new User
-        {
-            Email = email,
-            Id = Guid.NewGuid(),
-            CreateAt = DateTime.UtcNow,
-            IsActive = true,
-            EmployeeId = Guid.NewGuid(),
-            PermissionMask = PermissionEnum.Admin,
-            RefreshTokens = new List<RefreshToken>(),
-            Password = passwordManager.HashPassword(null, password),
-        };
-        await _testDatabase.UserDbContext.Users.AddAsync(user);
-        await _testDatabase.UserDbContext.SaveChangesAsync();
-
-        return user;
-    }
 }
+    
