@@ -1,0 +1,23 @@
+using CargoApp.Modules.Cargoes.Core.CompanyAggregate;
+using CargoApp.Modules.Cargoes.Core.CompanyAggregate.ValueObject;
+using CargoApp.Modules.Cargoes.Core.DriverAggregate;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+
+namespace CargoApp.Modules.Cargoes.Infrastructure.DAL.Configurations;
+
+public class CompanyConfiguration : IEntityTypeConfiguration<Company>
+{
+    public void Configure(EntityTypeBuilder<Company> builder)
+    {
+        builder.HasKey(x => x.Id);
+        
+        builder
+            .Property<CompanyName>("_companyName")
+            .HasConversion(x => x.Name, x => new CompanyName(x));
+
+        builder.Property<Guid>("_companyId");
+        
+        builder.HasMany<Driver>("_drivers").WithOne("_employer");
+    }
+}

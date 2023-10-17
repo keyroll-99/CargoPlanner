@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CargoApp.Modules.Locations.Infrastructure.Repositories;
 
-public class LocationRepository : Repository<Location, LocationDbContext>, ILocationRepository
+internal class LocationRepository : Repository<Location, LocationDbContext>, ILocationRepository
 {
     public LocationRepository(LocationDbContext appContext, IClock clock) : base(appContext, clock)
     {

@@ -1,15 +1,11 @@
 ﻿using CargoApp.Core.Abstraction.Mail;
 using CargoApp.Core.Abstraction.QueueMessages;
-using CargoApp.Core.Abstraction.Repositories;
-using CargoApp.Core.Abstraction.Services;
 using CargoApp.Core.Infrastructure.Metadata;
 using CargoApp.Core.ShareCore.Clock;
 using CargoApp.Modules.Contracts.Events.Companies;
 using CargoApp.Modules.Users.Core.EmailTemplates.NewUser;
 using CargoApp.Modules.Users.Core.Entities;
 using CargoApp.Modules.Users.Core.Repositories;
-using CargoApp.Modules.Users.Core.Services.Abstract;
-using Microsoft.Extensions.Hosting;
 using Serilog;
 using IServiceProvider = CargoApp.Core.Abstraction.Services.IServiceProvider;
 
@@ -27,7 +23,7 @@ internal sealed class EmployeeCreateEventConsumer : IEventConsumer<EmployeeCreat
         ILogger logger,
         IServiceProvider serviceProvider,
         IMailManager mailManager,
-        IClock clock, 
+        IClock clock,
         Metadata metadata)
     {
         _logger = logger;
@@ -59,7 +55,7 @@ internal sealed class EmployeeCreateEventConsumer : IEventConsumer<EmployeeCreat
         var recoveryModel = PasswordRecovery.CreatePasswordRecovery(user!.Id, _clock);
         //TODO: user try add two times
         await passwordRecoveryRepository.AddAsync(recoveryModel);
-        
+
         await _mailManager.SendMailAsync(
             MailModel.CreateModel(user.Email, "Welcome in cargo app"),
             new WelcomeMail(_metadata.FrontUrl, recoveryModel.Id.ToString()));

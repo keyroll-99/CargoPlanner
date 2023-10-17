@@ -12,7 +12,7 @@ internal static class Modules
         services.AddUsers();
         services.AddLocations();
         services.AddCompanies();
-        // services.AddCargoes();
+        services.AddCargoes();
         return services;
     }
 }

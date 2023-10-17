@@ -9,10 +9,16 @@
 
     <ItemGroup>
         <InternalsVisibleTo Include="CargoApp.Modules.Cargoes.Application" />
+        <InternalsVisibleTo Include="CargoApp.Modules.Cargoes.Infrastructure" />
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\..\..\_Core\CargoApp.Core.Infrastructure\CargoApp.Core.Infrastructure.csproj" />
       <ProjectReference Include="..\..\..\_Core\CargoApp.Core.ShareCore\CargoApp.Core.ShareCore.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="CargoAggregate\ValueObject\" />
     </ItemGroup>
     
 </Project>

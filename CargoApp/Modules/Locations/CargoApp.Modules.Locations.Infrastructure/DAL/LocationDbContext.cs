@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CargoApp.Modules.Locations.Infrastructure.DAL;
 
-public class LocationDbContext : DbContext
+internal class LocationDbContext : DbContext
 {
     public LocationDbContext(DbContextOptions<LocationDbContext> options) : base(options)
     {

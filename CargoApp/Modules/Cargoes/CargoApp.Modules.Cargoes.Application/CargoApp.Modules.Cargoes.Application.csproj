@@ -10,6 +10,7 @@
     </ItemGroup>
     <ItemGroup>
       <ProjectReference Include="..\..\..\_Core\CargoApp.Core.Abstraction\CargoApp.Core.Abstraction.csproj" />
+      <ProjectReference Include="..\..\_Contracts\CargoApp.Modules.Contracts.Events\CargoApp.Modules.Contracts.Events.csproj" />
       <ProjectReference Include="..\CargoApp.Modules.Cargoes.Core\CargoApp.Modules.Cargoes.Core.csproj" />
     </ItemGroup>
 </Project>
