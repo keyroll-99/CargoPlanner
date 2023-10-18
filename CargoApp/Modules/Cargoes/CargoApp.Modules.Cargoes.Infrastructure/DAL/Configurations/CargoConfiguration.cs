@@ -12,8 +12,8 @@ public class CargoConfiguration : IEntityTypeConfiguration<Cargo>
     public void Configure(EntityTypeBuilder<Cargo> builder)
     {
         builder.HasKey(x => x.Id);
-        builder.HasOne<Location>("_to").WithMany();
-        builder.HasOne<Location>("_from").WithMany();
+        builder.HasOne<Location>("_to").WithMany().HasForeignKey("LocationToId");
+        builder.HasOne<Location>("_from").WithMany().HasForeignKey("LocationFromId");
         builder.HasOne<Driver>("_driver").WithMany();
         builder.HasOne<Company>("_sender").WithMany();
         builder.HasOne<Company>("_receiver").WithMany();

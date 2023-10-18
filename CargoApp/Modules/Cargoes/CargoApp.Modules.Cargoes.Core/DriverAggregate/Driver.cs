@@ -1,4 +1,5 @@
 
+using CargoApp.Core.Infrastructure.Response;
 using CargoApp.Modules.Cargoes.Core.CompanyAggregate;
 using CargoApp.Modules.Cargoes.Core.LocationAggregate;
 
@@ -19,8 +20,17 @@ public class Driver
         Id = id;
     }
 
-    public static Driver Create(Location home, Company employer)
+    private Driver()
     {
+    }
+
+    public static Result<Driver> Create(Location? home, Company? employer)
+    {
+        if (employer is null)
+        {
+            return Result<Driver>.Fail("Employer cannot be null");
+        }
+        
         return new Driver(home, employer, true, Guid.NewGuid());
     }
 }

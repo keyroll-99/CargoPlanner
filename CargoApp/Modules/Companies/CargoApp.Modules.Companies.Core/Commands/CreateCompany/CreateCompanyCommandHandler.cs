@@ -1,9 +1,11 @@
-﻿using CargoApp.Core.Infrastructure.Policies;
+﻿using CargoApp.Core.Abstraction.QueueMessages;
+using CargoApp.Core.Infrastructure.Policies;
 using CargoApp.Core.Infrastructure.Response;
 using CargoApp.Core.ShareCore.Clock;
 using CargoApp.Core.ShareCore.Policies;
 using CargoApp.Modules.Companies.Core.Entities;
 using CargoApp.Modules.Companies.Core.Repositories;
+using CargoApp.Modules.Contracts.Events.Companies;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 
@@ -14,12 +16,18 @@ internal class CreateCompanyCommandHandler : IRequestHandler<CreateCompanyComman
     private readonly IEnumerable<IPolicy<CreateCompanyCommand>> _policies;
     private readonly ICompanyRepository _companyRepository;
     private readonly IClock _clock;
+    private readonly IEventManager _eventManager;
 
-    public CreateCompanyCommandHandler(IEnumerable<IPolicy<CreateCompanyCommand>> policies, ICompanyRepository companyRepository, IClock clock)
+    public CreateCompanyCommandHandler(
+        IEnumerable<IPolicy<CreateCompanyCommand>> policies,
+        ICompanyRepository companyRepository,
+        IClock clock,
+        IEventManager eventManager)
     {
         _policies = policies;
         _companyRepository = companyRepository;
         _clock = clock;
+        _eventManager = eventManager;
     }
 
     public async Task<Result<string>> Handle(CreateCompanyCommand request, CancellationToken cancellationToken)
@@ -33,6 +41,8 @@ internal class CreateCompanyCommandHandler : IRequestHandler<CreateCompanyComman
         var company = new Company(Guid.NewGuid(), _clock.Now(), request.Name, request.CompanyType);
         await _companyRepository.AddAsync(company);
         
+        _eventManager.PublishEvent(new CompanyCreateEvent(company.Id, company.Name));
+
         return Result<string>.Success(company.Id.ToString(), StatusCodes.Status201Created);
     }
 }

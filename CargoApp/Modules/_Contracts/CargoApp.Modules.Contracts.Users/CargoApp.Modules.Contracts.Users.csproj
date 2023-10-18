@@ -11,10 +11,4 @@
       <ProjectReference Include="..\..\..\_Core\CargoApp.Core.Infrastructure\CargoApp.Core.Infrastructure.csproj" />
     </ItemGroup>
 
-
-    <ItemGroup>
-      <Folder Include="Enums\" />
-      <Folder Include="Extensions\" />
-    </ItemGroup>
-
 </Project>

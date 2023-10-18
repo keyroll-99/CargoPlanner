@@ -6,15 +6,19 @@ namespace CargoApp.Modules.Cargoes.Core.CompanyAggregate;
 public class Company
 {
     public Guid Id { get; init; }
-    private Guid _companyId;
+    public Guid CompanyId { get; private set; }
     private CompanyName _companyName;
-    private IList<Driver> _drivers;
+    private ICollection<Driver> _drivers = new List<Driver>();
 
     private Company(CompanyName companyName, Guid companyId)
     {
         _companyName = companyName;
-        _companyId = companyId;
+        CompanyId = companyId;
         _drivers = new List<Driver>();
+    }
+
+    public Company()
+    {
     }
 
     public static Company Create(CompanyName name, Guid companyId)

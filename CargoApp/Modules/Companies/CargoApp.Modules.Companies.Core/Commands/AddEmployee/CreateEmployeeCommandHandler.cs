@@ -10,6 +10,7 @@ using CargoApp.Modules.Companies.Core.Repositories;
 using CargoApp.Modules.Contracts.Events.Companies;
 using MediatR;
 using Microsoft.AspNetCore.Http;
+using WorkingPositionEnum = CargoApp.Modules.Contracts.Events.Companies.Enums.WorkingPositionEnum;
 
 namespace CargoApp.Modules.Companies.Core.Commands.AddWorker;
 
@@ -68,7 +69,7 @@ internal class CreateEmployeeCommandHandler : IRequestHandler<CreateEmployeeComm
 
         await _employeeRepository.AddAsync(employee);
 
-        _eventManager.PublishEvent(new EmployeeCreateEvent(employee.Id, employee.CompanyId, employee.Name, employee.Surname, employee.Email));
+        _eventManager.PublishEvent(new EmployeeCreateEvent(employee.Id, employee.CompanyId, employee.Name, employee.Surname, employee.Email, (WorkingPositionEnum)employee.WorkingPosition));
         
         return Result<string>.Success(employee.Id.ToString(), StatusCodes.Status201Created);
     }

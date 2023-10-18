@@ -1,4 +1,5 @@
-﻿using CargoApp.Core.ShareCore.Clock;
+﻿using CargoApp.Core.Abstraction.QueueMessages;
+using CargoApp.Core.ShareCore.Clock;
 using CargoApp.Core.ShareCore.Policies;
 using CargoApp.Modules.Companies.Core.Commands.CreateCompany;
 using CargoApp.Modules.Companies.Core.Entities;
@@ -16,6 +17,7 @@ public class CreateCompanyTests
     private IPolicy<CreateCompanyCommand> _mockPolicy = Substitute.For<IPolicy<CreateCompanyCommand>>();
     private ICompanyRepository _companyRepository = Substitute.For<ICompanyRepository>();
     private IClock _clock = Substitute.For<IClock>();
+    private IEventManager _eventManager = Substitute.For<IEventManager>();
 
     private CreateCompanyCommandHandler _handler;
 
@@ -24,7 +26,8 @@ public class CreateCompanyTests
         _handler = new CreateCompanyCommandHandler(
             new List<IPolicy<CreateCompanyCommand>>() { _mockPolicy },
             _companyRepository,
-            _clock
+            _clock,
+            _eventManager
         );
     }
 

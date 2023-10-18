@@ -14,10 +14,11 @@ public class CompanyConfiguration : IEntityTypeConfiguration<Company>
         
         builder
             .Property<CompanyName>("_companyName")
-            .HasConversion(x => x.Name, x => new CompanyName(x));
+            .HasConversion(x => x.Name, x => new CompanyName(x))
+            .HasColumnName("CompanyName");
 
-        builder.Property<Guid>("_companyId");
-        
+        builder.Property(x => x.CompanyId);
+
         builder.HasMany<Driver>("_drivers").WithOne("_employer");
     }
 }

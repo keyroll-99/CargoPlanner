@@ -1,6 +1,7 @@
 using CargoApp.Modules.Cargoes.Core.CargoAggregate;
 using CargoApp.Modules.Cargoes.Core.CompanyAggregate;
 using CargoApp.Modules.Cargoes.Infrastructure.DAL;
+using Microsoft.EntityFrameworkCore;
 
 namespace CargoApp.Modules.Cargoes.Infrastructure.Repository;
 
@@ -13,8 +14,14 @@ internal class CompanyRepository : ICompanyRepository
         _dbContext = cargoDbContext;
     }
 
-    public Task AddAsync(Company company)
+    public async Task AddAsync(Company company)
     {
-        throw new NotImplementedException();
+        await _dbContext.AddAsync(company);
+        await _dbContext.SaveChangesAsync();
+    }
+
+    public Task<Company?> GetByCompanyId(Guid companyId)
+    {
+        return _dbContext.Companies.Include("_drivers").FirstOrDefaultAsync(x => x.CompanyId == companyId);
     }
 }
