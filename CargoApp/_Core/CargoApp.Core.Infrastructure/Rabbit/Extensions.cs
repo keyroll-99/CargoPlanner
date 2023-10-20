@@ -8,7 +8,8 @@ namespace CargoApp.Core.Infrastructure.Rabbit;
 public static class Extensions
 {
     private const string OptionsName = "Rabbit";
-
+    private static List<string> RegistredEvents = new();
+    
     public static IServiceCollection AddRabbit(this IServiceCollection services)
     {
         var options = services.GetOptions<RabbitOptions>(OptionsName);
@@ -24,12 +25,17 @@ public static class Extensions
     where TProcessor: IEventConsumer<TEvent>
     {
         services.Add(new ServiceDescriptor(
-            typeof(TProcessor),
+            typeof(IEventConsumer<TEvent>),
             typeof(TProcessor),
             ServiceLifetime.Singleton
         ));
 
-        services.AddHostedService<RabbitEventConsumer<TProcessor, TEvent>>();
+        if (!RegistredEvents.Contains(typeof(TEvent).FullName))
+        {
+            services.AddHostedService<RabbitEventConsumer<TEvent>>();
+            RegistredEvents.Add(typeof(TEvent).FullName);
+        }
+
         return services;
     }
 }

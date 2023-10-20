@@ -27,5 +27,6 @@ public class Employee : BaseEntity
         WorkingPosition = workingPosition;
         CompanyId = companyId;
         Company = company;
+        IsActive = true;
     }
 }

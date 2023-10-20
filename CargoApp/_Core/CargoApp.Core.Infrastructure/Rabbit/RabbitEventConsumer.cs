@@ -5,35 +5,40 @@ using Serilog;
 
 namespace CargoApp.Core.Infrastructure.Rabbit;
 
-public class RabbitEventConsumer<TProcessor ,TEvent> : BackgroundService
+public class RabbitEventConsumer<TEvent> : BackgroundService
     where TEvent : class
-    where TProcessor: IEventConsumer<TEvent>
 {
 
-    private readonly IEventConsumer<TEvent> _eventConsumer;
+    private readonly IEnumerable<IEventConsumer<TEvent>> _eventConsumers;
     private readonly IEventManager _eventManager;
     private readonly ILogger _logger;
 
 
-    public RabbitEventConsumer(TProcessor eventConsumer, IEventManager eventManager, ILogger logger)
+    public RabbitEventConsumer(IEnumerable<IEventConsumer<TEvent>> eventConsumers, IEventManager eventManager, ILogger logger)
     {
-        _eventConsumer = eventConsumer;
+        _eventConsumers = eventConsumers;
         _eventManager = eventManager;
         _logger = logger;
     }
-
+    
     protected override Task ExecuteAsync(CancellationToken stoppingToken)
     {
         _eventManager.ReceiveAsync<TEvent>(async (model) =>
         {
-            try
+            var tasks = new List<Task>();
+            foreach (var eventConsumer in _eventConsumers)
             {
-                await _eventConsumer.Process(model);
+                try
+                {
+                    tasks.Add(eventConsumer.Process(model));
+                }
+                catch (System.Exception e)
+                {
+                    _logger.Fatal(e, "Error while execute message {messagePath}", typeof(TEvent).FullName);
+                }
             }
-            catch (System.Exception e)
-            {
-                _logger.Fatal(e, "Error while execute message {messagePath}", typeof(TEvent).FullName);
-            }
+
+            await Task.WhenAll(tasks);
         });
 
         return Task.CompletedTask;

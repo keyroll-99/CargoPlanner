@@ -3,7 +3,7 @@
 [Flags]
 public enum WorkingPositionEnum
 {
-    Owner,
-    Driver,
-    Dispatcher
+    Owner = 1 << 0,
+    Driver = 1 << 1,
+    Dispatcher = 1 << 2
 }

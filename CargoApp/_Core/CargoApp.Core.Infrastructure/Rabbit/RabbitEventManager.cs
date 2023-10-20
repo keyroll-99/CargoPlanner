@@ -11,27 +11,38 @@ internal class RabbitEventManager : IEventManager
 {
     private readonly ILogger _logger;
     private readonly IModel _chanel;
+    private readonly IDictionary<string, IModel> _exchangeName;
     
     public RabbitEventManager(IModel chanel, ILogger logger)
     {
         _logger = logger;
         _chanel = chanel;
+        _exchangeName = new Dictionary<string, IModel>();
     }
 
     public void PublishEvent<T>(T @event)
     {
-        _chanel.QueueDeclare(typeof(T).FullName, true, false, false);
+        _chanel.ExchangeDeclare(exchange: typeof(T).FullName, ExchangeType.Fanout);
         var properties = _chanel.CreateBasicProperties();
         properties.Persistent = true;
         
         var message = JsonSerializer.Serialize(@event);
         var body = Encoding.UTF8.GetBytes(message);
-        _chanel.BasicPublish(string.Empty, typeof(T).FullName, null, body);
+        _chanel.BasicPublish(typeof(T).FullName, string.Empty, properties, body);
     }
 
     public async Task ReceiveAsync<T>(Func<T, Task> action)
     {
-        _chanel.QueueDeclare(typeof(T).FullName, true, false, false);
+        if (!_exchangeName.ContainsKey(typeof(T).FullName))
+        {
+            _chanel.ExchangeDeclare(exchange: typeof(T).FullName, type: ExchangeType.Fanout);
+            _exchangeName[typeof(T).FullName] = _chanel;
+        }
+
+        var queueName = _chanel.QueueDeclare().QueueName;
+        
+        _chanel.QueueBind(queueName, typeof(T).FullName, string.Empty);
+        
         var consumer = new AsyncEventingBasicConsumer(_chanel);
 
         consumer.Received += async (@object, @event) =>
