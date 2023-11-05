@@ -31,6 +31,6 @@ public class Driver
             return Result<Driver>.Fail("Employer cannot be null");
         }
         
-        return new Driver(home, employer, true, Guid.NewGuid());
+        return new Driver(home, employer, true, Guid.Empty);
     }
 }

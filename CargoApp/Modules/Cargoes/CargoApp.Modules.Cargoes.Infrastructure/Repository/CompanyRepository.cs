@@ -16,18 +16,18 @@ internal class CompanyRepository : ICompanyRepository
 
     public async Task AddAsync(Company company)
     {
-        await _dbContext.AddAsync(company);
+        _dbContext.Companies.Add(company);
         await _dbContext.SaveChangesAsync();
     }
 
     public async Task UpdateAsync(Company company)
     {
-        _dbContext.Update(company);
+        _dbContext.Companies.Update(company);
         await _dbContext.SaveChangesAsync();
     }
 
     public Task<Company?> GetByCompanyId(Guid companyId)
     {
-        return _dbContext.Companies.Include("_drivers").AsNoTracking().FirstOrDefaultAsync(x => x.CompanyId == companyId);
+        return _dbContext.Companies.Include("_drivers").FirstOrDefaultAsync(x => x.CompanyId == companyId);
     }
 }
