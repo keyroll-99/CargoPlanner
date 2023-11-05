@@ -14,10 +14,10 @@ public class CargoConfiguration : IEntityTypeConfiguration<Cargo>
         builder.HasKey(x => x.Id);
         builder.HasOne<Location>("_to").WithMany().HasForeignKey("LocationToId");
         builder.HasOne<Location>("_from").WithMany().HasForeignKey("LocationFromId");
-        builder.HasOne<Driver>("_driver").WithMany();
-        builder.HasOne<Company>("_sender").WithMany();
-        builder.HasOne<Company>("_receiver").WithMany();
-        builder.Property<DateTime>("_expectedDeliveryTime");
-        builder.Property<DateTime?>("_deliveryDate").IsRequired(false);
+        builder.HasOne<Driver>("_driver").WithMany().HasForeignKey("DriverId");
+        builder.HasOne<Company>("_sender").WithMany().HasForeignKey("SenderId");
+        builder.HasOne<Company>("_receiver").WithMany().HasForeignKey("ReceiverId");
+        builder.Property<DateTime>("_expectedDeliveryTime").HasColumnName("ExpectedDeliveryTime");
+        builder.Property<DateTime?>("_deliveryDate").IsRequired(false).HasColumnName("DeliveryDate");
     }
 }

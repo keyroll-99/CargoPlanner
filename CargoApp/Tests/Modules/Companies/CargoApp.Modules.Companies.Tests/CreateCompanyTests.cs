@@ -5,10 +5,8 @@ using CargoApp.Modules.Companies.Core.Commands.CreateCompany;
 using CargoApp.Modules.Companies.Core.Entities;
 using CargoApp.Modules.Companies.Core.Repositories;
 using FluentAssertions;
-using Microsoft.AspNetCore.Http;
 using NSubstitute;
 using Xunit;
-using Company = CargoApp.Modules.Contracts.Companies.DTO.Company;
 
 namespace CargoApp.Modules.Companies.Tests;
 
@@ -65,6 +63,6 @@ public class CreateCompanyTests
         result.Should().NotBeNull();
         result.IsSuccess.Should().BeTrue();
 
-        await _companyRepository.Received(1).AddAsync(Arg.Is<Core.Entities.Company>(x => x.Name == "test"));
+        await _companyRepository.Received(1).AddAsync(Arg.Is<Company>(x => x.Name == "test"));
     }
 }

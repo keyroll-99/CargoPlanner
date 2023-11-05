@@ -4,7 +4,6 @@ using CargoApp.Core.ShareCore.Clock;
 using CargoApp.Core.ShareCore.Policies;
 using CargoApp.Modules.Companies.Core.Commands.AddEmployee;
 using CargoApp.Modules.Companies.Core.Commands.AddWorker;
-using CargoApp.Modules.Companies.Core.Commands.CreateCompany;
 using CargoApp.Modules.Companies.Core.Entities;
 using CargoApp.Modules.Companies.Core.Repositories;
 using FluentAssertions;

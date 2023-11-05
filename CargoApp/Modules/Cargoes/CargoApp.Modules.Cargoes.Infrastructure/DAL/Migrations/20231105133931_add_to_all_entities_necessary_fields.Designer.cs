@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace CargoApp.Modules.Cargoes.Infrastructure.DAL.Migrations
 {
     [DbContext(typeof(CargoDbContext))]
-    [Migration("20231018205352_UpdateLocationCompanyDriverAndCargoEntities")]
-    partial class UpdateLocationCompanyDriverAndCargoEntities
+    [Migration("20231105133931_add_to_all_entities_necessary_fields")]
+    partial class add_to_all_entities_necessary_fields
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -32,38 +32,40 @@ namespace CargoApp.Modules.Cargoes.Infrastructure.DAL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
+                    b.Property<Guid?>("DriverId")
+                        .HasColumnType("uuid");
+
                     b.Property<Guid?>("LocationFromId")
                         .HasColumnType("uuid");
 
                     b.Property<Guid?>("LocationToId")
                         .HasColumnType("uuid");
 
-                    b.Property<DateTime?>("_deliveryDate")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<Guid?>("_driverId")
+                    b.Property<Guid?>("ReceiverId")
                         .HasColumnType("uuid");
+
+                    b.Property<Guid?>("SenderId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("_deliveryDate")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("DeliveryDate");
 
                     b.Property<DateTime>("_expectedDeliveryTime")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<Guid?>("_receiverId")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid?>("_senderId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("ExpectedDeliveryTime");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("DriverId");
 
                     b.HasIndex("LocationFromId");
 
                     b.HasIndex("LocationToId");
 
-                    b.HasIndex("_driverId");
+                    b.HasIndex("ReceiverId");
 
-                    b.HasIndex("_receiverId");
-
-                    b.HasIndex("_senderId");
+                    b.HasIndex("SenderId");
 
                     b.ToTable("Cargoes", "cargoes");
                 });
@@ -93,18 +95,19 @@ namespace CargoApp.Modules.Cargoes.Infrastructure.DAL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<Guid?>("CompanyId")
+                    b.Property<Guid?>("EmployerId")
                         .HasColumnType("uuid");
 
                     b.Property<Guid?>("HomeId")
                         .HasColumnType("uuid");
 
                     b.Property<bool>("_isActive")
-                        .HasColumnType("boolean");
+                        .HasColumnType("boolean")
+                        .HasColumnName("IsActive");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CompanyId");
+                    b.HasIndex("EmployerId");
 
                     b.HasIndex("HomeId");
 
@@ -137,6 +140,10 @@ namespace CargoApp.Modules.Cargoes.Infrastructure.DAL.Migrations
 
             modelBuilder.Entity("CargoApp.Modules.Cargoes.Core.CargoAggregate.Cargo", b =>
                 {
+                    b.HasOne("CargoApp.Modules.Cargoes.Core.DriverAggregate.Driver", "_driver")
+                        .WithMany()
+                        .HasForeignKey("DriverId");
+
                     b.HasOne("CargoApp.Modules.Cargoes.Core.LocationAggregate.Location", "_from")
                         .WithMany()
                         .HasForeignKey("LocationFromId");
@@ -145,17 +152,13 @@ namespace CargoApp.Modules.Cargoes.Infrastructure.DAL.Migrations
                         .WithMany()
                         .HasForeignKey("LocationToId");
 
-                    b.HasOne("CargoApp.Modules.Cargoes.Core.DriverAggregate.Driver", "_driver")
-                        .WithMany()
-                        .HasForeignKey("_driverId");
-
                     b.HasOne("CargoApp.Modules.Cargoes.Core.CompanyAggregate.Company", "_receiver")
                         .WithMany()
-                        .HasForeignKey("_receiverId");
+                        .HasForeignKey("ReceiverId");
 
                     b.HasOne("CargoApp.Modules.Cargoes.Core.CompanyAggregate.Company", "_sender")
                         .WithMany()
-                        .HasForeignKey("_senderId");
+                        .HasForeignKey("SenderId");
 
                     b.Navigation("_driver");
 
@@ -170,13 +173,15 @@ namespace CargoApp.Modules.Cargoes.Infrastructure.DAL.Migrations
 
             modelBuilder.Entity("CargoApp.Modules.Cargoes.Core.DriverAggregate.Driver", b =>
                 {
-                    b.HasOne("CargoApp.Modules.Cargoes.Core.CompanyAggregate.Company", null)
+                    b.HasOne("CargoApp.Modules.Cargoes.Core.CompanyAggregate.Company", "_employer")
                         .WithMany("_drivers")
-                        .HasForeignKey("CompanyId");
+                        .HasForeignKey("EmployerId");
 
                     b.HasOne("CargoApp.Modules.Cargoes.Core.LocationAggregate.Location", "_home")
                         .WithMany()
                         .HasForeignKey("HomeId");
+
+                    b.Navigation("_employer");
 
                     b.Navigation("_home");
                 });

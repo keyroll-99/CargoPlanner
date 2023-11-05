@@ -9,12 +9,12 @@
     <ItemGroup>
       <PackageReference Include="FluentAssertions" Version="6.12.0" />
       <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.7.2" />
+      <PackageReference Include="NSubstitute" Version="5.1.0" />
       <PackageReference Include="xunit" Version="2.5.0" />
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\..\_Core\CargoApp.Core.TestCore\CargoApp.Core.TestCore.csproj" />
-      <ProjectReference Include="..\CargoApp.Modules.Companies.Core\CargoApp.Modules.Companies.Core.csproj" />
+      <ProjectReference Include="..\..\..\..\Modules\Companies\CargoApp.Modules.Companies.Core\CargoApp.Modules.Companies.Core.csproj" />
     </ItemGroup>
 
 </Project>

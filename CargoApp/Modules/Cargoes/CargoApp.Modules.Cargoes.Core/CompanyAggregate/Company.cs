@@ -28,4 +28,9 @@ public class Company
             Id = Guid.NewGuid()
         };
     }
+
+    public void AddDriver(Driver driver)
+    {
+        _drivers.Add(driver);
+    }
 }

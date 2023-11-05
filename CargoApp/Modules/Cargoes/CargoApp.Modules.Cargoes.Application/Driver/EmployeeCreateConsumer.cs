@@ -28,8 +28,8 @@ public class EmployeeCreateConsumer : IEventConsumer<EmployeeCreateEvent>
 
         Core.DriverAggregate.Driver.Create(null, company).MatchOnlySuccess(async (driver) =>
         {
-            var driverRepository = await _serviceProvider.GetService<IDriverRepository>();
-            await driverRepository.AddAsync(driver);
+            company.AddDriver(driver);
+            await companyRepository.UpdateAsync(company);
         });
         
     }

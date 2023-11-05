@@ -12,7 +12,8 @@ public class DriverConfiguration : IEntityTypeConfiguration<Driver>
     {
         builder.HasKey(x => x.Id);
         builder.HasOne<Location>("_home").WithMany().HasForeignKey("HomeId");
-        builder.HasOne<Company>().WithMany("_drivers");
-        builder.Property<bool>("_isActive");
+        builder.HasOne<Company>("_employer").WithMany("_drivers").HasForeignKey("EmployerId");
+
+        builder.Property<bool>("_isActive").HasColumnName("IsActive");
     }
 }
