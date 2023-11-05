@@ -17,7 +17,7 @@ public class CompanyConfiguration : IEntityTypeConfiguration<Company>
             .HasConversion(x => x.Name, x => new CompanyName(x))
             .HasColumnName("CompanyName");
 
-        builder.Property(x => x.CompanyId);
+        builder.Property(x => x.CompanyId).HasColumnName("CompanyId");
 
         builder.HasMany<Driver>("_drivers").WithOne("_employer");
     }

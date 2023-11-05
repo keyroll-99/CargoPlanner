@@ -74,7 +74,8 @@ namespace CargoApp.Modules.Cargoes.Infrastructure.DAL.Migrations
                         .HasColumnType("uuid");
 
                     b.Property<Guid>("CompanyId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("CompanyId");
 
                     b.Property<string>("_companyName")
                         .IsRequired()

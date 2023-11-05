@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace CargoApp.Modules.Cargoes.Infrastructure.DAL.Migrations
 {
     [DbContext(typeof(CargoDbContext))]
-    [Migration("20231105133931_add_to_all_entities_necessary_fields")]
-    partial class add_to_all_entities_necessary_fields
+    [Migration("20231105135214_Initial_Cargoes")]
+    partial class Initial_Cargoes
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -77,7 +77,8 @@ namespace CargoApp.Modules.Cargoes.Infrastructure.DAL.Migrations
                         .HasColumnType("uuid");
 
                     b.Property<Guid>("CompanyId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("CompanyId");
 
                     b.Property<string>("_companyName")
                         .IsRequired()
