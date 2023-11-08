@@ -1,5 +1,6 @@
 using System.Net;
 using System.Net.Http.Json;
+using CargoApp.Core.Abstraction.QueueMessages;
 using CargoApp.Core.ShareCore.Enums;
 using CargoApp.IntegrationTests;
 using CargoApp.Modules.Contracts.Companies;
@@ -19,7 +20,8 @@ namespace CargoApp.Modules.Users.Tests.Integration.Controllers;
 public class AuthController : BaseControllerTest, IDisposable
 {
     private readonly TestDatabase _testDatabase;
-    private ICompany _companyServiceMock = Substitute.For<ICompany>();
+    private readonly ICompany _companyServiceMock = Substitute.For<ICompany>();
+    private readonly IEventManager _eventManagerMock = Substitute.For<IEventManager>();
 
     public AuthController(OptionsProvider optionsProvider) : base(optionsProvider)
     {
@@ -34,6 +36,7 @@ public class AuthController : BaseControllerTest, IDisposable
     protected override void ConfigureServices(IServiceCollection services)
     {
         services.AddSingleton(_companyServiceMock);
+        services.AddSingleton(_eventManagerMock);
     }
 
     [Fact]

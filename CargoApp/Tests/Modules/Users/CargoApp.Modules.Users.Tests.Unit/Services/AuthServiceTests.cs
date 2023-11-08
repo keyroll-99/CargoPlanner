@@ -21,7 +21,6 @@ public class AuthServiceTests
     private readonly IUserRepository _userRepository = Substitute.For<IUserRepository>();
     private readonly IAuthManager _authManager = Substitute.For<IAuthManager>();
     private readonly IPasswordHasher<User> _passwordHasher = Substitute.For<IPasswordHasher<User>>();
-    private readonly IClock  _clock = Substitute.For<IClock>();
     private readonly ICompany _company = Substitute.For<ICompany>();
     private readonly IAuthService _service;
 
@@ -32,7 +31,7 @@ public class AuthServiceTests
             _samplePolicy
         };
         _service = new AuthService(_userRepository, createUserPolicies, _authManager,
-            _passwordHasher, _clock, _company);
+            _passwordHasher, _company);
     }
 
     [Fact]

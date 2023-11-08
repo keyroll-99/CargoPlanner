@@ -18,7 +18,6 @@ internal sealed class AuthService : IAuthService
 {
     private readonly IEnumerable<IPolicy<CreateUserCommand>> _createUserPolicy;
     private readonly IUserRepository _userRepository;
-    private readonly IClock _clock;
     private readonly IAuthManager _authManager;
     private readonly IPasswordHasher<User> _passwordHasher;
     private readonly ICompany _companyServices;
@@ -28,14 +27,12 @@ internal sealed class AuthService : IAuthService
         IEnumerable<IPolicy<CreateUserCommand>> createUserPolicy,
         IAuthManager authManager,
         IPasswordHasher<User> passwordHasher,
-        IClock clock,
         ICompany companyServices)
     {
         _userRepository = userRepository;
         _createUserPolicy = createUserPolicy;
         _authManager = authManager;
         _passwordHasher = passwordHasher;
-        _clock = clock;
         _companyServices = companyServices;
     }
 
