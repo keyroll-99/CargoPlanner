@@ -1,11 +1,9 @@
 ﻿using CargoApp.Core.Abstraction.Context;
-using CargoApp.Core.Abstraction.Repositories;
 using CargoApp.Core.Infrastructure.Policies;
 using CargoApp.Core.Infrastructure.Response;
 using CargoApp.Core.ShareCore.Policies;
 using CargoApp.Modules.Locations.Application.Mappers.Location;
 using CargoApp.Modules.Locations.Application.Repositories;
-using CargoApp.Modules.Locations.Core.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 

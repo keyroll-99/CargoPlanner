@@ -5,6 +5,6 @@ namespace CargoApp.Modules.Users.Core.Services.Abstract;
 
 public interface IPermissionTools
 {
-    Task<Result> AddPermission(UpdatePermissionCommand command);
-    Task<Result> RemovePermission(UpdatePermissionCommand command);
+    Task<CargoApp.Core.Infrastructure.Response.Result> AddPermission(UpdatePermissionCommand command);
+    Task<CargoApp.Core.Infrastructure.Response.Result> RemovePermission(UpdatePermissionCommand command);
 }

@@ -20,7 +20,7 @@ internal sealed class PermissionTools : IPermissionTools
         _userRepository = userRepository;
     }
 
-    public async Task<Result> AddPermission(UpdatePermissionCommand command)
+    public async Task<CargoApp.Core.Infrastructure.Response.Result> AddPermission(UpdatePermissionCommand command)
     {
         var user = await _userRepository.GetByIdAsync(command.UserId);
         if (user is null)
@@ -31,10 +31,10 @@ internal sealed class PermissionTools : IPermissionTools
         var result = await _policies.UsePolicies(command);
         return await result.Match(
             () => AddPermission(user, command.Permission),
-            (onErrorResult) => Task.FromResult<Result>(onErrorResult));
+            (onErrorResult) => Task.FromResult<CargoApp.Core.Infrastructure.Response.Result>(onErrorResult));
     }
 
-    public async Task<Result> RemovePermission(UpdatePermissionCommand command)
+    public async Task<CargoApp.Core.Infrastructure.Response.Result> RemovePermission(UpdatePermissionCommand command)
     {
         var user = await _userRepository.GetByIdAsync(command.UserId);
         if (user is null)
@@ -45,7 +45,7 @@ internal sealed class PermissionTools : IPermissionTools
         var result = await _policies.UsePolicies(command);
         return await result.Match(
             () => RemovePermission(user, command.Permission),
-            (onErrorResult) => Task.FromResult<Result>(onErrorResult));
+            (onErrorResult) => Task.FromResult<CargoApp.Core.Infrastructure.Response.Result>(onErrorResult));
     }
 
     private async Task AddPermission(User user, PermissionEnum permission)

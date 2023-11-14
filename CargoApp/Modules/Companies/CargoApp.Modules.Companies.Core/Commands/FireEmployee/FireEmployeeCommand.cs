@@ -3,4 +3,4 @@ using MediatR;
 
 namespace CargoApp.Modules.Companies.Core.Commands.FireEmployee;
 
-public record FireEmployeeCommand(Guid EmployeeId): IRequest<Result>;
+public record FireEmployeeCommand(Guid EmployeeId): IRequest<CargoApp.Core.Infrastructure.Response.Result>;

@@ -23,18 +23,18 @@ public static class Extensions
         return services;
     }
 
-    public static async Task<Result> UsePolicies<TCommand>(this IEnumerable<IPolicy<TCommand>> policies, TCommand model)
+    public static async Task<Response.Result> UsePolicies<TCommand>(this IEnumerable<IPolicy<TCommand>> policies, TCommand model)
     {
         foreach (var policy in policies)
         {
             if (policy.IsApplicable(model) && !(await policy.IsValidAsync(model)))
             {
-                return Result.Fail(policy.ErrorMessage, policy.StatusCode);
+                return Response.Result.Fail(policy.ErrorMessage, policy.StatusCode);
             }
             
         }
 
-        return Result.Success();
+        return Response.Result.Success();
     }
 
     private static IEnumerable<Type> GetAllPolicesTypes(Assembly assembly)

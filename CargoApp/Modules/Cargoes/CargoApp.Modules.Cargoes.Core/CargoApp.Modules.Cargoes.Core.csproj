@@ -18,6 +18,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Folder Include="CargoAggregate\Exceptions\" />
       <Folder Include="CargoAggregate\ValueObject\" />
     </ItemGroup>
     

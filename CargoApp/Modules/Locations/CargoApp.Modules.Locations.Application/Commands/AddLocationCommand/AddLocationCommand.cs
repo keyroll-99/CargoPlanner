@@ -1,8 +1,6 @@
-﻿using CargoApp.Core.Infrastructure.CQRS.Request;
-using CargoApp.Core.Infrastructure.Response;
-using CargoApp.Modules.Locations.Application.DTO;
+﻿using CargoApp.Modules.Locations.Application.DTO;
 using MediatR;
-
+using CargoApp.Core.Infrastructure.Response;
 
 namespace CargoApp.Modules.Locations.Application.Commands.AddLocationCommand;
 
