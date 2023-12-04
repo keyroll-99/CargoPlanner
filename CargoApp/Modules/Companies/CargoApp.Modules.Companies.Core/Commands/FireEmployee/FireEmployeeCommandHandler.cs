@@ -1,5 +1,4 @@
 using CargoApp.Core.Abstraction.QueueMessages;
-using CargoApp.Core.Infrastructure.Response;
 using CargoApp.Modules.Companies.Core.Repositories;
 using CargoApp.Modules.Contracts.Events.Companies;
 using MediatR;

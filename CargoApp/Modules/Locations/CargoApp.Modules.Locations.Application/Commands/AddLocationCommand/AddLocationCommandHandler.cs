@@ -1,7 +1,9 @@
 ﻿using CargoApp.Core.Abstraction.Context;
+using CargoApp.Core.Abstraction.QueueMessages;
 using CargoApp.Core.Infrastructure.Policies;
 using CargoApp.Core.Infrastructure.Response;
 using CargoApp.Core.ShareCore.Policies;
+using CargoApp.Modules.Contracts.Events.Locations;
 using CargoApp.Modules.Locations.Application.Mappers.Location;
 using CargoApp.Modules.Locations.Application.Repositories;
 using MediatR;
@@ -14,15 +16,18 @@ internal class AddLocationCommandHandler : IRequestHandler<AddLocationCommand, R
     private readonly ILocationRepository _locationRepository;
     private readonly IEnumerable<IPolicy<AddLocationCommand>> _policies;
     private readonly IContext _context;
+    private readonly IEventManager _eventManager;
 
     public AddLocationCommandHandler(
         ILocationRepository locationRepository,
         IEnumerable<IPolicy<AddLocationCommand>> policies,
-        IContext context)
+        IContext context,
+        IEventManager eventManager)
     {
         _locationRepository = locationRepository;
         _policies = policies;
         _context = context;
+        _eventManager = eventManager;
     }
 
     public async Task<Result<string>> Handle(AddLocationCommand command, CancellationToken cancellationToken)
@@ -40,6 +45,7 @@ internal class AddLocationCommandHandler : IRequestHandler<AddLocationCommand, R
             {
                 var location = command.Location.AsEntity(_context.IdentityContext.CompanyId);
                 var result = await _locationRepository.AddAsync(location);
+                _eventManager.PublishEvent(new LocationCreatedEvent(result.Lat, result.Lon, result.DisplayName, result.OsmId));
                 return Result<string>.Success(result.Id.ToString(), StatusCodes.Status201Created);
             }, (error) => Task.FromResult(Result<string>.Fail(error)));
     }

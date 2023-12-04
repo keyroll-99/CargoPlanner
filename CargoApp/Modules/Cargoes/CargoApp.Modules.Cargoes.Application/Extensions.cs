@@ -1,9 +1,12 @@
 ﻿
+using System.Reflection;
 using CargoApp.Core.Infrastructure.Rabbit;
 using CargoApp.Modules.Cargoes.Application.Company;
 using CargoApp.Modules.Cargoes.Application.Driver;
+using CargoApp.Modules.Cargoes.Application.Location;
 using CargoApp.Modules.Cargoes.Core.CargoAggregate.DomainService;
 using CargoApp.Modules.Contracts.Events.Companies;
+using CargoApp.Modules.Contracts.Events.Locations;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace CargoApp.Modules.Cargoes.Application;
@@ -14,9 +17,11 @@ internal static class Extensions
     {
         services.AddEventConsumer<CompanyCreateConsumer, CompanyCreateEvent>();
         services.AddEventConsumer<EmployeeCreateConsumer, EmployeeCreateEvent>();
+        services.AddEventConsumer<LocationCreatedConsumer, LocationCreatedEvent>();
 
         services.AddScoped<ICreateCargoDomainService, CreateCargoDomainService>();
-        
+        services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
+
         return services;
     }
 }

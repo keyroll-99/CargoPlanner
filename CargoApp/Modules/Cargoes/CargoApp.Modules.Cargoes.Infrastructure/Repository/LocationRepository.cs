@@ -16,6 +16,22 @@ internal class LocationRepository : ILocationRepository
 
     public Task<Location?> GetByOsmId(long osmId)
     {
-        return _dbContext.Locations.AsNoTracking().SingleOrDefaultAsync(x => x.OsmId == osmId);
+        return _dbContext.Locations.SingleOrDefaultAsync(x => x.OsmId == osmId);
+    }
+
+    public async Task<Location> AddAsync(Location location)
+    {
+        var existingLocation = await _dbContext.Locations.AsNoTracking()
+            .SingleOrDefaultAsync(x => x.OsmId == location.OsmId);
+
+        if (existingLocation != null)
+        {
+            return existingLocation;
+        }
+
+        await _dbContext.Locations.AddAsync(location);
+        await _dbContext.SaveChangesAsync();
+
+        return location;
     }
 }

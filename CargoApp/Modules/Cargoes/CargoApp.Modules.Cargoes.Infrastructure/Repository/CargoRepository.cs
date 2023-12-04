@@ -11,4 +11,12 @@ internal class CargoRepository : ICargoRepository
    {
       _dbContext = cargoDbContext;
    }
+
+   public async Task<Cargo> AddAsync(Cargo cargo)
+   {
+      await _dbContext.Cargoes.AddAsync(cargo);
+      await _dbContext.SaveChangesAsync();
+
+      return cargo;
+   }
 }

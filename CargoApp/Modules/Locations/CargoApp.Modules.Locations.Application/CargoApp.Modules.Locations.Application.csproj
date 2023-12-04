@@ -8,6 +8,7 @@
 
     <ItemGroup>
         <ProjectReference Include="..\..\..\_Core\CargoApp.Core.Infrastructure\CargoApp.Core.Infrastructure.csproj"/>
+        <ProjectReference Include="..\..\_Contracts\CargoApp.Modules.Contracts.Events\CargoApp.Modules.Contracts.Events.csproj" />
         <ProjectReference Include="..\CargoApp.Modules.Locations.Core\CargoApp.Modules.Locations.Core.csproj"/>
     </ItemGroup>
     <ItemGroup>

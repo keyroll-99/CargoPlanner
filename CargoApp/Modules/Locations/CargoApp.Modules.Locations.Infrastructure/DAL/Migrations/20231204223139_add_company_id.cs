@@ -1,22 +1,23 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
 namespace CargoApp.Modules.Locations.Infrastructure.DAL.Migrations
 {
     /// <inheritdoc />
-    public partial class add_companyId : Migration
+    public partial class add_company_id : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<long>(
+            migrationBuilder.AddColumn<Guid>(
                 name: "CompanyId",
                 schema: "locations",
                 table: "Locations",
-                type: "bigint",
+                type: "uuid",
                 nullable: false,
-                defaultValue: 0L);
+                defaultValue: new Guid("00000000-0000-0000-0000-000000000000"));
         }
 
         /// <inheritdoc />

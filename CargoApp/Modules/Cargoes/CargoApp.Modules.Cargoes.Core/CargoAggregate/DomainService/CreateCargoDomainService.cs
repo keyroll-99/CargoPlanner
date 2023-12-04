@@ -23,15 +23,9 @@ internal class CreateCargoDomainService : ICreateCargoDomainService
         _clock = clock;
     }
 
-    public async Task<Cargo> CreateCargo(long fromOsmId, long toOsmId, Guid senderId, Guid receiverId,
+    public Cargo CreateCargo(Location? from, Location? to, Company? sender, Company? receiver,
         DateTime expectedDeliveryTime)
     {
-        var from = await _locationRepository.GetByOsmId(fromOsmId);
-        var to = await _locationRepository.GetByOsmId(toOsmId);
-
-        var sender = await _companyRepository.GetByCompanyId(senderId);
-        var receiver = await _companyRepository.GetByCompanyId(receiverId);
-
         var cargo = Cargo.Create(from, to, sender, receiver, expectedDeliveryTime, _clock.Now());
 
         return cargo;

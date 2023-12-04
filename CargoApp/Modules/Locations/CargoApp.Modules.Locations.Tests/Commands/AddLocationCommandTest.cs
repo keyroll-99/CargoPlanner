@@ -1,4 +1,5 @@
 ﻿using CargoApp.Core.Abstraction.Context;
+using CargoApp.Core.Abstraction.QueueMessages;
 using CargoApp.Core.Infrastructure.Context;
 using CargoApp.Core.ShareCore.Enums;
 using CargoApp.Core.ShareCore.Policies;
@@ -18,6 +19,7 @@ public class AddLocationCommandTest
     private readonly AddLocationCommandHandler _services;
     private IPolicy<AddLocationCommand> _policyMock = Substitute.For<IPolicy<AddLocationCommand>>();
     private ILocationRepository _locationRepositoryMock = Substitute.For<ILocationRepository>();
+    private IEventManager _eventManagerMock = Substitute.For<IEventManager>();
     private IContext _context = Substitute.For<IContext>();
 
     public AddLocationCommandTest()
@@ -25,7 +27,8 @@ public class AddLocationCommandTest
         _services = new AddLocationCommandHandler(
             _locationRepositoryMock,
             new List<IPolicy<AddLocationCommand>> { _policyMock },
-            _context
+            _context,
+            _eventManagerMock
         );
 
         _context.IdentityContext.Returns(new TestIdentityContext

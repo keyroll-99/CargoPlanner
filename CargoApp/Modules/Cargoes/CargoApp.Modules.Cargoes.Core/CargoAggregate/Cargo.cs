@@ -16,6 +16,9 @@ public class Cargo
     private readonly DateTime _createAt;
     private DriverAggregate.Driver? _driver;
 
+    public Cargo()
+    {
+    }
 
     private Cargo(
         Location from,
