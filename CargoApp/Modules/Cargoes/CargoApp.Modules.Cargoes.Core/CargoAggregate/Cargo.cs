@@ -13,6 +13,8 @@ public class Cargo
     private Company _receiver;
     private DateTime _expectedDeliveryTime;
     private DateTime? _deliveryDate;
+    private bool _isDelivered;
+    private bool _isCanceled;
     private readonly DateTime _createAt;
     private DriverAggregate.Driver? _driver;
 
@@ -38,13 +40,15 @@ public class Cargo
         _deliveryDate = deliveryDate;
         _createAt = createAt;
         _driver = driver;
+        _isCanceled = false;
+        _isDelivered = false;
     }
 
     public static Cargo Create(
         Location from,
         Location to,
-        Company sender, 
-        Company receiver, 
+        Company sender,
+        Company receiver,
         DateTime expectedDeliveryTime,
         DateTime createAt)
     {
@@ -52,5 +56,29 @@ public class Cargo
         {
             Id = Guid.NewGuid()
         };
+    }
+
+    public void Update(
+        Location from,
+        Location to,
+        Company receiver,
+        DateTime expectedDeliveryTime
+    )
+    {
+        _from = from;
+        _to = to;
+        _receiver = receiver;
+        _expectedDeliveryTime = expectedDeliveryTime;
+    }
+
+    public void Cancel()
+    {
+        _isCanceled = true;
+    }
+
+    public void Deliver(DateTime deliveryDate)
+    {
+        _isDelivered = true;
+        _deliveryDate = deliveryDate;
     }
 }

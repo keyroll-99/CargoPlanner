@@ -19,5 +19,7 @@ public class CargoConfiguration : IEntityTypeConfiguration<Cargo>
         builder.HasOne<Company>("_receiver").WithMany().HasForeignKey("ReceiverId");
         builder.Property<DateTime>("_expectedDeliveryTime").HasColumnName("ExpectedDeliveryTime");
         builder.Property<DateTime?>("_deliveryDate").IsRequired(false).HasColumnName("DeliveryDate");
+        builder.Property<bool>("_isDelivered").HasColumnName("IsDelivered");
+        builder.Property<bool>("_isCanceled").HasColumnName("IsCanceled");
     }
 }
