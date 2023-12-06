@@ -1,13 +1,13 @@
-using CargoApp.Core.Infrastructure.Response;
 using CargoApp.Modules.Cargoes.Core.CargoAggregate;
 using CargoApp.Modules.Cargoes.Core.CargoAggregate.DomainService;
 using CargoApp.Modules.Cargoes.Core.CompanyAggregate;
 using CargoApp.Modules.Cargoes.Core.LocationAggregate;
 using MediatR;
+using Result;
 
 namespace CargoApp.Modules.Cargoes.Application.Cargo.CreateCargo;
 
-public class CreateCargoCommandHandler : IRequestHandler<CreateCargoCommand, Result.Result<string>>
+public class CreateCargoCommandHandler : IRequestHandler<CreateCargoCommand, Result<string>>
 {
     private readonly ICreateCargoDomainService _createCargoDomainService;
     private readonly ILocationRepository _locationRepository;
@@ -26,7 +26,7 @@ public class CreateCargoCommandHandler : IRequestHandler<CreateCargoCommand, Res
         _cargoRepository = cargoRepository;
     }
 
-    public async Task<Result.Result<string>> Handle(CreateCargoCommand request, CancellationToken cancellationToken)
+    public async Task<Result<string>> Handle(CreateCargoCommand request, CancellationToken cancellationToken)
     {
         var from = await _locationRepository.GetByOsmId(request.FromOsmId);
         var to = await _locationRepository.GetByOsmId(request.ToOsmId);
@@ -45,6 +45,6 @@ public class CreateCargoCommandHandler : IRequestHandler<CreateCargoCommand, Res
 
         await _cargoRepository.AddAsync(cargo);
 
-        return Result.Result<string>.Success(cargo.Id.ToString());
+        return Result<string>.Success(cargo.Id.ToString());
     }
 }

@@ -42,8 +42,8 @@ public class PermissionToolsTest
 
         // assert
         result.IsSuccess.Should().BeFalse();
-        result.Error.Should().NotBeNull();
-        result.Error.Should().Be("User doesn't exists");
+        result.ErrorModel.Should().NotBeNull();
+        result.ErrorModel.Should().Be("User doesn't exists");
     }
 
     [Fact]
@@ -65,8 +65,8 @@ public class PermissionToolsTest
 
         // assert
         result.IsSuccess.Should().BeFalse();
-        result.Error.Should().NotBeNull();
-        result.Error.Should().Be("Error");
+        result.ErrorModel.Should().NotBeNull();
+        result.ErrorModel.Should().Be("Error");
     }
     
     [Fact]
@@ -89,7 +89,7 @@ public class PermissionToolsTest
 
         // assert
         result.IsSuccess.Should().BeTrue();
-        result.Error.Should().BeNull();
+        result.ErrorModel.Should().BeNull();
         await _userRepositoryMock.Received(1).UpdateAsync(Arg.Is<User>(x => x.PermissionMask == PermissionEnum.Cargoes));
     }
     
@@ -104,8 +104,8 @@ public class PermissionToolsTest
 
         // assert
         result.IsSuccess.Should().BeFalse();
-        result.Error.Should().NotBeNull();
-        result.Error.Should().Be("User doesn't exists");
+        result.ErrorModel.Should().NotBeNull();
+        result.ErrorModel.Should().Be("User doesn't exists");
     }
 
     [Fact]
@@ -127,8 +127,8 @@ public class PermissionToolsTest
 
         // assert
         result.IsSuccess.Should().BeFalse();
-        result.Error.Should().NotBeNull();
-        result.Error.Should().Be("Error");
+        result.ErrorModel.Should().NotBeNull();
+        result.ErrorModel.Should().Be("Error");
     }
     
     [Fact]
@@ -151,7 +151,7 @@ public class PermissionToolsTest
 
         // assert
         result.IsSuccess.Should().BeTrue();
-        result.Error.Should().BeNull();
+        result.ErrorModel.Should().BeNull();
         await _userRepositoryMock.Received(1).UpdateAsync(Arg.Is<User>(x => x.PermissionMask == 0));
     }
     

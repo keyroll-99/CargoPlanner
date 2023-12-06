@@ -9,6 +9,7 @@ using CargoApp.Modules.Users.Core.Entities;
 using CargoApp.Modules.Users.Core.Repositories;
 using CargoApp.Modules.Users.Core.Services.Abstract;
 using Microsoft.AspNetCore.Identity;
+using Result.ApiResult;
 
 namespace CargoApp.Modules.Users.Core.Services.Impl;
 
@@ -40,13 +41,13 @@ internal class PasswordRecoveryService : IPasswordRecoveryService
         _changePasswordPolicies = changePasswordPolicies;
     }
 
-    public async Task<CargoApp.Core.Infrastructure.Response.Result> InitPasswordRecovery(
+    public async Task<ApiResult> InitPasswordRecovery(
         InitPasswordRecoveryCommand command)
     {
         var user = await _userRepository.GetByEmailAsync(command.Email);
         if (user is null)
         {
-            return CargoApp.Core.Infrastructure.Response.Result.Fail("User not found");
+            return "User not found";
         }
 
         var passwordRecovery = PasswordRecovery.CreatePasswordRecovery(user, _clock);
@@ -61,42 +62,42 @@ internal class PasswordRecoveryService : IPasswordRecoveryService
                 user.Email,
                 "Password recovery"),
             passwordRecoveryMail);
-        return CargoApp.Core.Infrastructure.Response.Result.Success();
+        return ApiResult.Success();
     }
 
-    public async Task<CargoApp.Core.Infrastructure.Response.Result> IsRecoveryKeyValid(string recoveryKey)
+    public async Task<ApiResult> IsRecoveryKeyValid(string recoveryKey)
     {
         if (!Guid.TryParse(recoveryKey, out var recoveryGuid))
         {
-            return CargoApp.Core.Infrastructure.Response.Result.Fail("Invalid recovery key");
+            return "Invalid recovery key";
         }
 
         var recoveryModel = await _passwordRecoveryRepository.GetByIdAsync(recoveryGuid);
 
         if (recoveryModel is null)
         {
-            return CargoApp.Core.Infrastructure.Response.Result.Fail("Invalid recovery key");
+            return "Invalid recovery key";
         }
 
         return recoveryModel.IsValid(_clock)
-            ? CargoApp.Core.Infrastructure.Response.Result.Success()
-            : CargoApp.Core.Infrastructure.Response.Result.Fail("Invalid recovery key");
+            ? ApiResult.Success()
+            : "Invalid recovery key";
     }
 
-    public async Task<CargoApp.Core.Infrastructure.Response.Result> ChangePassword(Guid recoveryKey,
+    public async Task<ApiResult> ChangePassword(Guid recoveryKey,
         ChangePasswordCommand command)
     {
         var changePasswordPoliciesResult = await _changePasswordPolicies.UsePolicies(command);
 
         if (!changePasswordPoliciesResult.IsSuccess)
         {
-            return CargoApp.Core.Infrastructure.Response.Result.Fail(changePasswordPoliciesResult.Error!);
+            return changePasswordPoliciesResult.ErrorMessage!;
         }
 
         var recoveryModel = await _passwordRecoveryRepository.GetByIdAsync(recoveryKey);
         if (recoveryModel is null)
         {
-            return CargoApp.Core.Infrastructure.Response.Result.Fail("Invalid recovery key");
+            return "Invalid recovery key";
         }
 
         var user = recoveryModel.User;
@@ -107,6 +108,6 @@ internal class PasswordRecoveryService : IPasswordRecoveryService
         await _userRepository.UpdateAsync(user);
         await _passwordRecoveryRepository.UpdateAsync(recoveryModel);
 
-        return CargoApp.Core.Infrastructure.Response.Result.Success();
+        return ApiResult.Success();
     }
 }

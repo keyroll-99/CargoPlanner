@@ -1,7 +1,7 @@
 ﻿using System.Reflection;
-using CargoApp.Core.Infrastructure.Response;
 using CargoApp.Core.ShareCore.Policies;
 using Microsoft.Extensions.DependencyInjection;
+using Result.ApiResult;
 
 namespace CargoApp.Core.Infrastructure.Policies;
 
@@ -23,18 +23,18 @@ public static class Extensions
         return services;
     }
 
-    public static async Task<Response.Result> UsePolicies<TCommand>(this IEnumerable<IPolicy<TCommand>> policies, TCommand model)
+    public static async Task<ApiResult> UsePolicies<TCommand>(this IEnumerable<IPolicy<TCommand>> policies, TCommand model)
     {
         foreach (var policy in policies)
         {
             if (policy.IsApplicable(model) && !(await policy.IsValidAsync(model)))
             {
-                return Response.Result.Fail(policy.ErrorMessage, policy.StatusCode);
+                return ApiResult.Fail(policy.StatusCode, policy.ErrorMessage);
             }
             
         }
 
-        return Response.Result.Success();
+        return ApiResult.Success();
     }
 
     private static IEnumerable<Type> GetAllPolicesTypes(Assembly assembly)

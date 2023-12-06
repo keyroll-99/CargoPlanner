@@ -1,7 +1,7 @@
 
-using CargoApp.Core.Infrastructure.Response;
 using CargoApp.Modules.Cargoes.Core.CompanyAggregate;
 using CargoApp.Modules.Cargoes.Core.LocationAggregate;
+using Result;
 
 namespace CargoApp.Modules.Cargoes.Core.DriverAggregate;
 

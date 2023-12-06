@@ -1,11 +1,11 @@
-﻿using CargoApp.Core.Infrastructure.Response;
-using CargoApp.Modules.Locations.Application.DTO;
+﻿using CargoApp.Modules.Locations.Application.DTO;
 using CargoApp.Modules.Locations.Application.ExternalServices.Locations;
 using MediatR;
+using Result.ApiResult;
 
 namespace CargoApp.Modules.Locations.Application.Queries.SearchLocations;
 
-internal class SearchLocationQueryHandler : IRequestHandler<SearchLocationQuery, Result<IEnumerable<LocationDto>, string>>
+internal class SearchLocationQueryHandler : IRequestHandler<SearchLocationQuery, ApiResult<IEnumerable<LocationDto>, string>>
 {
     private readonly ILocationClientFactory _locationClientFactory;
 
@@ -14,7 +14,7 @@ internal class SearchLocationQueryHandler : IRequestHandler<SearchLocationQuery,
         _locationClientFactory = locationClientFactory;
     }
 
-    public async Task<Result<IEnumerable<LocationDto>, string>> Handle(SearchLocationQuery query, CancellationToken cancellationToken)
+    public async Task<ApiResult<IEnumerable<LocationDto>, string>> Handle(SearchLocationQuery query, CancellationToken cancellationToken)
     {
         return await _locationClientFactory.Create().Search(query.Query, new CancellationToken(false));
     }

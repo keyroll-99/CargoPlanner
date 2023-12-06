@@ -26,7 +26,7 @@ public class EmployeeCreateConsumer : IEventConsumer<EmployeeCreateEvent>
         var companyRepository = await _serviceProvider.GetService<ICompanyRepository>();
         var company = await companyRepository.GetByCompanyId(@event.CompanyId);
 
-        Core.DriverAggregate.Driver.Create(null, company).MatchOnlySuccess(async (driver) =>
+        await Core.DriverAggregate.Driver.Create(null, company).OnSuccessAsync(async (driver) =>
         {
             company.AddDriver(driver);
             await companyRepository.UpdateAsync(company);

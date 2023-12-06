@@ -1,11 +1,11 @@
-using CargoApp.Core.Infrastructure.Response;
 using CargoApp.Modules.Users.Core.Commands;
+using Result.ApiResult;
 
 namespace CargoApp.Modules.Users.Core.Services.Abstract;
 
 public interface IPasswordRecoveryService
 {
-    Task<CargoApp.Core.Infrastructure.Response.Result> InitPasswordRecovery(InitPasswordRecoveryCommand command);
-    Task<CargoApp.Core.Infrastructure.Response.Result> IsRecoveryKeyValid(string recoveryKey);
-    Task<CargoApp.Core.Infrastructure.Response.Result> ChangePassword(Guid recoveryKey, ChangePasswordCommand command);
+    Task<ApiResult> InitPasswordRecovery(InitPasswordRecoveryCommand command);
+    Task<ApiResult> IsRecoveryKeyValid(string recoveryKey);
+    Task<ApiResult> ChangePassword(Guid recoveryKey, ChangePasswordCommand command);
 }

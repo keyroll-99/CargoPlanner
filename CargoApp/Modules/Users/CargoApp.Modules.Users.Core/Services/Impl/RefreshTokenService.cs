@@ -1,11 +1,12 @@
 ﻿using System.Security.Cryptography;
 using CargoApp.Core.Abstraction.Auth;
-using CargoApp.Core.Infrastructure.Response;
 using CargoApp.Core.ShareCore.Clock;
 using CargoApp.Modules.Contracts.Companies;
 using CargoApp.Modules.Users.Core.Entities;
 using CargoApp.Modules.Users.Core.Repositories;
 using CargoApp.Modules.Users.Core.Services.Abstract;
+using Result;
+using Result.ApiResult;
 
 namespace CargoApp.Modules.Users.Core.Services.Impl;
 
@@ -35,38 +36,38 @@ internal class RefreshTokenService : IRefreshTokenService
         return token;
     }
 
-    public async Task<Result<string, string>> RefreshTokenAsync(string token)
+    public async Task<ApiResult<string, string>> RefreshTokenAsync(string token)
     {
         var dbModel = await _refreshTokenRepository.GetByTokenAsync(token);
         if (dbModel is null)
         {
-            return Result<string, string>.Fail("Refresh token doesn't exists");
+            return ApiResult<string, string>.Fail("Refresh token doesn't exists");
         }
 
         if (dbModel.ExpiredAt < _clock.Now())
         {
-            return Result<string, string>.Fail("Refresh token has expired");
+            return ApiResult<string, string>.Fail("Refresh token has expired");
         }
 
         if (dbModel.IsUsed)
         {
             await InvokeAllRefreshTokenAsync(dbModel.UserId);
-            return Result<string, string>.Fail("Refresh token has been used");
+            return ApiResult<string, string>.Fail("Refresh token has been used");
         }
 
         if (!dbModel.User.IsActive)
         {
-            return Result<string, string>.Fail("User is inactive");
+            return ApiResult<string, string>.Fail("User is inactive");
         }
 
         var newTokenTask = await GenerateTokenAsync(dbModel.UserId);
         dbModel.IsUsed = true;
         await _refreshTokenRepository.UpdateAsync(dbModel);
 
-        return Result<string, string>.Success(newTokenTask);
+        return ApiResult<string, string>.Success(newTokenTask);
     }
 
-    public async Task<Result<JsonWebToken, string>> GenerateJsonWebTokenAsync(string token)
+    public async Task<ApiResult<JsonWebToken, string>> GenerateJsonWebTokenAsync(string token)
     {
         var user = (await _refreshTokenRepository.GetByTokenAsync(token))?.User;
         if (user is null)
