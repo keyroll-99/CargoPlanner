@@ -17,7 +17,7 @@ public class CreateCargoCommandHandler : IRequestHandler<CreateCargoCommand, Res
     public CreateCargoCommandHandler(
         ICreateCargoDomainService createCargoDomainService,
         ICompanyRepository companyRepository,
-        ILocationRepository locationRepository, 
+        ILocationRepository locationRepository,
         ICargoRepository cargoRepository)
     {
         _createCargoDomainService = createCargoDomainService;
@@ -30,12 +30,12 @@ public class CreateCargoCommandHandler : IRequestHandler<CreateCargoCommand, Res
     {
         var from = await _locationRepository.GetByOsmId(request.FromOsmId);
         var to = await _locationRepository.GetByOsmId(request.ToOsmId);
-        
+
         var sender = await _companyRepository.GetByCompanyId(request.SenderId);
         var receiver = await _companyRepository.GetByCompanyId(request.ReceiverId);
-        
-        
-        var cargo = _createCargoDomainService.CreateCargo(
+
+
+        var createCargoResult = _createCargoDomainService.CreateCargo(
             from,
             to,
             sender,
@@ -43,8 +43,11 @@ public class CreateCargoCommandHandler : IRequestHandler<CreateCargoCommand, Res
             request.ExpectedDeliveryTime
         );
 
-        await _cargoRepository.AddAsync(cargo);
+        await createCargoResult.OnSuccessAsync(async (cargo) => { await _cargoRepository.AddAsync(cargo); });
 
-        return Result<string>.Success(cargo.Id.ToString());
+
+        return createCargoResult.IsSuccess
+            ? Result<string>.Success(createCargoResult.SuccessModel!.Id.ToString())
+            : Result<string>.Fail(createCargoResult.ErrorModel!);
     }
 }

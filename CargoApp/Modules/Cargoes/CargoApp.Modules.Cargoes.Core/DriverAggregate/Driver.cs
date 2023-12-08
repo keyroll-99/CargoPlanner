@@ -1,6 +1,7 @@
 
 using CargoApp.Modules.Cargoes.Core.CompanyAggregate;
 using CargoApp.Modules.Cargoes.Core.LocationAggregate;
+using CargoApp.Modules.Contracts.Cargoes;
 using Result;
 
 namespace CargoApp.Modules.Cargoes.Core.DriverAggregate;
@@ -32,5 +33,10 @@ public class Driver
         }
         
         return new Driver(home, employer, true, Guid.Empty);
+    }
+    
+    public DriverDto CreateDto()
+    {
+        return new DriverDto(Id, _home?.CreateDto(), _employer.CreateDtoWithoutDrivers(), _isActive);
     }
 }

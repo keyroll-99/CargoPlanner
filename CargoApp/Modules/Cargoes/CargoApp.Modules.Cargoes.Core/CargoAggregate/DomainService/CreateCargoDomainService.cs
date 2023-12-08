@@ -1,14 +1,12 @@
 using CargoApp.Core.ShareCore.Clock;
 using CargoApp.Modules.Cargoes.Core.CompanyAggregate;
 using CargoApp.Modules.Cargoes.Core.LocationAggregate;
+using Result;
 
 namespace CargoApp.Modules.Cargoes.Core.CargoAggregate.DomainService;
 
 internal class CreateCargoDomainService : ICreateCargoDomainService
 {
-    private readonly ILocationRepository _locationRepository;
-    private readonly ICompanyRepository _companyRepository;
-    private readonly ICargoRepository _cargoRepository;
     private readonly IClock _clock;
 
     public CreateCargoDomainService(
@@ -17,17 +15,10 @@ internal class CreateCargoDomainService : ICreateCargoDomainService
         ICargoRepository cargoRepository,
         IClock clock)
     {
-        _locationRepository = locationRepository;
-        _companyRepository = companyRepository;
-        _cargoRepository = cargoRepository;
         _clock = clock;
     }
 
-    public Cargo CreateCargo(Location? from, Location? to, Company? sender, Company? receiver,
-        DateTime expectedDeliveryTime)
-    {
-        var cargo = Cargo.Create(from, to, sender, receiver, expectedDeliveryTime, _clock.Now());
-
-        return cargo;
-    }
+    public Result<Cargo> CreateCargo(Location? from, Location? to, Company? sender, Company? receiver,
+        DateTime expectedDeliveryTime) =>
+        Cargo.Create(from, to, sender, receiver, expectedDeliveryTime, _clock);
 }

@@ -1,3 +1,5 @@
+using CargoApp.Modules.Contracts.Cargoes;
+
 namespace CargoApp.Modules.Cargoes.Core.LocationAggregate;
 
 public class Location
@@ -15,5 +17,10 @@ public class Location
         Lon = lon;
         Name = name;
         OsmId = osmId;
+    }
+    
+    public LocationDto CreateDto()
+    {
+        return new LocationDto(Id, Lat, Lon, Name, OsmId);
     }
 }
