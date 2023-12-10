@@ -7,16 +7,16 @@ using Result.ApiResult;
 
 namespace CargoApp.Modules.Cargoes.Application.Cargo.FetchById;
 
-public class FetchByIdCommandHandler : IRequestHandler<FetchByIdCommand, ApiResult<CargoDto>>
+public class FetchByIdQueryHandler : IRequestHandler<FetchByIdQuery, ApiResult<CargoDto>>
 {
     private readonly ICargoRepository _cargoRepository;
 
-    public FetchByIdCommandHandler(ICargoRepository cargoRepository)
+    public FetchByIdQueryHandler(ICargoRepository cargoRepository)
     {
         _cargoRepository = cargoRepository;
     }
 
-    public async Task<ApiResult<CargoDto>> Handle(FetchByIdCommand request,
+    public async Task<ApiResult<CargoDto>> Handle(FetchByIdQuery request,
         CancellationToken cancellationToken)
     {
         var cargo = await _cargoRepository.GetByIdAsync(request.Id);

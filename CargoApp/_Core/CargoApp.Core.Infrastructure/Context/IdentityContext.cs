@@ -12,7 +12,7 @@ public class IdentityContext : IIdentityContext
     public Dictionary<string, IEnumerable<string>> Claims { get; }
     public PermissionEnum Permissions { get; }
     public Guid CompanyId { get; }
-    
+
     public IdentityContext(ClaimsPrincipal principal)
     {
         IsAuthenticated = principal.Identity?.IsAuthenticated is true;
@@ -28,7 +28,7 @@ public class IdentityContext : IIdentityContext
         {
             CompanyId = companyIdAsGuid;
         }
-        
+
         var permission = permissions?.FirstOrDefault();
         if (permission is not null && long.TryParse(permission, out var parsedPermission))
         {
@@ -40,13 +40,15 @@ public class IdentityContext : IIdentityContext
 public static class IdentityContextExtensions
 {
     public static bool HasPermission(this IIdentityContext identityContext, PermissionEnum permissionEnum)
-        => identityContext.Permissions.HasFlag(permissionEnum);
+        => identityContext.Permissions.HasFlag(permissionEnum) ||
+           identityContext.Permissions.HasFlag(PermissionEnum.Admin);
 
     public static bool HasOneOfPermission(this IIdentityContext identityContext,
         IEnumerable<PermissionEnum> permissionEnums)
     {
         return permissionEnums.Any(x => identityContext.Permissions.HasFlag(x));
     }
+
     public static bool HasAllPermission(this IIdentityContext identityContext,
         IEnumerable<PermissionEnum> permissionEnums)
     {

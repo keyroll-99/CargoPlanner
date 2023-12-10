@@ -33,6 +33,19 @@ internal class CargoRepository : ICargoRepository
          .FirstOrDefaultAsync(x => x.Id == id);
    }
 
+   public Task<List<Cargo>> GetPageAsync(int page, int pageSize)
+   {
+      return _dbContext
+         .Cargoes
+         .Include("_from")
+         .Include("_to")
+         .Include("_sender")
+         .Include("_receiver")
+         .Include("_driver")
+         .Skip(page * pageSize)
+         .Take(pageSize).ToListAsync();
+   }
+
    public async Task UpdateAsync(Cargo cargo)
    {
       _dbContext.Cargoes.Update(cargo);
