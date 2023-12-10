@@ -47,11 +47,11 @@ public class Cargo
         _isDelivered = false;
     }
 
-    public static Result<Cargo> Create(
-        Location from,
-        Location to,
-        Company sender,
-        Company receiver,
+    internal static Result<Cargo> Create(
+        Location? from,
+        Location? to,
+        Company? sender,
+        Company? receiver,
         DateTime expectedDeliveryTime,
         IClock clock)
     {
@@ -60,6 +60,26 @@ public class Cargo
             return "Can't create cargo with expected delivery time in past";
         }
 
+        if (from is null)
+        {
+            return "Source can not be null";
+        }
+
+        if (to is null)
+        {
+            return "Destination can not be null";
+        }
+        
+        if (sender is null)
+        {
+            return "Sender can not be null";
+        }
+        
+        if (receiver is null)
+        {
+            return "Receiver can not be null";
+        }
+        
         return new Cargo(from, to, sender, receiver, expectedDeliveryTime, null, clock.Now(), null)
         {
             Id = Guid.NewGuid()

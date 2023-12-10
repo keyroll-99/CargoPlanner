@@ -1,5 +1,5 @@
+using CargoApp.Core.ShareCore.Clock;
 using CargoApp.Modules.Cargoes.Core.CargoAggregate;
-using CargoApp.Modules.Cargoes.Core.CargoAggregate.DomainService;
 using CargoApp.Modules.Cargoes.Core.CompanyAggregate;
 using CargoApp.Modules.Cargoes.Core.LocationAggregate;
 using MediatR;
@@ -9,21 +9,21 @@ namespace CargoApp.Modules.Cargoes.Application.Cargo.CreateCargo;
 
 public class CreateCargoCommandHandler : IRequestHandler<CreateCargoCommand, Result<string>>
 {
-    private readonly ICreateCargoDomainService _createCargoDomainService;
     private readonly ILocationRepository _locationRepository;
     private readonly ICompanyRepository _companyRepository;
     private readonly ICargoRepository _cargoRepository;
+    private readonly IClock _clock;
 
     public CreateCargoCommandHandler(
-        ICreateCargoDomainService createCargoDomainService,
         ICompanyRepository companyRepository,
         ILocationRepository locationRepository,
-        ICargoRepository cargoRepository)
+        ICargoRepository cargoRepository,
+        IClock clock)
     {
-        _createCargoDomainService = createCargoDomainService;
         _companyRepository = companyRepository;
         _locationRepository = locationRepository;
         _cargoRepository = cargoRepository;
+        _clock = clock;
     }
 
     public async Task<Result<string>> Handle(CreateCargoCommand request, CancellationToken cancellationToken)
@@ -35,12 +35,13 @@ public class CreateCargoCommandHandler : IRequestHandler<CreateCargoCommand, Res
         var receiver = await _companyRepository.GetByCompanyId(request.ReceiverId);
 
 
-        var createCargoResult = _createCargoDomainService.CreateCargo(
+        var createCargoResult = Core.CargoAggregate.Cargo.Create(
             from,
             to,
             sender,
             receiver,
-            request.ExpectedDeliveryTime
+            request.ExpectedDeliveryTime,
+            _clock
         );
 
         await createCargoResult.OnSuccessAsync(async (cargo) => { await _cargoRepository.AddAsync(cargo); });

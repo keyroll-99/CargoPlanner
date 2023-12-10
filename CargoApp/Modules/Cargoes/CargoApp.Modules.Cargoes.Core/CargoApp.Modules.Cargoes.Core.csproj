@@ -10,6 +10,7 @@
     <ItemGroup>
         <InternalsVisibleTo Include="CargoApp.Modules.Cargoes.Application" />
         <InternalsVisibleTo Include="CargoApp.Modules.Cargoes.Infrastructure" />
+        <InternalsVisibleTo Include="CargoApp.Modules.Cargoes.Tests.Unit" />
     </ItemGroup>
 
     <ItemGroup>
