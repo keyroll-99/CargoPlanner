@@ -25,6 +25,7 @@ public static class Extensions
         services.AddSwaggerGen(c =>
         {
             c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebApiDevoTo", Version = "v1" });
+            c.CustomSchemaIds(type => $"{type.Namespace}.{type.Name.Replace("Dto", "")}");
         });
         services.AddSingleton<IClock, Clock.Clock>();
         services.AddControllers()
