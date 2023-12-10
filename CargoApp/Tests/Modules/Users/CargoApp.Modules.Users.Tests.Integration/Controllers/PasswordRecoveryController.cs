@@ -54,7 +54,7 @@ public class PasswordRecoveryController : BaseControllerTest, IDisposable
         var result = await Client.PostAsJsonAsync("/Users/PasswordRecovery/InitPasswordRecovery", command);
 
         // Assert
-        result.StatusCode.Should().Be(HttpStatusCode.OK);
+        result.StatusCode.Should().Be(HttpStatusCode.NoContent);
         var passwordRecoveryModel =
             await _testDatabase.UserDbContext.PasswordRecoveries.FirstOrDefaultAsync(x => x.UserId == user.Id);
         passwordRecoveryModel.Should().NotBeNull();
@@ -93,7 +93,7 @@ public class PasswordRecoveryController : BaseControllerTest, IDisposable
         var response = await Client.GetAsync($"/Users/PasswordRecovery/IsRecoveryKeyValid?recoveryKey={recoveryKey}");
 
         // Assert
-        response.StatusCode.Should().Be(HttpStatusCode.OK);
+        response.StatusCode.Should().Be(HttpStatusCode.NoContent);
     }
 
     [Theory]
@@ -135,7 +135,7 @@ public class PasswordRecoveryController : BaseControllerTest, IDisposable
             await Client.PatchAsJsonAsync($"/Users/PasswordRecovery/ChangePassword/{recoveryModel.Id}", command);
         
         // Assert
-        result.StatusCode.Should().Be(HttpStatusCode.OK);
+        result.StatusCode.Should().Be(HttpStatusCode.NoContent);
     }
 
     public void Dispose()
