@@ -1,4 +1,5 @@
-﻿using CargoApp.Core.Infrastructure.Auth;
+﻿using System.Collections;
+using CargoApp.Core.Infrastructure.Auth;
 using CargoApp.Core.ShareCore.Enums;
 using CargoApp.Modules.Locations.Application.Commands.AddLocationCommand;
 using CargoApp.Modules.Locations.Application.DTO;
@@ -24,7 +25,7 @@ public class LocationController : ControllerBase
     }
 
     [HttpGet]
-    [ProducesResponseType(typeof(LocationDto), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(IEnumerable<LocationDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
 
     public async Task<IActionResult> Search([FromQuery] string query)

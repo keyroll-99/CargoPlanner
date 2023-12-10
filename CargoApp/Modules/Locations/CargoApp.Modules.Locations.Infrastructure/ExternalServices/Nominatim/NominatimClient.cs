@@ -1,13 +1,10 @@
 ﻿using System.Text.Json;
-using System.Web;
-using CargoApp.Core.Infrastructure.Response;
 using CargoApp.Modules.Locations.Application.DTO;
-using CargoApp.Modules.Locations.Application.ExternalServices;
 using CargoApp.Modules.Locations.Application.ExternalServices.Locations;
-using CargoApp.Modules.Locations.Core.Entities;
 using CargoApp.Modules.Locations.Infrastructure.ExternalServices.Nominatim.DTO;
 using CargoApp.Modules.Locations.Infrastructure.ExternalServices.Nominatim.Mappers;
 using Microsoft.AspNetCore.WebUtilities;
+using Result.ApiResult;
 
 namespace CargoApp.Modules.Locations.Infrastructure.ExternalServices.Nominatim;
 
@@ -21,14 +18,14 @@ internal class NominatimClient : ILocationClient
     }
 
 
-    public async Task<Result<IEnumerable<LocationDto>>> Search(string query, CancellationToken cancellationToken)
+    public async Task<ApiResult<IEnumerable<LocationDto>>> Search(string query, CancellationToken cancellationToken)
     {
         var request = GetHttpSearchRequest(query);
         using var result = await _httpClient
             .SendAsync(request, HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
         if (!result.IsSuccessStatusCode)
         {
-            return "Something went wrong";
+            return ApiResult<IEnumerable<LocationDto>>.Fail("Something went wrong");
         }
 
         await using var contentStream = await result.Content.ReadAsStreamAsync(cancellationToken);
@@ -36,10 +33,10 @@ internal class NominatimClient : ILocationClient
             DefaultJsonSerializerOptions.Options, cancellationToken);
         if (deserializedResult is null)
         {
-            return "Something went wrong";
+            return ApiResult<IEnumerable<LocationDto>>.Fail("Something went wrong");
         }
 
-        return Result<IEnumerable<LocationDto>>.Success(deserializedResult.Select(x => x.AsLocationDto()));
+        return ApiResult<IEnumerable<LocationDto>>.Success(deserializedResult.Select(x => x.AsLocationDto()));
     }
 
     private static HttpRequestMessage GetHttpSearchRequest(string query)

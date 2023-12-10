@@ -7,4 +7,12 @@
         <RootNamespace>CargoApp.Core.ShareCore</RootNamespace>
     </PropertyGroup>
 
+    <ItemGroup>
+      <Folder Include="Exceptions\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Keyroll.Result" Version="0.5.1" />
+    </ItemGroup>
+
 </Project>

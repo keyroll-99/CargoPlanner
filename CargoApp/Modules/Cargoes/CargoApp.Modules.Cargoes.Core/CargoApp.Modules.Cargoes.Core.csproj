@@ -10,11 +10,13 @@
     <ItemGroup>
         <InternalsVisibleTo Include="CargoApp.Modules.Cargoes.Application" />
         <InternalsVisibleTo Include="CargoApp.Modules.Cargoes.Infrastructure" />
+        <InternalsVisibleTo Include="CargoApp.Modules.Cargoes.Tests.Unit" />
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\..\..\_Core\CargoApp.Core.Infrastructure\CargoApp.Core.Infrastructure.csproj" />
       <ProjectReference Include="..\..\..\_Core\CargoApp.Core.ShareCore\CargoApp.Core.ShareCore.csproj" />
+      <ProjectReference Include="..\..\_Contracts\CargoApp.Modules.Contracts.Cargoes\CargoApp.Modules.Contracts.Cargoes.csproj" />
     </ItemGroup>
 
     <ItemGroup>

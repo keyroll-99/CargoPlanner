@@ -1,7 +1,6 @@
 using CargoApp.Core.Abstraction.Mail;
 using CargoApp.Core.Infrastructure.Metadata;
 using CargoApp.Core.Infrastructure.Policies;
-using CargoApp.Core.Infrastructure.Response;
 using CargoApp.Core.ShareCore.Clock;
 using CargoApp.Core.ShareCore.Policies;
 using CargoApp.Modules.Users.Core.Commands;
@@ -9,8 +8,8 @@ using CargoApp.Modules.Users.Core.EmailTemplates.PasswordRecovery;
 using CargoApp.Modules.Users.Core.Entities;
 using CargoApp.Modules.Users.Core.Repositories;
 using CargoApp.Modules.Users.Core.Services.Abstract;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Result.ApiResult;
 
 namespace CargoApp.Modules.Users.Core.Services.Impl;
 
@@ -30,7 +29,7 @@ internal class PasswordRecoveryService : IPasswordRecoveryService
         IClock clock,
         IMailManager mailManager,
         Metadata metadata,
-        IPasswordHasher<User> passwordHasher, 
+        IPasswordHasher<User> passwordHasher,
         IEnumerable<IPolicy<ChangePasswordCommand>> changePasswordPolicies)
     {
         _passwordRecoveryRepository = passwordRecoveryRepository;
@@ -42,12 +41,13 @@ internal class PasswordRecoveryService : IPasswordRecoveryService
         _changePasswordPolicies = changePasswordPolicies;
     }
 
-    public async Task<Result> InitPasswordRecovery(InitPasswordRecoveryCommand command)
+    public async Task<ApiResult> InitPasswordRecovery(
+        InitPasswordRecoveryCommand command)
     {
         var user = await _userRepository.GetByEmailAsync(command.Email);
         if (user is null)
         {
-            return Result.Fail("User not found");
+            return "User not found";
         }
 
         var passwordRecovery = PasswordRecovery.CreatePasswordRecovery(user, _clock);
@@ -56,56 +56,58 @@ internal class PasswordRecoveryService : IPasswordRecoveryService
             _metadata.FrontUrl,
             passwordRecovery.Id.ToString(),
             _metadata.ContactMail);
-        
+
         await _mailManager.SendMailAsync(
             MailModel.CreateModel(
                 user.Email,
-            "Password recovery"),
+                "Password recovery"),
             passwordRecoveryMail);
-        return Result.Success();
+        return ApiResult.Success();
     }
 
-    public async Task<Result> IsRecoveryKeyValid(string recoveryKey)
+    public async Task<ApiResult> IsRecoveryKeyValid(string recoveryKey)
     {
         if (!Guid.TryParse(recoveryKey, out var recoveryGuid))
         {
-            return Result.Fail("Invalid recovery key");
+            return "Invalid recovery key";
         }
+
         var recoveryModel = await _passwordRecoveryRepository.GetByIdAsync(recoveryGuid);
 
         if (recoveryModel is null)
         {
-            return Result.Fail("Invalid recovery key");
-
+            return "Invalid recovery key";
         }
 
-        return recoveryModel.IsValid(_clock) ? Result.Success() : Result.Fail("Invalid recovery key");
+        return recoveryModel.IsValid(_clock)
+            ? ApiResult.Success()
+            : "Invalid recovery key";
     }
 
-    public async Task<Result> ChangePassword(Guid recoveryKey, ChangePasswordCommand command)
+    public async Task<ApiResult> ChangePassword(Guid recoveryKey,
+        ChangePasswordCommand command)
     {
         var changePasswordPoliciesResult = await _changePasswordPolicies.UsePolicies(command);
-        
-        if ( !changePasswordPoliciesResult.IsSuccess)
+
+        if (!changePasswordPoliciesResult.IsSuccess)
         {
-            return Result.Fail(changePasswordPoliciesResult.Error!);
+            return changePasswordPoliciesResult.ErrorMessage!;
         }
-        
+
         var recoveryModel = await _passwordRecoveryRepository.GetByIdAsync(recoveryKey);
         if (recoveryModel is null)
         {
-            return Result.Fail("Invalid recovery key");
-
+            return "Invalid recovery key";
         }
 
         var user = recoveryModel.User;
 
         user.Password = _passwordHasher.HashPassword(null, command.Password);
         recoveryModel.IsUsed = true;
-        
+
         await _userRepository.UpdateAsync(user);
         await _passwordRecoveryRepository.UpdateAsync(recoveryModel);
-        
-        return Result.Success();
+
+        return ApiResult.Success();
     }
 }

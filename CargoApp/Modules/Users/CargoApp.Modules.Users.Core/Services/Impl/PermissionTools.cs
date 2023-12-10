@@ -1,11 +1,11 @@
 ﻿using CargoApp.Core.Infrastructure.Policies;
-using CargoApp.Core.Infrastructure.Response;
 using CargoApp.Core.ShareCore.Enums;
 using CargoApp.Core.ShareCore.Policies;
 using CargoApp.Modules.Users.Core.Commands;
 using CargoApp.Modules.Users.Core.Entities;
 using CargoApp.Modules.Users.Core.Repositories;
 using CargoApp.Modules.Users.Core.Services.Abstract;
+using Result.ApiResult;
 
 namespace CargoApp.Modules.Users.Core.Services.Impl;
 
@@ -20,7 +20,7 @@ internal sealed class PermissionTools : IPermissionTools
         _userRepository = userRepository;
     }
 
-    public async Task<Result> AddPermission(UpdatePermissionCommand command)
+    public async Task<ApiResult> AddPermission(UpdatePermissionCommand command)
     {
         var user = await _userRepository.GetByIdAsync(command.UserId);
         if (user is null)
@@ -29,12 +29,13 @@ internal sealed class PermissionTools : IPermissionTools
         }
 
         var result = await _policies.UsePolicies(command);
-        return await result.Match(
-            () => AddPermission(user, command.Permission),
-            (onErrorResult) => Task.FromResult<Result>(onErrorResult));
+        
+        await result.OnSuccessAsync((_) => AddPermission(user, command.Permission));
+
+        return result;
     }
 
-    public async Task<Result> RemovePermission(UpdatePermissionCommand command)
+    public async Task<ApiResult> RemovePermission(UpdatePermissionCommand command)
     {
         var user = await _userRepository.GetByIdAsync(command.UserId);
         if (user is null)
@@ -43,9 +44,9 @@ internal sealed class PermissionTools : IPermissionTools
         }
 
         var result = await _policies.UsePolicies(command);
-        return await result.Match(
-            () => RemovePermission(user, command.Permission),
-            (onErrorResult) => Task.FromResult<Result>(onErrorResult));
+        
+        await result.OnSuccessAsync((_) => RemovePermission(user, command.Permission));
+        return result;
     }
 
     private async Task AddPermission(User user, PermissionEnum permission)

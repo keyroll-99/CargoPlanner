@@ -1,6 +1,4 @@
 ﻿using CargoApp.Core.Abstraction.Auth;
-using CargoApp.Core.Infrastructure.Response;
-using CargoApp.Core.ShareCore.Clock;
 using CargoApp.Core.ShareCore.Policies;
 using CargoApp.Modules.Contracts.Companies;
 using CargoApp.Modules.Contracts.Users.DTO;
@@ -11,6 +9,7 @@ using CargoApp.Modules.Users.Core.Repositories;
 using CargoApp.Modules.Users.Core.Services.Abstract;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Result.ApiResult;
 
 namespace CargoApp.Modules.Users.Core.Services.Impl;
 
@@ -36,7 +35,7 @@ internal sealed class AuthService : IAuthService
         _companyServices = companyServices;
     }
 
-    public async Task<Result<UserDto, string>> CreateUserAsync(CreateUserCommand createUserCommand)
+    public async Task<ApiResult<UserDto>> CreateUserAsync(CreateUserCommand createUserCommand)
     {
         foreach (var policy in _createUserPolicy.Where(x => x.IsApplicable(createUserCommand)))
             if (!await policy.IsValidAsync(createUserCommand))
@@ -51,16 +50,16 @@ internal sealed class AuthService : IAuthService
         };
         await _userRepository.AddAsync(model);
 
-        return Result<UserDto, string>.Success(model.AsUserDto(), StatusCodes.Status201Created);
+        return ApiResult<UserDto>.Success(model.AsUserDto(), StatusCodes.Status201Created);
     }
 
-    public async Task<Result<JsonWebToken, string>> SignInAsync(SingInCommand singInCommand)
+    public async Task<ApiResult<JsonWebToken>> SignInAsync(SingInCommand singInCommand)
     {
         var user = await _userRepository.GetByEmailAsync(singInCommand.Email);
         if (user is null || _passwordHasher.VerifyHashedPassword(default, user.Password, singInCommand.Password) ==
             PasswordVerificationResult.Failed || !user.IsActive)
         {
-            return Result<JsonWebToken, string>.Fail("Invalid Email or Password", StatusCodes.Status401Unauthorized);
+            return ApiResult<JsonWebToken>.Fail("Invalid Email or Password", StatusCodes.Status401Unauthorized);
         }
 
         var company = user.EmployeeId.HasValue

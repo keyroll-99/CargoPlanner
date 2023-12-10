@@ -1,6 +1,5 @@
 ﻿using CargoApp.Core.Abstraction.QueueMessages;
 using CargoApp.Core.Infrastructure.Policies;
-using CargoApp.Core.Infrastructure.Response;
 using CargoApp.Core.ShareCore.Clock;
 using CargoApp.Core.ShareCore.Policies;
 using CargoApp.Modules.Companies.Core.Entities;
@@ -8,10 +7,11 @@ using CargoApp.Modules.Companies.Core.Repositories;
 using CargoApp.Modules.Contracts.Events.Companies;
 using MediatR;
 using Microsoft.AspNetCore.Http;
+using Result.ApiResult;
 
 namespace CargoApp.Modules.Companies.Core.Commands.CreateCompany;
 
-internal class CreateCompanyCommandHandler : IRequestHandler<CreateCompanyCommand, Result<string>>
+internal class CreateCompanyCommandHandler : IRequestHandler<CreateCompanyCommand, ApiResult<string>>
 {
     private readonly IEnumerable<IPolicy<CreateCompanyCommand>> _policies;
     private readonly ICompanyRepository _companyRepository;
@@ -30,12 +30,12 @@ internal class CreateCompanyCommandHandler : IRequestHandler<CreateCompanyComman
         _eventManager = eventManager;
     }
 
-    public async Task<Result<string>> Handle(CreateCompanyCommand request, CancellationToken cancellationToken)
+    public async Task<ApiResult<string>> Handle(CreateCompanyCommand request, CancellationToken cancellationToken)
     {
         var policyResult = await _policies.UsePolicies(request);
         if (!policyResult.IsSuccess)
         {
-            return Result<string>.Fail(policyResult.Error, policyResult.StatusCode);
+            return ApiResult<string>.Fail(policyResult.ErrorMessage, policyResult.StatusCode);
         }
 
         var company = new Company(Guid.NewGuid(), _clock.Now(), request.Name, request.CompanyType);
@@ -43,6 +43,6 @@ internal class CreateCompanyCommandHandler : IRequestHandler<CreateCompanyComman
         
         _eventManager.PublishEvent(new CompanyCreateEvent(company.Id, company.Name));
 
-        return Result<string>.Success(company.Id.ToString(), StatusCodes.Status201Created);
+        return ApiResult<string>.Success(company.Id.ToString(), StatusCodes.Status201Created);
     }
 }

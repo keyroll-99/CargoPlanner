@@ -1,8 +1,8 @@
-﻿using CargoApp.Core.Infrastructure.Response;
-using CargoApp.Modules.Locations.Application.DTO;
+﻿using CargoApp.Modules.Locations.Application.DTO;
 using CargoApp.Modules.Locations.Application.ExternalServices.Locations;
 using CargoApp.Modules.Locations.Application.Queries.SearchLocations;
 using NSubstitute;
+using Result.ApiResult;
 using Xunit;
 
 namespace CargoApp.Modules.Locations.Tests.Queries;
@@ -29,7 +29,7 @@ public class SearchLocationQueryTest
             Query = "QQuery"
         };
         _locationClient.Search(Arg.Any<string>(), Arg.Any<CancellationToken>())
-            .Returns(Result<IEnumerable<LocationDto>>.Success(new List<LocationDto>()));
+            .Returns(ApiResult<IEnumerable<LocationDto>>.Success(new List<LocationDto>()));
 
         // Act
         var result = await _service.Handle(query, new CancellationToken(false));

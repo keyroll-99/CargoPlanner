@@ -30,4 +30,10 @@ internal class CompanyRepository : ICompanyRepository
     {
         return _dbContext.Companies.Include("_drivers").FirstOrDefaultAsync(x => x.CompanyId == companyId);
     }
+
+    public Task<Company?> GetById(Guid id)
+    {
+        return _dbContext.Companies.Include("_drivers").FirstOrDefaultAsync(x => x.Id == id);
+
+    }
 }

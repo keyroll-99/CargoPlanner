@@ -1,9 +1,9 @@
-﻿using CargoApp.Core.Infrastructure.Response;
-using CargoApp.Modules.Contracts.Users.DTO;
+﻿using CargoApp.Modules.Contracts.Users.DTO;
+using Result.ApiResult;
 
 namespace CargoApp.Modules.Contracts.Users;
 
 public interface IUser
 {
-    Task<Result<UserDto, string>> GetUserByIdAsync(Guid id);
+    Task<ApiResult<UserDto, string>> GetUserByIdAsync(Guid id);
 }

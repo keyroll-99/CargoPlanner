@@ -1,7 +1,6 @@
 ﻿using CargoApp.Core.Abstraction.Context;
 using CargoApp.Core.Abstraction.QueueMessages;
 using CargoApp.Core.Infrastructure.Policies;
-using CargoApp.Core.Infrastructure.Response;
 using CargoApp.Core.ShareCore.Clock;
 using CargoApp.Core.ShareCore.Policies;
 using CargoApp.Modules.Companies.Core.Commands.AddEmployee;
@@ -10,11 +9,13 @@ using CargoApp.Modules.Companies.Core.Repositories;
 using CargoApp.Modules.Contracts.Events.Companies;
 using MediatR;
 using Microsoft.AspNetCore.Http;
+using Result;
+using Result.ApiResult;
 using WorkingPositionEnum = CargoApp.Modules.Contracts.Events.Companies.Enums.WorkingPositionEnum;
 
 namespace CargoApp.Modules.Companies.Core.Commands.AddWorker;
 
-internal class CreateEmployeeCommandHandler : IRequestHandler<CreateEmployeeCommand, Result<string>>
+internal class CreateEmployeeCommandHandler : IRequestHandler<CreateEmployeeCommand, ApiResult<string>>
 {
     private readonly ICompanyRepository _companyRepository;
     private readonly IEmployeeRepository _employeeRepository;
@@ -39,12 +40,12 @@ internal class CreateEmployeeCommandHandler : IRequestHandler<CreateEmployeeComm
         _eventManager = eventManager;
     }
 
-    public async Task<Result<string>> Handle(CreateEmployeeCommand request, CancellationToken cancellationToken)
+    public async Task<ApiResult<string>> Handle(CreateEmployeeCommand request, CancellationToken cancellationToken)
     {
         var policyResult = await _policies.UsePolicies(request);
         if (!policyResult.IsSuccess)
         {
-            return Result<string>.Fail(policyResult.Error, policyResult.StatusCode);
+            return ApiResult<string>.Fail(policyResult.ErrorMessage, policyResult.StatusCode);
         }
 
         var company = await _companyRepository.GetByIdAsync(request.CompanyId != Guid.Empty
@@ -53,7 +54,7 @@ internal class CreateEmployeeCommandHandler : IRequestHandler<CreateEmployeeComm
 
         if (company is null)
         {
-            return Result<string>.Fail("Company not found");
+            return ApiResult<string>.Fail("Company not found");
         }
 
         var employee = new Employee(
@@ -69,8 +70,9 @@ internal class CreateEmployeeCommandHandler : IRequestHandler<CreateEmployeeComm
 
         await _employeeRepository.AddAsync(employee);
 
-        _eventManager.PublishEvent(new EmployeeCreateEvent(employee.Id, employee.CompanyId, employee.Name, employee.Surname, employee.Email, (WorkingPositionEnum)employee.WorkingPosition));
-        
-        return Result<string>.Success(employee.Id.ToString(), StatusCodes.Status201Created);
+        _eventManager.PublishEvent(new EmployeeCreateEvent(employee.Id, employee.CompanyId, employee.Name,
+            employee.Surname, employee.Email, (WorkingPositionEnum)employee.WorkingPosition));
+
+        return ApiResult<string>.Success(employee.Id.ToString(), StatusCodes.Status201Created);
     }
 }

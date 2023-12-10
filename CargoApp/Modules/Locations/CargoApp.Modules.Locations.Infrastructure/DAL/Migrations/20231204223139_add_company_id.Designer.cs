@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace CargoApp.Modules.Locations.Infrastructure.DAL.Migrations
 {
     [DbContext(typeof(LocationDbContext))]
-    [Migration("20230909163720_add_companyId")]
-    partial class add_companyId
+    [Migration("20231204223139_add_company_id")]
+    partial class add_company_id
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -70,8 +70,8 @@ namespace CargoApp.Modules.Locations.Infrastructure.DAL.Migrations
                     b.Property<Guid>("AddressId")
                         .HasColumnType("uuid");
 
-                    b.Property<long>("CompanyId")
-                        .HasColumnType("bigint");
+                    b.Property<Guid>("CompanyId")
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime>("CreateAt")
                         .HasColumnType("timestamp with time zone");

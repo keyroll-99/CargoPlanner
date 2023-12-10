@@ -1,12 +1,12 @@
 using CargoApp.Core.Abstraction.QueueMessages;
-using CargoApp.Core.Infrastructure.Response;
 using CargoApp.Modules.Companies.Core.Repositories;
 using CargoApp.Modules.Contracts.Events.Companies;
 using MediatR;
+using Result.ApiResult;
 
 namespace CargoApp.Modules.Companies.Core.Commands.FireEmployee;
 
-internal class FireEmployeeCommandHandler: IRequestHandler<FireEmployeeCommand, Result>
+internal class FireEmployeeCommandHandler: IRequestHandler<FireEmployeeCommand, ApiResult>
 {
     private readonly IEmployeeRepository _employeeRepository;
     private readonly IEventManager _eventManager;
@@ -17,12 +17,12 @@ internal class FireEmployeeCommandHandler: IRequestHandler<FireEmployeeCommand, 
         _eventManager = eventManager;
     }
 
-    public async Task<Result> Handle(FireEmployeeCommand request, CancellationToken cancellationToken)
+    public async Task<ApiResult> Handle(FireEmployeeCommand request, CancellationToken cancellationToken)
     {
         var employee = await _employeeRepository.GetByIdAsync(request.EmployeeId);
         if (employee is null)
         {
-            return Result.Fail("User not found");
+            return ApiResult.Fail();
         }
 
         employee.IsActive = false;
@@ -30,6 +30,6 @@ internal class FireEmployeeCommandHandler: IRequestHandler<FireEmployeeCommand, 
         
         _eventManager.PublishEvent(new EmployeeFiredEvent(employee.Id));
 
-        return Result.Success();
+        return ApiResult.Success();
     }
 }

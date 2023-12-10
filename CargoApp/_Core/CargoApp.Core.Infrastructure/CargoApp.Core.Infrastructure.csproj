@@ -9,6 +9,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="Keyroll.ApiResult" Version="0.7.6" />
         <PackageReference Include="MediatR" Version="12.1.1" />
         <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.1.0" />
         <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.9" />
@@ -33,6 +34,10 @@
     
     <ItemGroup>
         <InternalsVisibleTo Include="CargoApp.Modules.Users.Tests.Integration" />
+    </ItemGroup>
+    
+    <ItemGroup>
+      <Folder Include="Response\" />
     </ItemGroup>
 
 

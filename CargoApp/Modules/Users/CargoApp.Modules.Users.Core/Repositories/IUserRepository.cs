@@ -1,8 +1,7 @@
-﻿using System.Runtime.CompilerServices;
-using CargoApp.Core.Abstraction.Repositories;
-using CargoApp.Core.Infrastructure.Response;
+﻿using CargoApp.Core.Abstraction.Repositories;
 using CargoApp.Modules.Contracts.Events.Companies;
 using CargoApp.Modules.Users.Core.Entities;
+using Result;
 
 namespace CargoApp.Modules.Users.Core.Repositories;
 

@@ -52,6 +52,14 @@ namespace CargoApp.Modules.Cargoes.Infrastructure.DAL.Migrations
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("ExpectedDeliveryTime");
 
+                    b.Property<bool>("_isCanceled")
+                        .HasColumnType("boolean")
+                        .HasColumnName("IsCanceled");
+
+                    b.Property<bool>("_isDelivered")
+                        .HasColumnType("boolean")
+                        .HasColumnName("IsDelivered");
+
                     b.HasKey("Id");
 
                     b.HasIndex("DriverId");

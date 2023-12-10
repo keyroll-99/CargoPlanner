@@ -46,14 +46,13 @@ internal sealed class EmployeeCreateEventConsumer : IEventConsumer<EmployeeCreat
         var addUserResult = await userRepo.AddAsync(@event);
         if (!addUserResult.IsSuccess)
         {
-            _logger.Error("Cannot add user error {error}", addUserResult.Error);
+            _logger.Error("Cannot add user error {error}", addUserResult.ErrorModel);
             return;
         }
 
         var passwordRecoveryRepository = await _serviceProvider.GetService<IPasswordRecoveryRepository>();
         var user = addUserResult.SuccessModel;
         var recoveryModel = PasswordRecovery.CreatePasswordRecovery(user!.Id, _clock);
-        //TODO: user try add two times
         await passwordRecoveryRepository.AddAsync(recoveryModel);
 
         await _mailManager.SendMailAsync(

@@ -1,5 +1,5 @@
-﻿using CargoApp.Core.Infrastructure.Response;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
+using Result;
 
 namespace CargoApp.Core.Infrastructure.Exception;
 

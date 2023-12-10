@@ -1,10 +1,10 @@
 ﻿using CargoApp.Core.Infrastructure.Repositories;
-using CargoApp.Core.Infrastructure.Response;
 using CargoApp.Core.ShareCore.Clock;
 using CargoApp.Modules.Contracts.Events.Companies;
 using CargoApp.Modules.Users.Core.DAL;
 using CargoApp.Modules.Users.Core.Entities;
 using Microsoft.EntityFrameworkCore;
+using Result;
 
 namespace CargoApp.Modules.Users.Core.Repositories;
 
