@@ -24,31 +24,36 @@ import {LocationSearchComponent} from './features/location/component/location-se
 import {MainLocationComponent} from './features/location/pages/main/main-location/main-location.component';
 import {MatTreeModule} from "@angular/material/tree";
 import {MatIconModule} from "@angular/material/icon";
+import {MatExpansionModule} from "@angular/material/expansion";
+import {
+  NavigationElementsComponent
+} from "./core/components/navigation/navigation-elements/navigation-elements.component";
 
 export const httpInterceptorProviders = [
-  { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+  {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
 ];
 
 @NgModule({
-  declarations: [AppComponent, SignInComponent, HomeComponent, NavigationComponent, MapComponent, LocationSearchComponent, MainLocationComponent],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        BrowserAnimationsModule,
-        MatInputModule,
-        ReactiveFormsModule,
-        HttpClientModule,
-        MatRippleModule,
-        MatButtonModule,
-        MatSidenavModule,
-        MatCardModule,
-        NgIconsModule.withIcons({bootstrapArrowRightShort}),
-        MatListModule,
-        LeafletModule,
-        MatTreeModule,
-        MatIconModule
+  declarations: [AppComponent, SignInComponent, HomeComponent, NavigationComponent, MapComponent, LocationSearchComponent, MainLocationComponent, NavigationElementsComponent, NavigationElementsComponent],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    MatInputModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+    MatRippleModule,
+    MatButtonModule,
+    MatSidenavModule,
+    MatCardModule,
+    NgIconsModule.withIcons({bootstrapArrowRightShort}),
+    MatListModule,
+    LeafletModule,
+    MatTreeModule,
+    MatIconModule,
+    MatExpansionModule
 
-    ],
+  ],
   providers: [httpInterceptorProviders],
   bootstrap: [AppComponent],
 })
