@@ -1,4 +1,4 @@
-<mat-accordion>
+<div>
   <mat-expansion-panel *ngFor="let navElement of navigationSchema" >
       <mat-expansion-panel-header  *ngIf="hasAccess(navElement.permission)">
       <mat-panel-title>
@@ -10,4 +10,4 @@
         <a *ngFor="let navLink of navElement.links" mat-list-item [routerLink]="navLink.routerLink">{{navLink.name}}</a>
       </mat-nav-list>
   </mat-expansion-panel>
-</mat-accordion>
+</div>

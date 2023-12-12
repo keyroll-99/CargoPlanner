@@ -24,10 +24,10 @@ import {LocationSearchComponent} from './features/location/component/location-se
 import {MainLocationComponent} from './features/location/pages/main/main-location/main-location.component';
 import {MatTreeModule} from "@angular/material/tree";
 import {MatIconModule} from "@angular/material/icon";
-import {MatExpansionModule} from "@angular/material/expansion";
 import {
   NavigationElementsComponent
 } from "./core/components/navigation/navigation-elements/navigation-elements.component";
+import {MatExpansionModule} from "@angular/material/expansion";
 
 export const httpInterceptorProviders = [
   {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
@@ -51,7 +51,7 @@ export const httpInterceptorProviders = [
     LeafletModule,
     MatTreeModule,
     MatIconModule,
-    MatExpansionModule
+    MatExpansionModule,
   ],
   providers: [httpInterceptorProviders],
   bootstrap: [AppComponent],
