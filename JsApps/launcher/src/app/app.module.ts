@@ -52,7 +52,6 @@ export const httpInterceptorProviders = [
     MatTreeModule,
     MatIconModule,
     MatExpansionModule
-
   ],
   providers: [httpInterceptorProviders],
   bootstrap: [AppComponent],
