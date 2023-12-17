@@ -5,6 +5,7 @@ using CargoApp.Modules.Cargoes.Core.CompanyAggregate;
 using CargoApp.Modules.Cargoes.Core.DriverAggregate;
 using CargoApp.Modules.Cargoes.Core.LocationAggregate;
 using CargoApp.Modules.Cargoes.Infrastructure.DAL;
+using CargoApp.Modules.Cargoes.Infrastructure.DAL.SeedData;
 using CargoApp.Modules.Cargoes.Infrastructure.Repository;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -20,6 +21,8 @@ internal static class Extensions
         services.AddScoped<ILocationRepository, LocationRepository>();
         services.AddScoped<ICargoRepository, CargoRepository>();
 
+        services.AddHostedService<SeedData>();
+        
         services.AddApplication();
         return services;
     }
