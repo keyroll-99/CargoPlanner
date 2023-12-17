@@ -16,7 +16,6 @@ internal class CompanyRepository : Repository<Company, CompanyDbContext>, ICompa
     {
         return Entities
             .Include(x => x.Employees)
-            .Where(x => x.Employees.TrueForAll(employee => employee.Id == employeeId))
-            .FirstOrDefaultAsync();
+            .FirstOrDefaultAsync(x => x.Employees.Select(y => y.Id).Contains(employeeId));
     }
 }

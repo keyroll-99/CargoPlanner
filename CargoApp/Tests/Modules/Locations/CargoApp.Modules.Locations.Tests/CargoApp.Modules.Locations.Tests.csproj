@@ -25,9 +25,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\..\_Core\CargoApp.Core.TestCore\CargoApp.Core.TestCore.csproj" />
-      <ProjectReference Include="..\CargoApp.Modules.Locations.Application\CargoApp.Modules.Locations.Application.csproj" />
-      <ProjectReference Include="..\CargoApp.Modules.Locations.Core\CargoApp.Modules.Locations.Core.csproj" />
+      <ProjectReference Include="..\..\..\..\Modules\Locations\CargoApp.Modules.Locations.Application\CargoApp.Modules.Locations.Application.csproj" />
+      <ProjectReference Include="..\..\..\..\_Core\CargoApp.Core.TestCore\CargoApp.Core.TestCore.csproj" />
     </ItemGroup>
 
 

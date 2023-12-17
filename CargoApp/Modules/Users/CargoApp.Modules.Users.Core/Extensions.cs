@@ -3,6 +3,7 @@ using CargoApp.Core.Infrastructure.Postgres;
 using CargoApp.Core.Infrastructure.Rabbit;
 using CargoApp.Modules.Contracts.Events.Companies;
 using CargoApp.Modules.Users.Core.DAL;
+using CargoApp.Modules.Users.Core.DAL.SeedData;
 using CargoApp.Modules.Users.Core.Events;
 using CargoApp.Modules.Users.Core.Policies;
 using CargoApp.Modules.Users.Core.Repositories;
@@ -26,6 +27,8 @@ internal static class Extensions
         services.AddEventConsumer<EmployeeCreateEventConsumer, EmployeeCreateEvent>();
         services.AddEventConsumer<EmployeeFiredEventConsumer, EmployeeFiredEvent>();
 
+        services.AddHostedService<SeedData>();
+        
         return services;
     }
 }

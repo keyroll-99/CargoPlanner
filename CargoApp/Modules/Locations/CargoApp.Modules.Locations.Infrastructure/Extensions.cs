@@ -1,9 +1,12 @@
 ﻿using System.Runtime.CompilerServices;
+using CargoApp.Core.Infrastructure;
 using CargoApp.Core.Infrastructure.Postgres;
 using CargoApp.Modules.Locations.Application;
 using CargoApp.Modules.Locations.Application.ExternalServices.Locations;
 using CargoApp.Modules.Locations.Infrastructure.DAL;
+using CargoApp.Modules.Locations.Infrastructure.DAL.SeedData;
 using CargoApp.Modules.Locations.Infrastructure.ExternalServices.Nominatim;
+using CargoApp.Modules.Locations.Infrastructure.ExternalServices.Nominatim.Options;
 using CargoApp.Modules.Locations.Infrastructure.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -17,10 +20,15 @@ internal static class Extensions
     {
         services.AddPostgres<LocationDbContext>();
         services.AddRepositories();
-        services.AddHttpClient<NominatimClient>("NominatimClient",
-            // TODO: it's should be in config
-            x => { x.BaseAddress = new Uri("https://nominatim.openstreetmap.org"); });
+        
+        var nominatimSettings = services.GetOptions<NominatimOptions>("Nominatim");
+        
+        services.AddHttpClient<NominatimClient>(nominatimSettings.ClientName,
+            x => { x.BaseAddress = new Uri(nominatimSettings.BaseUri); });
         services.AddSingleton<ILocationClientFactory, NominatimClientFactory>();
+
+        services.AddHostedService<SeedData>();
+        
         services.AddApplication();
         return services;
     }

@@ -2,6 +2,7 @@
 using CargoApp.Core.Infrastructure.Policies;
 using CargoApp.Core.Infrastructure.Postgres;
 using CargoApp.Modules.Companies.Core.DAL;
+using CargoApp.Modules.Companies.Core.DAL.SeedData;
 using CargoApp.Modules.Companies.Core.Repositories;
 using CargoApp.Modules.Companies.Core.Services;
 using Microsoft.Extensions.DependencyInjection;
@@ -21,7 +22,8 @@ internal static class Extensions
         services.AddServices();
 
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
-        
+
+        services.AddHostedService<SeedData>();
         return services;
     }
 }
