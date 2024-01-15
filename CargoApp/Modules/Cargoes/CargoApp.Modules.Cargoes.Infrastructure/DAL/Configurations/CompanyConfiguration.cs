@@ -13,12 +13,12 @@ public class CompanyConfiguration : IEntityTypeConfiguration<Company>
         builder.HasKey(x => x.Id);
         
         builder
-            .Property<CompanyName>("_companyName")
+            .Property<CompanyName>(x => x.CompanyName)
             .HasConversion(x => x.Name, x => new CompanyName(x))
             .HasColumnName("CompanyName");
 
         builder.Property(x => x.CompanyId).HasColumnName("CompanyId");
 
-        builder.HasMany<Driver>("_drivers").WithOne("_employer");
+        builder.HasMany<Driver>(x => x.Drivers).WithOne(y => y.Employer);
     }
 }

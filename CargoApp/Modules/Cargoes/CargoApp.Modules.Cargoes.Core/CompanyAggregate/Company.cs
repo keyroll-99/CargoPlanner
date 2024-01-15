@@ -8,14 +8,14 @@ public class Company
 {
     public Guid Id { get; init; }
     public Guid CompanyId { get; private set; }
-    private CompanyName _companyName;
-    private ICollection<Driver> _drivers = new List<Driver>();
+    public CompanyName CompanyName { get; private set; }
+    public ICollection<Driver> Drivers { get; private set; } = new List<Driver>();
 
     private Company(CompanyName companyName, Guid companyId)
     {
-        _companyName = companyName;
+        CompanyName = companyName;
         CompanyId = companyId;
-        _drivers = new List<Driver>();
+        Drivers = new List<Driver>();
     }
 
     public Company()
@@ -32,16 +32,16 @@ public class Company
 
     public void AddDriver(Driver driver)
     {
-        _drivers.Add(driver);
+        Drivers.Add(driver);
     }
 
     public CompanyDto CreateDto()
     {
-        return new CompanyDto(Id, CompanyId, _companyName, _drivers.Select(x => x.CreateDto()).ToList());
+        return new CompanyDto(Id, CompanyId, CompanyName, Drivers.Select(x => x.CreateDto()).ToList());
     }
     
     public CompanyDto CreateDtoWithoutDrivers()
     {
-        return new CompanyDto(Id, CompanyId, _companyName, new List<DriverDto>());
+        return new CompanyDto(Id, CompanyId, CompanyName, new List<DriverDto>());
     }
 }

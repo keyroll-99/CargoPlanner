@@ -10,15 +10,16 @@ namespace CargoApp.Modules.Cargoes.Core.CargoAggregate;
 public class Cargo
 {
     public Guid Id { get; init; }
-    private Location _from;
-    private Location _to;
-    private Company _sender;
-    private Company _receiver;
-    private Driver? _driver;
-    private DateTime _expectedDeliveryTime;
-    private DateTime? _deliveryDate;
-    private bool _isDelivered;
-    private bool _isCanceled;
+    public Location From { get; private set; }
+    public Location To { get; private set;}
+    public Company Sender { get; private set;}
+    public Company Receiver { get; private set;}
+    public Driver? Driver { get; private set;}
+    public DateTime ExpectedDeliveryTime{ get; private set;}
+    public DateTime? DeliveryDate{ get; private set;}
+    public bool IsDelivered{ get; private set;}
+    public bool IsLocked{ get; private set;}
+    public bool IsCanceled { get; private set;}
     private readonly DateTime _createAt;
 
     public Cargo()
@@ -35,16 +36,16 @@ public class Cargo
         DateTime createAt,
         Driver? driver)
     {
-        _from = from;
-        _to = to;
-        _sender = sender;
-        _receiver = receiver;
-        _expectedDeliveryTime = expectedDeliveryTime;
-        _deliveryDate = deliveryDate;
+        From = from;
+        To = to;
+        Sender = sender;
+        Receiver = receiver;
+        ExpectedDeliveryTime = expectedDeliveryTime;
+        DeliveryDate = deliveryDate;
         _createAt = createAt;
-        _driver = driver;
-        _isCanceled = false;
-        _isDelivered = false;
+        Driver = driver;
+        IsCanceled = false;
+        IsDelivered = false;
     }
 
     internal static Result<Cargo> Create(
@@ -94,41 +95,46 @@ public class Cargo
         IClock clock
     )
     {
-        if (clock.Now() > _expectedDeliveryTime)
+        if (clock.Now() > ExpectedDeliveryTime)
         {
             return Result.Result.Fail("Can't update cargo after expected delivery time");
         }
 
-        _from = from ?? _from;
-        _to = to ?? _to;
-        _receiver = receiver ?? _receiver;
-        _expectedDeliveryTime = expectedDeliveryTime ?? _expectedDeliveryTime;
+        From = from ?? From;
+        To = to ?? To;
+        Receiver = receiver ?? Receiver;
+        ExpectedDeliveryTime = expectedDeliveryTime ?? ExpectedDeliveryTime;
 
         return Result.Result.Success();
     }
 
     public void Cancel()
     {
-        _isCanceled = true;
+        IsCanceled = true;
+    }
+
+    public void Lock()
+    {
+        IsLocked = true;
     }
 
     public void Deliver(DateTime deliveryDate)
     {
-        _isDelivered = true;
-        _deliveryDate = deliveryDate;
+        IsDelivered = true;
+        DeliveryDate = deliveryDate;
     }
 
     public CargoDto CreateDto()
     {
         return  new CargoDto(
-            _from.CreateDto(),
-            _to.CreateDto(),
-            _sender.CreateDto(),
-            _driver?.CreateDto(),
+            From.CreateDto(),
+            To.CreateDto(),
+            Sender.CreateDto(),
+            Driver?.CreateDto(),
             _createAt,
-            _expectedDeliveryTime,
-            _isDelivered,
-            _isCanceled,
+            ExpectedDeliveryTime,
+            IsDelivered,
+            IsCanceled,
             Id
         );
     }

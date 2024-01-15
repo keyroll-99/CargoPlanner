@@ -11,10 +11,10 @@ public class DriverConfiguration : IEntityTypeConfiguration<Driver>
     public void Configure(EntityTypeBuilder<Driver> builder)
     {
         builder.HasKey(x => x.Id);
-        builder.HasOne<Location>("_home").WithMany().HasForeignKey("HomeId");
-        builder.HasOne<Company>("_employer").WithMany("_drivers").HasForeignKey("EmployerId");
+        builder.HasOne<Location>(x => x.Home).WithMany().HasForeignKey("HomeId");
+        builder.HasOne<Company>(x => x.Employer).WithMany("_drivers").HasForeignKey("EmployerId");
 
-        builder.Property<bool>("_isActive").HasColumnName("IsActive");
-        builder.Property<Guid>("_employeeId").HasColumnName("EmployeeId");
+        builder.Property<bool>(x => x.IsActive).HasColumnName("IsActive");
+        builder.Property<Guid>(x => x.EmployeeId).HasColumnName("EmployeeId");
     }
 }

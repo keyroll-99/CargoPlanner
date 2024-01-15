@@ -9,18 +9,18 @@ namespace CargoApp.Modules.Cargoes.Core.DriverAggregate;
 public class Driver
 {
     public Guid Id { get; init; }
-    private Guid _employeeId;
-    private Location? _home;
-    private Company _employer;
-    private bool _isActive;
+    public Guid EmployeeId { get; private set; }
+    public Location? Home{ get; private set; }
+    public Company Employer{ get; private set; }
+    public bool IsActive{ get; private set; }
 
     private Driver(Location? home, Company employer, bool isActive, Guid id, Guid employeeId)
     {
-        _home = home;
-        _employer = employer;
-        _isActive = isActive;
+        Home = home;
+        Employer = employer;
+        IsActive = isActive;
         Id = id;
-        _employeeId = employeeId;
+        EmployeeId = employeeId;
     }
 
     private Driver()
@@ -39,6 +39,6 @@ public class Driver
     
     public DriverDto CreateDto()
     {
-        return new DriverDto(Id, _home?.CreateDto(), _employer.CreateDtoWithoutDrivers(), _isActive);
+        return new DriverDto(Id, Home?.CreateDto(), Employer.CreateDtoWithoutDrivers(), IsActive);
     }
 }
