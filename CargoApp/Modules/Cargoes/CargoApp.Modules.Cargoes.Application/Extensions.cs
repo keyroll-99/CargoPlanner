@@ -22,8 +22,7 @@ internal static class Extensions
 
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
 
-        services.AddJob<PlannerScheduler>("0 * * ? * *");
-        services.AddJob<TestSchduler>("0 * * ? * *");
+        // services.AddJob<PlannerScheduler>("0 * * ? * *");
         
         return services;
     }

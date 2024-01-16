@@ -14,7 +14,4 @@
     <ItemGroup>
         <InternalsVisibleTo Include="CargoApp.Modules.Cargoes.Api" />
     </ItemGroup>
-    <ItemGroup>
-      <Folder Include="DAL\Migrations\" />
-    </ItemGroup>
 </Project>

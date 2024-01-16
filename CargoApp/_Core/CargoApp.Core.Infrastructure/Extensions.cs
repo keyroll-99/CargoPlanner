@@ -13,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using Quartz;
 
 [assembly: InternalsVisibleTo("CargoApp.Bootstrap")]
 
@@ -51,6 +52,8 @@ public static class Extensions
                         .WithOrigins("http://localhost:4200");
                 });
         });
+        services.AddQuartzHostedService(opt => opt.WaitForJobsToComplete = true);
+
         
         return services;
     }

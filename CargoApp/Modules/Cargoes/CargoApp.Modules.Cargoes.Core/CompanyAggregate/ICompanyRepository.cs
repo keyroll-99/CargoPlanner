@@ -6,4 +6,5 @@ public interface ICompanyRepository
     Task UpdateAsync(Company company);
     Task<Company?> GetByCompanyId(Guid companyId);
     Task<Company?> GetById(Guid id);
+    Task<List<Company>> GetAll();
 }

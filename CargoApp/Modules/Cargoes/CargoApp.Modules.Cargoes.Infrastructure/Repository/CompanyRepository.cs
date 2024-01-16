@@ -36,4 +36,9 @@ internal class CompanyRepository : ICompanyRepository
         return _dbContext.Companies.Include("_drivers").FirstOrDefaultAsync(x => x.Id == id);
 
     }
+
+    public Task<List<Company>> GetAll()
+    {
+        return _dbContext.Companies.Include(c => c.Drivers).ToListAsync();
+    }
 }

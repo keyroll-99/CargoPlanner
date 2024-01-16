@@ -14,6 +14,7 @@ public static class Extensions
             sp.AddJob<TJobs>(opt => opt.WithIdentity(jobKey));
             sp.AddTrigger(opt => opt.ForJob(jobKey).WithIdentity($"{jobKey}-trigger").WithCronSchedule(cronExpression));
         });
+        
 
         return services;
     }

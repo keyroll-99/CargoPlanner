@@ -36,10 +36,6 @@
     <ItemGroup>
         <InternalsVisibleTo Include="CargoApp.Modules.Users.Tests.Integration" />
     </ItemGroup>
-    
-    <ItemGroup>
-      <Folder Include="Response\" />
-    </ItemGroup>
 
 
 

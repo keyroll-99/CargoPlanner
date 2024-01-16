@@ -25,11 +25,11 @@ internal class CargoRepository : ICargoRepository
    {
       return _dbContext
          .Cargoes
-         .Include("_from")
-         .Include("_to")
-         .Include("_sender")
-         .Include("_receiver")
-         .Include("_driver")
+         .Include(x => x.From)
+         .Include(x => x.To)
+         .Include(x => x.Sender)
+         .Include(x => x.Receiver)
+         .Include(x => x.Driver)
          .FirstOrDefaultAsync(x => x.Id == id);
    }
 
@@ -37,13 +37,27 @@ internal class CargoRepository : ICargoRepository
    {
       return _dbContext
          .Cargoes
-         .Include("_from")
-         .Include("_to")
-         .Include("_sender")
-         .Include("_receiver")
-         .Include("_driver")
+         .Include(c => c.From)
+         .Include(c => c.To)
+         .Include(c => c.Sender)
+         .Include(c => c.Receiver)
+         .Include(c => c.Driver)
          .Skip(page * pageSize)
          .Take(pageSize).ToListAsync();
+   }
+
+   public Task<List<Cargo>> GetAllToPlanForCompany(Guid companyId)
+   {
+      return _dbContext
+         .Cargoes
+         .Include(c => c.From)
+         .Include(c => c.To)
+         .Include(c => c.Sender)
+         .Include(c => c.Receiver)
+         .Include(c => c.Driver)
+         .Where(c => c.Sender.CompanyId == companyId)
+         .Where(c => !c.IsCanceled && !c.IsLocked && !c.IsDelivered)
+         .ToListAsync();
    }
 
    public async Task UpdateAsync(Cargo cargo)
