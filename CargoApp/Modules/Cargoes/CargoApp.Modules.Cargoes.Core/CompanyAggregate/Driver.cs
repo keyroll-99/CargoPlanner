@@ -1,23 +1,19 @@
-
-using CargoApp.Modules.Cargoes.Core.CompanyAggregate;
 using CargoApp.Modules.Cargoes.Core.LocationAggregate;
 using CargoApp.Modules.Contracts.Cargoes;
 using Result;
 
-namespace CargoApp.Modules.Cargoes.Core.DriverAggregate;
+namespace CargoApp.Modules.Cargoes.Core.CompanyAggregate;
 
 public class Driver
 {
     public Guid Id { get; init; }
     public Guid EmployeeId { get; private set; }
     public Location? Home{ get; private set; }
-    public Company Employer{ get; private set; }
     public bool IsActive{ get; private set; }
 
-    private Driver(Location? home, Company employer, bool isActive, Guid id, Guid employeeId)
+    private Driver(Location? home, bool isActive, Guid id, Guid employeeId)
     {
         Home = home;
-        Employer = employer;
         IsActive = isActive;
         Id = id;
         EmployeeId = employeeId;
@@ -27,18 +23,14 @@ public class Driver
     {
     }
 
-    public static Result<Driver> Create(Location? home, Company? employer, Guid employeeId)
+    public static Result<Driver> Create(Location? home, Guid employeeId)
     {
-        if (employer is null)
-        {
-            return Result<Driver>.Fail("Employer cannot be null");
-        }
         
-        return new Driver(home, employer, true, Guid.Empty, employeeId);
+        return new Driver(home, true, Guid.Empty, employeeId);
     }
     
     public DriverDto CreateDto()
     {
-        return new DriverDto(Id, Home?.CreateDto(), Employer.CreateDtoWithoutDrivers(), IsActive);
+        return new DriverDto(Id, Home?.CreateDto(), IsActive);
     }
 }

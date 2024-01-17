@@ -2,12 +2,9 @@
 using CargoApp.Modules.Cargoes.Application;
 using CargoApp.Modules.Cargoes.Core.CargoAggregate;
 using CargoApp.Modules.Cargoes.Core.CompanyAggregate;
-using CargoApp.Modules.Cargoes.Core.DriverAggregate;
 using CargoApp.Modules.Cargoes.Core.LocationAggregate;
-using CargoApp.Modules.Cargoes.Core.Planner.ExternalServices;
 using CargoApp.Modules.Cargoes.Infrastructure.DAL;
 using CargoApp.Modules.Cargoes.Infrastructure.DAL.SeedData;
-using CargoApp.Modules.Cargoes.Infrastructure.ExternalService;
 using CargoApp.Modules.Cargoes.Infrastructure.Repository;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -24,10 +21,6 @@ internal static class Extensions
 
         services.AddHostedService<SeedData>();
 
-        services.AddHttpClient<OsrmClient>(x => x.BaseAddress = new Uri("http://localhost:8000/"));
-
-        services.AddScoped<IRouteEngineClient, OsrmClient>();
-        
         services.AddApplication();
         return services;
     }

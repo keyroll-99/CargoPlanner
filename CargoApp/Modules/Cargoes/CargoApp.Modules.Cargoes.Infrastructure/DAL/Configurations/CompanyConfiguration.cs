@@ -1,6 +1,6 @@
 using CargoApp.Modules.Cargoes.Core.CompanyAggregate;
 using CargoApp.Modules.Cargoes.Core.CompanyAggregate.ValueObject;
-using CargoApp.Modules.Cargoes.Core.DriverAggregate;
+using CargoApp.Modules.Cargoes.Core.LocationAggregate;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -19,6 +19,12 @@ public class CompanyConfiguration : IEntityTypeConfiguration<Company>
 
         builder.Property(x => x.CompanyId).HasColumnName("CompanyId");
 
-        builder.HasMany<Driver>(x => x.Drivers).WithOne(y => y.Employer);
+        builder.OwnsMany<Driver>(d => d.Drivers, navigationBuilder =>
+        {
+            navigationBuilder.HasKey(x => x.Id);
+            navigationBuilder.HasOne<Location>(x => x.Home).WithMany().HasForeignKey("HomeId");
+            navigationBuilder.Property<bool>(x => x.IsActive).HasColumnName("IsActive");
+            navigationBuilder.Property<Guid>(x => x.EmployeeId).HasColumnName("EmployeeId");
+        });
     }
 }

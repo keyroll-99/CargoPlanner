@@ -82,6 +82,16 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Locations", "Locations", "{
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CargoApp.Modules.Locations.Tests", "Tests\Modules\Locations\CargoApp.Modules.Locations.Tests\CargoApp.Modules.Locations.Tests.csproj", "{97894B4D-D4C7-4E4F-9A0A-093C6A0E0D88}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Planner", "Planner", "{A7418E7E-57C6-4663-8CCB-D0C734217AD9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CargoApp.Modules.Planner.Infrastructure", "Modules\Planner\CargoApp.Modules.Planner.Infrastructure\CargoApp.Modules.Planner.Infrastructure.csproj", "{D450F801-7F1A-427D-A52B-A3CEB0533EA6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CargoApp.Modules.Planner.Application", "Modules\Planner\CargoApp.Modules.Planner.Application\CargoApp.Modules.Planner.Application.csproj", "{48337BAB-3BD9-4A60-A7A4-90095D6FAE5B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CargoApp.Modules.Planner.Core", "Modules\Planner\CargoApp.Modules.Planner.Core\CargoApp.Modules.Planner.Core.csproj", "{5C5540D8-DF3E-4B9E-915C-B47A12E0245C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CargoApp.Modules.Contracts.Planner", "Modules\_Contracts\CargoApp.Modules.Contracts.Planner\CargoApp.Modules.Contracts.Planner.csproj", "{66DA6DDA-5390-4903-8177-D758F6D463AC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -125,6 +135,11 @@ Global
 		{0410A8B6-FE6A-4F9B-A038-9B7C2FA2C6A3} = {776E5EA9-CAA1-4053-8A56-08E50CC06D21}
 		{282F1FFC-7A88-4D6E-A073-4A9C7C8650EC} = {43DC91C8-81C9-4B4A-B112-824EA33840BC}
 		{97894B4D-D4C7-4E4F-9A0A-093C6A0E0D88} = {282F1FFC-7A88-4D6E-A073-4A9C7C8650EC}
+		{A7418E7E-57C6-4663-8CCB-D0C734217AD9} = {F667422E-76EE-4887-8585-BC44FBF07F5E}
+		{D450F801-7F1A-427D-A52B-A3CEB0533EA6} = {A7418E7E-57C6-4663-8CCB-D0C734217AD9}
+		{48337BAB-3BD9-4A60-A7A4-90095D6FAE5B} = {A7418E7E-57C6-4663-8CCB-D0C734217AD9}
+		{5C5540D8-DF3E-4B9E-915C-B47A12E0245C} = {A7418E7E-57C6-4663-8CCB-D0C734217AD9}
+		{66DA6DDA-5390-4903-8177-D758F6D463AC} = {776E5EA9-CAA1-4053-8A56-08E50CC06D21}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{C0124348-3DFA-45BE-8817-05D2C43F1D98}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -235,5 +250,21 @@ Global
 		{97894B4D-D4C7-4E4F-9A0A-093C6A0E0D88}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{97894B4D-D4C7-4E4F-9A0A-093C6A0E0D88}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{97894B4D-D4C7-4E4F-9A0A-093C6A0E0D88}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D450F801-7F1A-427D-A52B-A3CEB0533EA6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D450F801-7F1A-427D-A52B-A3CEB0533EA6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D450F801-7F1A-427D-A52B-A3CEB0533EA6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D450F801-7F1A-427D-A52B-A3CEB0533EA6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{48337BAB-3BD9-4A60-A7A4-90095D6FAE5B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{48337BAB-3BD9-4A60-A7A4-90095D6FAE5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{48337BAB-3BD9-4A60-A7A4-90095D6FAE5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{48337BAB-3BD9-4A60-A7A4-90095D6FAE5B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5C5540D8-DF3E-4B9E-915C-B47A12E0245C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C5540D8-DF3E-4B9E-915C-B47A12E0245C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C5540D8-DF3E-4B9E-915C-B47A12E0245C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C5540D8-DF3E-4B9E-915C-B47A12E0245C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{66DA6DDA-5390-4903-8177-D758F6D463AC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{66DA6DDA-5390-4903-8177-D758F6D463AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{66DA6DDA-5390-4903-8177-D758F6D463AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{66DA6DDA-5390-4903-8177-D758F6D463AC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

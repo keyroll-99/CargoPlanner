@@ -52,7 +52,7 @@ public static class Extensions
                         .WithOrigins("http://localhost:4200");
                 });
         });
-        services.AddQuartzHostedService(opt => opt.WaitForJobsToComplete = true);
+        // services.AddQuartzHostedService(opt => opt.WaitForJobsToComplete = true);
 
         
         return services;

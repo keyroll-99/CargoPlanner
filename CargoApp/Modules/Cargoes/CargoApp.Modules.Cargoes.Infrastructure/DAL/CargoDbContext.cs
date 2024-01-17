@@ -1,6 +1,5 @@
 ﻿using CargoApp.Modules.Cargoes.Core.CargoAggregate;
 using CargoApp.Modules.Cargoes.Core.CompanyAggregate;
-using CargoApp.Modules.Cargoes.Core.DriverAggregate;
 using CargoApp.Modules.Cargoes.Core.LocationAggregate;
 using Microsoft.EntityFrameworkCore;
 
@@ -17,7 +16,7 @@ internal class CargoDbContext : DbContext
     
     public DbSet<Cargo> Cargoes { get; set; }
     public DbSet<Location> Locations { get; set; }
-    public DbSet<Driver> Drivers { get; set; }
+    // public DbSet<Driver> Drivers { get; set; }
     public DbSet<Company> Companies { get; set; }
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)

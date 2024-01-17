@@ -1,6 +1,7 @@
 ﻿using CargoApp.Modules.Cargoes.Api;
 using CargoApp.Modules.Companies.Api;
 using CargoApp.Modules.Locations.Api;
+using CargoApp.Modules.Planner.Infrastructure;
 using CargoApp.Modules.Users;
 
 namespace CargoApp.Bootstrap;
@@ -13,6 +14,7 @@ internal static class Modules
         services.AddLocations();
         services.AddCompanies();
         services.AddCargoes();
+        services.AddPlanner();
         return services;
     }
 }

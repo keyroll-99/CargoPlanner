@@ -9,6 +9,7 @@ public record CargoDto(
     DateTime ExpectedDeliveryTime,
     bool IsDelivered,
     bool IsCancelled,
+    bool IsLocked,
     Guid Id)
 {
 }

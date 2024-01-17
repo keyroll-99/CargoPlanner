@@ -1,6 +1,5 @@
 ﻿using CargoApp.Core.ShareCore.Clock;
 using CargoApp.Modules.Cargoes.Core.CompanyAggregate;
-using CargoApp.Modules.Cargoes.Core.DriverAggregate;
 using CargoApp.Modules.Cargoes.Core.LocationAggregate;
 using CargoApp.Modules.Contracts.Cargoes;
 using Result;
@@ -10,6 +9,7 @@ namespace CargoApp.Modules.Cargoes.Core.CargoAggregate;
 public class Cargo
 {
     public Guid Id { get; init; }
+    // I know it's break rules to keep here Location and Company, but I don't have now better idea how do it
     public Location From { get; private set; }
     public Location To { get; private set;}
     public Company Sender { get; private set;}
@@ -135,6 +135,7 @@ public class Cargo
             ExpectedDeliveryTime,
             IsDelivered,
             IsCanceled,
+            IsLocked,
             Id
         );
     }

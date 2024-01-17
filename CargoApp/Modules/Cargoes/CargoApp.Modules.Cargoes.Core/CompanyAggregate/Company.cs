@@ -1,5 +1,4 @@
 using CargoApp.Modules.Cargoes.Core.CompanyAggregate.ValueObject;
-using CargoApp.Modules.Cargoes.Core.DriverAggregate;
 using CargoApp.Modules.Contracts.Cargoes;
 
 namespace CargoApp.Modules.Cargoes.Core.CompanyAggregate;
@@ -38,10 +37,5 @@ public class Company
     public CompanyDto CreateDto()
     {
         return new CompanyDto(Id, CompanyId, CompanyName, Drivers.Select(x => x.CreateDto()).ToList());
-    }
-    
-    public CompanyDto CreateDtoWithoutDrivers()
-    {
-        return new CompanyDto(Id, CompanyId, CompanyName, new List<DriverDto>());
     }
 }

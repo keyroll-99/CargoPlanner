@@ -21,7 +21,6 @@
 
     <ItemGroup>
       <Folder Include="CargoAggregate\ValueObject\" />
-      <Folder Include="Planner\Exceptions\" />
     </ItemGroup>
     
 </Project>

@@ -4,7 +4,7 @@ using CargoApp.Modules.Cargoes.Core.CompanyAggregate;
 
 namespace CargoApp.Modules.Cargoes.Infrastructure.DAL.SeedData;
 
-public class CompanyData
+public static class CompanyData
 {
     private static readonly IClock Clock = new Clock();
     

@@ -29,16 +29,22 @@ internal class SeedData : IHostedService
         var scope = _serviceProvider.CreateAsyncScope();
         var context = scope.ServiceProvider.GetRequiredService<CargoDbContext>();
 
-        if (await context.Drivers.AnyAsync(cancellationToken))
+        if (await context.Companies.AnyAsync(cancellationToken: cancellationToken))
         {
             return;
         }
 
         var locations = LocationData.Locations;
+        var companies = CompanyData.Companies;
         var drivers = DriverData.Drivers;
+        foreach (var driver in drivers)
+        {
+            companies.ForEach(c => c.AddDriver(driver));
+        }
 
+        
         await context.Locations.AddRangeAsync(locations, cancellationToken);
-        await context.Drivers.AddRangeAsync(drivers, cancellationToken);
+        await context.Companies.AddRangeAsync(companies, cancellationToken);
         await context.SaveChangesAsync(cancellationToken);
     }
 

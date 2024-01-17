@@ -1,6 +1,5 @@
 using CargoApp.Core.Abstraction.QueueMessages;
 using CargoApp.Modules.Cargoes.Core.CompanyAggregate;
-using CargoApp.Modules.Cargoes.Core.DriverAggregate;
 using CargoApp.Modules.Contracts.Events.Companies;
 using CargoApp.Modules.Contracts.Events.Companies.Enums;
 using IServiceProvider = CargoApp.Core.Abstraction.Services.IServiceProvider;
@@ -26,7 +25,7 @@ public class EmployeeCreateConsumer : IEventConsumer<EmployeeCreateEvent>
         var companyRepository = await _serviceProvider.GetService<ICompanyRepository>();
         var company = await companyRepository.GetByCompanyId(@event.CompanyId);
 
-        await Core.DriverAggregate.Driver.Create(null, company, @event.Id).OnSuccessAsync(async (driver) =>
+        await Core.CompanyAggregate.Driver.Create(null, @event.Id).OnSuccessAsync(async (driver) =>
         {
             company.AddDriver(driver);
             await companyRepository.UpdateAsync(company);

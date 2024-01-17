@@ -13,4 +13,7 @@
       <ProjectReference Include="..\..\_Contracts\CargoApp.Modules.Contracts.Events\CargoApp.Modules.Contracts.Events.csproj" />
       <ProjectReference Include="..\CargoApp.Modules.Cargoes.Core\CargoApp.Modules.Cargoes.Core.csproj" />
     </ItemGroup>
+    <ItemGroup>
+      <Folder Include="Services\" />
+    </ItemGroup>
 </Project>
