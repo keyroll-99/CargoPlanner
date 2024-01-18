@@ -18,7 +18,7 @@ public class CargoConfiguration : IEntityTypeConfiguration<Cargo>
         builder.HasOne<Company>(x => x.Receiver).WithMany().HasForeignKey("ReceiverId");
         builder.Property(x => x.ExpectedDeliveryTime).HasColumnName("ExpectedDeliveryTime");
         builder.Property(x => x.DeliveryDate).IsRequired(false).HasColumnName("DeliveryDate");
-        builder.Property(x => x.IsLocked).IsRequired().HasColumnName("IsLocked");
+        builder.Property(x => x.IsLocked).IsRequired().HasDefaultValue(false).HasColumnName("IsLocked");
         builder.Property(x => x.IsDelivered).HasColumnName("IsDelivered");
         builder.Property(x => x.IsCanceled).HasColumnName("IsCanceled");
     }

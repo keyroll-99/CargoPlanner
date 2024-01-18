@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace CargoApp.Modules.Cargoes.Infrastructure.DAL.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial_Cargoes : Migration
+    public partial class RegenerateCargoesModulesMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -45,26 +45,27 @@ namespace CargoApp.Modules.Cargoes.Infrastructure.DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Drivers",
+                name: "Driver",
                 schema: "cargoes",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    EmployerId = table.Column<Guid>(type: "uuid", nullable: true),
+                    EmployeeId = table.Column<Guid>(type: "uuid", nullable: false),
                     HomeId = table.Column<Guid>(type: "uuid", nullable: true),
-                    IsActive = table.Column<bool>(type: "boolean", nullable: false)
+                    IsActive = table.Column<bool>(type: "boolean", nullable: false),
+                    CompanyId = table.Column<Guid>(type: "uuid", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Drivers", x => x.Id);
+                    table.PrimaryKey("PK_Driver", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Drivers_Companies_EmployerId",
-                        column: x => x.EmployerId,
+                        name: "FK_Driver_Companies_CompanyId",
+                        column: x => x.CompanyId,
                         principalSchema: "cargoes",
                         principalTable: "Companies",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_Drivers_Locations_HomeId",
+                        name: "FK_Driver_Locations_HomeId",
                         column: x => x.HomeId,
                         principalSchema: "cargoes",
                         principalTable: "Locations",
@@ -77,13 +78,16 @@ namespace CargoApp.Modules.Cargoes.Infrastructure.DAL.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    LocationFromId = table.Column<Guid>(type: "uuid", nullable: false),
+                    LocationToId = table.Column<Guid>(type: "uuid", nullable: false),
+                    SenderId = table.Column<Guid>(type: "uuid", nullable: false),
+                    ReceiverId = table.Column<Guid>(type: "uuid", nullable: false),
                     DriverId = table.Column<Guid>(type: "uuid", nullable: true),
-                    LocationFromId = table.Column<Guid>(type: "uuid", nullable: true),
-                    LocationToId = table.Column<Guid>(type: "uuid", nullable: true),
-                    ReceiverId = table.Column<Guid>(type: "uuid", nullable: true),
-                    SenderId = table.Column<Guid>(type: "uuid", nullable: true),
+                    ExpectedDeliveryTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     DeliveryDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    ExpectedDeliveryTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                    IsDelivered = table.Column<bool>(type: "boolean", nullable: false),
+                    IsLocked = table.Column<bool>(type: "boolean", nullable: false, defaultValue: false),
+                    IsCanceled = table.Column<bool>(type: "boolean", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -93,31 +97,35 @@ namespace CargoApp.Modules.Cargoes.Infrastructure.DAL.Migrations
                         column: x => x.ReceiverId,
                         principalSchema: "cargoes",
                         principalTable: "Companies",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Cargoes_Companies_SenderId",
                         column: x => x.SenderId,
                         principalSchema: "cargoes",
                         principalTable: "Companies",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Cargoes_Drivers_DriverId",
+                        name: "FK_Cargoes_Driver_DriverId",
                         column: x => x.DriverId,
                         principalSchema: "cargoes",
-                        principalTable: "Drivers",
+                        principalTable: "Driver",
                         principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Cargoes_Locations_LocationFromId",
                         column: x => x.LocationFromId,
                         principalSchema: "cargoes",
                         principalTable: "Locations",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Cargoes_Locations_LocationToId",
                         column: x => x.LocationToId,
                         principalSchema: "cargoes",
                         principalTable: "Locations",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -151,15 +159,15 @@ namespace CargoApp.Modules.Cargoes.Infrastructure.DAL.Migrations
                 column: "SenderId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Drivers_EmployerId",
+                name: "IX_Driver_CompanyId",
                 schema: "cargoes",
-                table: "Drivers",
-                column: "EmployerId");
+                table: "Driver",
+                column: "CompanyId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Drivers_HomeId",
+                name: "IX_Driver_HomeId",
                 schema: "cargoes",
-                table: "Drivers",
+                table: "Driver",
                 column: "HomeId");
         }
 
@@ -171,7 +179,7 @@ namespace CargoApp.Modules.Cargoes.Infrastructure.DAL.Migrations
                 schema: "cargoes");
 
             migrationBuilder.DropTable(
-                name: "Drivers",
+                name: "Driver",
                 schema: "cargoes");
 
             migrationBuilder.DropTable(

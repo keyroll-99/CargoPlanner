@@ -18,13 +18,6 @@ public class CompanyConfiguration : IEntityTypeConfiguration<Company>
             .HasColumnName("CompanyName");
 
         builder.Property(x => x.CompanyId).HasColumnName("CompanyId");
-
-        builder.OwnsMany<Driver>(d => d.Drivers, navigationBuilder =>
-        {
-            navigationBuilder.HasKey(x => x.Id);
-            navigationBuilder.HasOne<Location>(x => x.Home).WithMany().HasForeignKey("HomeId");
-            navigationBuilder.Property<bool>(x => x.IsActive).HasColumnName("IsActive");
-            navigationBuilder.Property<Guid>(x => x.EmployeeId).HasColumnName("EmployeeId");
-        });
+        builder.HasMany<Driver>(x => x.Drivers);
     }
 }

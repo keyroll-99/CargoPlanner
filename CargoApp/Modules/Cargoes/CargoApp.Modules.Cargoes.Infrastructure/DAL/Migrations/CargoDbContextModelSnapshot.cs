@@ -49,7 +49,9 @@ namespace CargoApp.Modules.Cargoes.Infrastructure.DAL.Migrations
                         .HasColumnName("IsDelivered");
 
                     b.Property<bool>("IsLocked")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("boolean")
+                        .HasDefaultValue(false)
                         .HasColumnName("IsLocked");
 
                     b.Property<Guid>("LocationFromId")
@@ -99,18 +101,18 @@ namespace CargoApp.Modules.Cargoes.Infrastructure.DAL.Migrations
                     b.ToTable("Companies", "cargoes");
                 });
 
-            modelBuilder.Entity("CargoApp.Modules.Cargoes.Core.DriverAggregate.Driver", b =>
+            modelBuilder.Entity("CargoApp.Modules.Cargoes.Core.CompanyAggregate.Driver", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
+                    b.Property<Guid?>("CompanyId")
+                        .HasColumnType("uuid");
+
                     b.Property<Guid>("EmployeeId")
                         .HasColumnType("uuid")
                         .HasColumnName("EmployeeId");
-
-                    b.Property<Guid>("EmployerId")
-                        .HasColumnType("uuid");
 
                     b.Property<Guid?>("HomeId")
                         .HasColumnType("uuid");
@@ -121,11 +123,11 @@ namespace CargoApp.Modules.Cargoes.Infrastructure.DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("EmployerId");
+                    b.HasIndex("CompanyId");
 
                     b.HasIndex("HomeId");
 
-                    b.ToTable("Drivers", "cargoes");
+                    b.ToTable("Driver", "cargoes");
                 });
 
             modelBuilder.Entity("CargoApp.Modules.Cargoes.Core.LocationAggregate.Location", b =>
@@ -154,7 +156,7 @@ namespace CargoApp.Modules.Cargoes.Infrastructure.DAL.Migrations
 
             modelBuilder.Entity("CargoApp.Modules.Cargoes.Core.CargoAggregate.Cargo", b =>
                 {
-                    b.HasOne("CargoApp.Modules.Cargoes.Core.DriverAggregate.Driver", "Driver")
+                    b.HasOne("CargoApp.Modules.Cargoes.Core.CompanyAggregate.Driver", "Driver")
                         .WithMany()
                         .HasForeignKey("DriverId");
 
@@ -193,19 +195,15 @@ namespace CargoApp.Modules.Cargoes.Infrastructure.DAL.Migrations
                     b.Navigation("To");
                 });
 
-            modelBuilder.Entity("CargoApp.Modules.Cargoes.Core.DriverAggregate.Driver", b =>
+            modelBuilder.Entity("CargoApp.Modules.Cargoes.Core.CompanyAggregate.Driver", b =>
                 {
-                    b.HasOne("CargoApp.Modules.Cargoes.Core.CompanyAggregate.Company", "Employer")
+                    b.HasOne("CargoApp.Modules.Cargoes.Core.CompanyAggregate.Company", null)
                         .WithMany("Drivers")
-                        .HasForeignKey("EmployerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CompanyId");
 
                     b.HasOne("CargoApp.Modules.Cargoes.Core.LocationAggregate.Location", "Home")
                         .WithMany()
                         .HasForeignKey("HomeId");
-
-                    b.Navigation("Employer");
 
                     b.Navigation("Home");
                 });

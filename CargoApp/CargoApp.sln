@@ -92,6 +92,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CargoApp.Modules.Planner.Co
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CargoApp.Modules.Contracts.Planner", "Modules\_Contracts\CargoApp.Modules.Contracts.Planner\CargoApp.Modules.Contracts.Planner.csproj", "{66DA6DDA-5390-4903-8177-D758F6D463AC}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Planner", "Planner", "{E34CB02B-74C1-47ED-824D-D4D7020CB030}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -140,6 +142,7 @@ Global
 		{48337BAB-3BD9-4A60-A7A4-90095D6FAE5B} = {A7418E7E-57C6-4663-8CCB-D0C734217AD9}
 		{5C5540D8-DF3E-4B9E-915C-B47A12E0245C} = {A7418E7E-57C6-4663-8CCB-D0C734217AD9}
 		{66DA6DDA-5390-4903-8177-D758F6D463AC} = {776E5EA9-CAA1-4053-8A56-08E50CC06D21}
+		{E34CB02B-74C1-47ED-824D-D4D7020CB030} = {43DC91C8-81C9-4B4A-B112-824EA33840BC}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{C0124348-3DFA-45BE-8817-05D2C43F1D98}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
