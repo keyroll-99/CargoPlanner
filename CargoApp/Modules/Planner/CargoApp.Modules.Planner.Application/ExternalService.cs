@@ -24,4 +24,10 @@ internal class ExternalService : IExternalServiceFactory
         var scope = _serviceProvider.CreateAsyncScope();
         return scope.ServiceProvider.GetRequiredService<ICargoService>();
     }
+
+    public IDriverService GetDriverService()
+    {
+        var scope = _serviceProvider.CreateAsyncScope();
+        return scope.ServiceProvider.GetRequiredService<IDriverService>();
+    }
 }

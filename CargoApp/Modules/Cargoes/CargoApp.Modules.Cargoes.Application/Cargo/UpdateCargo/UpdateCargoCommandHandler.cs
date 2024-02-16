@@ -1,7 +1,6 @@
 using CargoApp.Core.ShareCore.Clock;
 using CargoApp.Modules.Cargoes.Core.CargoAggregate;
 using CargoApp.Modules.Cargoes.Core.CompanyAggregate;
-using CargoApp.Modules.Cargoes.Core.LocationAggregate;
 using MediatR;
 using Result;
 
@@ -28,8 +27,8 @@ public class UpdateCargoCommandHandler : IRequestHandler<UpdateCargoCommand, Res
 
     public async Task<Result.Result> Handle(UpdateCargoCommand request, CancellationToken cancellationToken)
     {
-        Core.LocationAggregate.Location? from = null;
-        Core.LocationAggregate.Location? to = null;
+        Core.CargoAggregate.Location? from = null;
+        Core.CargoAggregate.Location? to = null;
         Core.CompanyAggregate.Company? receiver = null;
         
         var cargo = await _cargoRepository.GetByIdAsync(request.Id);

@@ -2,7 +2,6 @@
 using CargoApp.Modules.Cargoes.Application;
 using CargoApp.Modules.Cargoes.Core.CargoAggregate;
 using CargoApp.Modules.Cargoes.Core.CompanyAggregate;
-using CargoApp.Modules.Cargoes.Core.LocationAggregate;
 using CargoApp.Modules.Cargoes.Infrastructure.DAL;
 using CargoApp.Modules.Cargoes.Infrastructure.DAL.SeedData;
 using CargoApp.Modules.Cargoes.Infrastructure.Repository;

@@ -2,7 +2,6 @@ using CargoApp.Core.ShareCore.Clock;
 using CargoApp.Modules.Cargoes.Application.Cargo.UpdateCargo;
 using CargoApp.Modules.Cargoes.Core.CargoAggregate;
 using CargoApp.Modules.Cargoes.Core.CompanyAggregate;
-using CargoApp.Modules.Cargoes.Core.LocationAggregate;
 using FluentAssertions;
 using NSubstitute;
 using Xunit;

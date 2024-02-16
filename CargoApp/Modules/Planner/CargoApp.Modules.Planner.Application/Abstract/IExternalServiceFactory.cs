@@ -6,4 +6,5 @@ internal interface IExternalServiceFactory
 {
     ICompanyService GetCompanyService();
     ICargoService GetCargoService();
+    IDriverService GetDriverService();
 }

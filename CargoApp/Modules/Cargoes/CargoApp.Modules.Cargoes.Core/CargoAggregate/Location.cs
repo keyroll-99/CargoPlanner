@@ -1,6 +1,6 @@
 using CargoApp.Modules.Contracts.Cargoes;
 
-namespace CargoApp.Modules.Cargoes.Core.LocationAggregate;
+namespace CargoApp.Modules.Cargoes.Core.CargoAggregate;
 
 public class Location
 {

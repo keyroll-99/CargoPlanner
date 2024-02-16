@@ -1,4 +1,4 @@
-using CargoApp.Modules.Cargoes.Core.LocationAggregate;
+using CargoApp.Modules.Cargoes.Core.CargoAggregate;
 using CargoApp.Modules.Contracts.Cargoes;
 using Result;
 

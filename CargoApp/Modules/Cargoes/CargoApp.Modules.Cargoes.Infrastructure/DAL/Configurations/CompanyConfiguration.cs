@@ -1,6 +1,5 @@
 using CargoApp.Modules.Cargoes.Core.CompanyAggregate;
 using CargoApp.Modules.Cargoes.Core.CompanyAggregate.ValueObject;
-using CargoApp.Modules.Cargoes.Core.LocationAggregate;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

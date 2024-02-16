@@ -1,6 +1,6 @@
 using CargoApp.Core.Infrastructure.Clock;
 using CargoApp.Core.ShareCore.Clock;
-using CargoApp.Modules.Cargoes.Core.LocationAggregate;
+using CargoApp.Modules.Cargoes.Core.CargoAggregate;
 
 namespace CargoApp.Modules.Cargoes.Infrastructure.DAL.SeedData;
 

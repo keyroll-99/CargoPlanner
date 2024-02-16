@@ -22,6 +22,7 @@ internal static class Extensions
 
         services.AddScoped<ICargoService, CargoService>();
         services.AddScoped<ICompanyService, CompanyService>();
+        services.AddScoped<IDriverService, DriverService>();
 
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
 

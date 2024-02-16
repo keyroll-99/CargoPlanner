@@ -1,6 +1,5 @@
 ﻿using CargoApp.Modules.Cargoes.Core.CargoAggregate;
 using CargoApp.Modules.Cargoes.Core.CompanyAggregate;
-using CargoApp.Modules.Cargoes.Core.LocationAggregate;
 using Microsoft.EntityFrameworkCore;
 
 namespace CargoApp.Modules.Cargoes.Infrastructure.DAL;

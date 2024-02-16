@@ -1,16 +1,18 @@
 using CargoApp.Modules.Contracts.Cargoes;
 using CargoApp.Modules.Planner.Core.Planner;
+using CargoApp.Modules.Planner.Core.Planner.Structure;
 
 namespace CargoApp.Modules.Planner.Application.Mapper;
 
 internal static class Mapper
 {
-    public static Driver AsDriver(this DriverDto driverDto)
+    public static Driver AsDriver(this DriverDto driverDto, List<Route> routes)
     {
         return new Driver
         {
             Home = driverDto.Home.AsLocation(),
-            Id = driverDto.Id
+            Id = driverDto.Id,
+            Routes = routes
         };
     }
     

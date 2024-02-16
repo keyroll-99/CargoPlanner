@@ -2,7 +2,9 @@ using CargoApp.Modules.Contracts.Cargoes;
 using CargoApp.Modules.Contracts.Cargoes.Services;
 using CargoApp.Modules.Planner.Application.Abstract;
 using CargoApp.Modules.Planner.Application.Mapper;
+using CargoApp.Modules.Planner.Core.Planner;
 using CargoApp.Modules.Planner.Core.Planner.ExternalService;
+using CargoApp.Modules.Planner.Core.Planner.Structure;
 using Quartz;
 
 namespace CargoApp.Modules.Planner.Application;
@@ -42,8 +44,22 @@ internal class PlannerScheduler : IJob
         }
     }
 
-    private static Core.Planner.Planner CreatePlanner(IRouteEngine routeEngine, IList<CargoDto> cargoes, CompanyDto company)
+    private async Task<Core.Planner.Planner> CreatePlanner(IRouteEngine routeEngine, IList<CargoDto> cargoes, CompanyDto company)
     {
+        List<Driver> drivers = new();
+        var driverService = _externalServiceFactory.GetDriverService();
+        foreach (var driver in company.Drivers)
+        {
+            var driverCargoes = await driverService.GetPlannedDriverCargoes(driver.Id);
+            List<Route> driverRoutes = new();
+            foreach (var driverCargo in driverCargoes)
+            {
+                driverRoutes.Add(new Route());
+            }
+            
+            drivers.Add(driver.AsDriver(driverRoutes));
+        }
+        
         var planner = new Core.Planner.Planner
         {
             Cargoes = cargoes.Select(c => c.AsCargo()).ToList(),

@@ -1,4 +1,4 @@
-namespace CargoApp.Modules.Cargoes.Core.LocationAggregate;
+namespace CargoApp.Modules.Cargoes.Core.CargoAggregate;
 
 public interface ILocationRepository
 {
