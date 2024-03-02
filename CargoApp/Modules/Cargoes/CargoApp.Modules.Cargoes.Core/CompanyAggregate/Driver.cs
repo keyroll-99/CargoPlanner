@@ -33,4 +33,10 @@ public class Driver
     {
         return new DriverDto(Id, Home?.CreateDto(), IsActive);
     }
+    
+    
+    public override int GetHashCode()
+    {
+        return string.GetHashCode(Id.ToString());
+    }
 }
